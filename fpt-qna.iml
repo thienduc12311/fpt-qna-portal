@@ -37,12 +37,12 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
     <orderEntry type="library" name="javax.servlet.jstl" level="project" />
     <orderEntry type="library" name="sqljdbc42" level="project" />
-    <orderEntry type="library" name="gson-2.9.0" level="project" />
     <orderEntry type="library" name="fluent-hc-4.5.13" level="project" />
     <orderEntry type="library" name="httpclient-4.5.13" level="project" />
     <orderEntry type="library" name="httpcore-4.4.13" level="project" />
     <orderEntry type="library" name="mssql" level="project" />
     <orderEntry type="library" name="commons-codec-1.11" level="project" />
     <orderEntry type="library" name="commons-logging-1.2" level="project" />
+    <orderEntry type="library" name="google.code.gson" level="project" />
   </component>
 </module>
