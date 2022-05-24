@@ -20,7 +20,8 @@
           <element id="library" level="project" name="fluent-hc-4.5.13" />
           <element id="library" level="project" name="httpclient-4.5.13" />
           <element id="library" level="project" name="httpcore-4.4.13" />
-          <element id="library" level="project" name="commons-codec-1.11" />
+          <element id="library" level="project" name="mssql" />
+          <element id="library" level="project" name="commons-logging-1.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">
