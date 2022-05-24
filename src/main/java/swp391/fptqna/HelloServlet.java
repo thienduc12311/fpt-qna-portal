@@ -24,6 +24,7 @@ public class HelloServlet extends HttpServlet {
 
     public void addThienDUc(){
         asdasdasdasd;
+        asdasdkasjhdkajsdhakjsdhka;
     }
 
     public void destroy() {
