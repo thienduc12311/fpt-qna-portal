@@ -23,6 +23,7 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void addThienDUc(){
+        asdasdasdasd;
     }
 
     public void destroy() {
