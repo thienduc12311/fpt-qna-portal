@@ -16,6 +16,11 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="sqljdbc42" />
+          <element id="library" level="project" name="gson-2.9.0" />
+          <element id="library" level="project" name="fluent-hc-4.5.13" />
+          <element id="library" level="project" name="httpclient-4.5.13" />
+          <element id="library" level="project" name="httpcore-4.4.13" />
+          <element id="library" level="project" name="commons-codec-1.11" />
         </element>
       </element>
       <element id="directory" name="META-INF">

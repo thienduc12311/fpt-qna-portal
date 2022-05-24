@@ -4,7 +4,17 @@ public class UserDTO {
   private String email;
   private String name;
   private String googleId;
-  private int role;
+  private String avtUrl;
+
+    public String getAvtUrl() {
+        return avtUrl;
+    }
+
+    public void setAvtUrl(String avtUrl) {
+        this.avtUrl = avtUrl;
+    }
+
+    private int role;
   private int score;
 
     public String getGoogleId() {
