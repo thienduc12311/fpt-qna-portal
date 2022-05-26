@@ -25,10 +25,11 @@ public class UserDTO {
         this.googleId = googleId;
     }
 
-    public UserDTO(String email, String name, String googleId, int role, int score) {
+    public UserDTO(String email, String name, String googleId, String avtUrl, int role, int score) {
         this.email = email;
         this.name = name;
         this.googleId = googleId;
+        this.avtUrl = avtUrl;
         this.role = role;
         this.score = score;
     }

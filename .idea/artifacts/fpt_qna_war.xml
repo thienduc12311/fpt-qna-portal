@@ -11,14 +11,6 @@
     </properties>
     <root id="archive" name="fpt-qna-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="fpt-qna:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="extracted-dir" path="$PROJECT_DIR$/../Downloads/sqljdbc4.jar" path-in-jar="/" />
-        </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="google.code.gson" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>

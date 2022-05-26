@@ -1,7 +1,7 @@
 package swp391.fptqna.utils;
 
 public class GooglePojo {
-    private String id;
+    private String sub;
     private String email;
     private boolean verified_email;
     private String name;
@@ -11,8 +11,8 @@ public class GooglePojo {
     private String picture;
     // getter-setter
 
-    public GooglePojo(String id, String email, boolean verified_email, String name, String given_name, String family_name, String link, String picture) {
-        this.id = id;
+    public GooglePojo(String sub, String email, boolean verified_email, String name, String given_name, String family_name, String link, String picture) {
+        this.sub = sub;
         this.email = email;
         this.verified_email = verified_email;
         this.name = name;
@@ -23,11 +23,11 @@ public class GooglePojo {
     }
 
     public String getId() {
-        return id;
+        return sub;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.sub = id;
     }
 
     public String getEmail() {
