@@ -13,5 +13,6 @@
 <body>
 <h1>Welcome ${sessionScope.USER.name}</h1>
 <img src="${sessionScope.USER.avtUrl}">
+<a href="/Logout">log out</a>
 </body>
 </html>
