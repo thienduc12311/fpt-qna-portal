@@ -4,7 +4,17 @@ public class UserDTO {
   private String email;
   private String name;
   private String googleId;
-  private int role;
+  private String avtUrl;
+
+    public String getAvtUrl() {
+        return avtUrl;
+    }
+
+    public void setAvtUrl(String avtUrl) {
+        this.avtUrl = avtUrl;
+    }
+
+    private int role;
   private int score;
 
     public String getGoogleId() {
@@ -15,10 +25,11 @@ public class UserDTO {
         this.googleId = googleId;
     }
 
-    public UserDTO(String email, String name, String googleId, int role, int score) {
+    public UserDTO(String email, String name, String googleId, String avtUrl, int role, int score) {
         this.email = email;
         this.name = name;
         this.googleId = googleId;
+        this.avtUrl = avtUrl;
         this.role = role;
         this.score = score;
     }
