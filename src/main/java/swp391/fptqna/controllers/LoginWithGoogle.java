@@ -17,8 +17,9 @@ import java.util.List;
 
 @WebServlet(name = "LoginWithGoogle", value = "/login-google")
 public class LoginWithGoogle extends HttpServlet {
-    private final String HOME_VIEW = "index.jsp";
-    private final String LOGIN_VIEW = "login.jsp";
+    private final String HOME_VIEW = "home.jsp";
+    private final String ERROR_VIEW = "error.jsp";
+    private final String LOGIN_VIEW = "index.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,16 +39,15 @@ public class LoginWithGoogle extends HttpServlet {
             String fullName = googlePojo.getName();
             String avtUrl = googlePojo.getPicture();
             String googleID = googlePojo.getId();
-            System.out.println(googlePojo);
             UserDAO dao = new UserDAO();
 
             boolean valid = true;
             if (!Validator.checkEmailFPT(email)){
                 log("Not using fpt mail");
                 validateErrors.add(new CustomException("You must use FPT email"));
-                request.setAttribute("ERROR", validateErrors);
+                session.setAttribute("ERROR", validateErrors);
                 valid = false;
-                request.getRequestDispatcher(LOGIN_VIEW).forward(request,response);
+                request.getRequestDispatcher(ERROR_VIEW).forward(request,response);
                 return;
             }
             try {
@@ -60,6 +60,7 @@ public class LoginWithGoogle extends HttpServlet {
                     session.setAttribute("USER", newUser);
                     response.sendRedirect(HOME_VIEW);
                 } else {
+                    log("login success");
                     session.setAttribute("USER", user);
                     response.sendRedirect(HOME_VIEW);
                 }
