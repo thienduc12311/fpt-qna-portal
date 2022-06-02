@@ -9,7 +9,7 @@
         <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
-    <root id="archive" name="fpt-qna-1.0-SNAPSHOT.war">
+    <root id="archive" name="FPT-QnA.war">
       <element id="artifact" artifact-name="fpt-qna:war exploded" />
     </root>
   </artifact>
