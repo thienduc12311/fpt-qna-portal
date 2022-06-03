@@ -38,10 +38,10 @@
                             </p>
                             <!-- submit? -->
                         </form>
-                        <p class="text-purple-600"><a href="#">Forgot password?</a> <span class="font-normal">or</span> <a
+                        <p class="text-purple-600 border-b border-gray-300 pb-3"><a href="#">Forgot password?</a> <span class="font-normal">or</span> <a
                                 href="#">Register</a></p>
-                        <hr/>
-                        <button class="border rounded border-gray-300 w-full h-8 flex justify-center content-center pt-1 mt-1">
+
+                        <button class="border rounded border-gray-300 w-full h-8 flex justify-center content-center pt-1 mt-3">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                  class="h-9 w-9" viewBox="0 0 80 80">
                                 <defs>
