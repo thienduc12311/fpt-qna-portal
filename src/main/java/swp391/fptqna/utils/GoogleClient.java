@@ -1,6 +1,9 @@
 package swp391.fptqna.utils;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class GoogleClient {
+
     public static String GOOGLE_CLIENT_ID = "987580920862-pdimkjajbgu8qoj80o3mt0bgsrgf53ti.apps.googleusercontent.com";
     public static String GOOGLE_CLIENT_SECRET = "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";
     public static String GOOGLE_REDIRECT_URI = "https://fpt-qna-portal.herokuapp.com/login-google";
