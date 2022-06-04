@@ -25,8 +25,7 @@ public class LoginWithGoogle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<CustomException> validateErrors = new ArrayList<>();
-        Dotenv dotenv = Dotenv.configure().load();
-        dotenv.get("STAGE");
+        System.out.println(System.getenv("STAGE"));
         HttpSession session = request.getSession(false);
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
