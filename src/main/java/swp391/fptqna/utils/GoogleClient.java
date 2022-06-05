@@ -27,7 +27,7 @@ public class GoogleClient {
     }
     public String getGoogleLinkGetToken() {
         return googleLinkGetToken;
-    }ß
+    }
     public String getGoogleClientId() {
         return googleClientId;
     }
