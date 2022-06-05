@@ -23,7 +23,7 @@
                             <div>
                                 <p class="pb-1">Email</p>
                                 <p><input type="text" value="" class="w-full border border-gray-300 h-8 rounded"
-                                          placeholder="   Username"></p>
+                                          placeholder="   Email"></p>
                             </div>
                             <div>
                                 <p class="pb-1">Password</p>
