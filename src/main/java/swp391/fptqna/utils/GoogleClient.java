@@ -10,9 +10,7 @@ public class GoogleClient {
    private String googleLinkGetUserInfo = "https://openidconnect.googleapis.com/v1/userinfo?access_token=";
    private String googleLinkGetToken ="https://oauth2.googleapis.com/token";
     private String googleGrantType = "authorization_code";
-    public String getGoogleLinkGetToken() {
-        return googleLinkGetToken;
-    }
+
     public GoogleClient() {
         String stage = System.getenv("STAGE");
         if (stage == null) {
@@ -27,7 +25,9 @@ public class GoogleClient {
         }
 
     }
-
+    public String getGoogleLinkGetToken() {
+        return googleLinkGetToken;
+    }ß
     public String getGoogleClientId() {
         return googleClientId;
     }
