@@ -10,6 +10,12 @@
 <head>
     <title>Error</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Inter';
+        }
+    </style>
 </head>
 <body>
 <%--<h1>Login error, ${sessionScope.ERROR}</h1>--%>
