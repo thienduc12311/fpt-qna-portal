@@ -8,11 +8,12 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 public class GoogleUtil {
     public static String getToken(final String code) throws ClientProtocolException, IOException {
-        String response = Request.Post(GoogleClient.GOOGLE_LINK_GET_TOKEN).bodyForm(Form.form().add("client_id", GoogleClient.GOOGLE_CLIENT_ID)
-                        .add("client_secret", GoogleClient.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", GoogleClient.GOOGLE_REDIRECT_URI)
+        GoogleClient googleClient = new GoogleClient();
+        String response = Request.Post(googleClient.getGoogleLinkGetToken()).bodyForm(Form.form().add("client_id", googleClient.getGoogleClientId())
+                        .add("client_secret", googleClient.getGoogleClientSecret())
+                        .add("redirect_uri", googleClient.getGoogleRedirectUri())
                         .add("code", code)
-                        .add("grant_type", GoogleClient.GOOGLE_GRANT_TYPE).build())
+                        .add("grant_type", googleClient.getGoogleGrantType()).build())
                 .execute().returnContent().asString();
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
@@ -20,7 +21,8 @@ public class GoogleUtil {
     }
 
     public static GooglePojo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = GoogleClient.GOOGLE_LINK_GET_USER_INFO + accessToken;
+        GoogleClient googleClient = new GoogleClient();
+        String link = googleClient.getGoogleLinkGetUserInfo() + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
         GooglePojo googlePojo = new Gson().fromJson(response, GooglePojo.class);
         return googlePojo;
