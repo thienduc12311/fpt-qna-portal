@@ -1,5 +1,6 @@
 package swp391.fptqna.controllers;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import swp391.fptqna.dao.UserDAO;
 import swp391.fptqna.dto.UserDTO;
 import swp391.fptqna.utils.*;
@@ -25,6 +26,7 @@ public class LoginWithGoogle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<CustomException> validateErrors = new ArrayList<>();
+        System.out.println(System.getenv("STAGE"));
         HttpSession session = request.getSession(false);
         String code = request.getParameter("code");
         String state = request.getParameter("state");

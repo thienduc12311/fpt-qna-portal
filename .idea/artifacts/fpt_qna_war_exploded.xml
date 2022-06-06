@@ -1,11 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="fpt-qna:war exploded">
-    <output-path>$PROJECT_DIR$/target/fpt-qna-1.0-SNAPSHOT</output-path>
+    <output-path>$PROJECT_DIR$/target/FPT-QnA</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
         <module>fpt-qna</module>
         <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="root">
@@ -20,10 +21,12 @@
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.11" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:fluent-hc:4.5.13" />
+          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre8" />
+          <element id="library" level="project" name="Maven: io.github.cdimascio:dotenv-java:2.2.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/fpt-qna-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/FPT-QnA/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="fpt-qna/web/Web" />
     </root>
