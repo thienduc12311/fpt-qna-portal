@@ -9,12 +9,7 @@
 <html>
 <head>
     <title>Home</title>
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <style>
-        body {
-            font-family: 'Inter';
-        }
-    </style>
+
 </head>
 <body>
 <h1>Welcome ${sessionScope.USER.name}</h1>

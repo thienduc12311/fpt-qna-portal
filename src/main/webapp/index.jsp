@@ -6,12 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <style>
-        body {
-            font-family: 'Inter';
-        }
-    </style>
+
 </head>
 <body>
     <div class="bg-gray-50 grid place-items-center h-screen ">
