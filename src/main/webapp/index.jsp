@@ -1,14 +1,17 @@
+<%@ page import="swp391.fptqna.utils.GoogleClient" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title> Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 <body>
+     <% GoogleClient client = new GoogleClient(); %>
+    <% String googleLoginLink = "https://accounts.google.com/o/oauth2/auth?scope=email https://www.googleapis.com/auth/userinfo.profile&redirect_uri="+client.getGoogleRedirectUri()+"&response_type=code &client_id="+client.getGoogleClientId()+"&approval_prompt=force";
+    %>
     <div class="bg-gray-50 grid place-items-center h-screen ">
         <div class="bg-white rounded-xl shadow-lg p-9 h-98 w-10/12 sm:w-8/12 md:w-6/12">
             <div class="p-0.5 h-full">
@@ -73,39 +76,16 @@
                                 <path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/>
                                 <path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
                             </svg>
-                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email https://www.googleapis.com/auth/userinfo.profile&redirect_uri=http://localhost:8080/login-google&response_type=code
-                                &client_id=439318717683-v1og8jquc6kn82nua7sun6cbvkt2oprb.apps.googleusercontent.com&approval_prompt=force"
+                            <a href="<%=googleLoginLink%>"
                                class="font-semibold">
                                 Login with Google</a>
 
                         </button>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<%--<!-- Include stylesheet -->--%>
-<%--<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">--%>
-
-<%--<!-- Create the editor container -->--%>
-<%--<div id="editor">--%>
-<%--    <p>Hello World!</p>--%>
-<%--    <p>Some initial <strong>bold</strong> text</p>--%>
-<%--    <p><br></p>--%>
-<%--</div>--%>
-
-<%--<!-- Include the Quill library -->--%>
-<%--<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>--%>
-
-<%--<!-- Initialize Quill editor -->--%>
-<%--<script>--%>
-<%--    var quill = new Quill('#editor', {--%>
-<%--        theme: 'snow'--%>
-<%--    });--%>
-<%--</script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>--%>
 </html>
+

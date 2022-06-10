@@ -3,11 +3,13 @@
     <output-path>$PROJECT_DIR$/target</output-path>
     <properties id="maven-jee-properties">
       <options>
+        <exploded>false</exploded>
         <module>fpt-qna</module>
         <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
-    <root id="archive" name="fpt-qna-1.0-SNAPSHOT.war">
+    <root id="archive" name="FPT-QnA.war">
       <element id="artifact" artifact-name="fpt-qna:war exploded" />
     </root>
   </artifact>
