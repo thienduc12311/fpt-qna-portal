@@ -3,54 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-     <% GoogleClient client = new GoogleClient(); %>
+
+    <% GoogleClient client = new GoogleClient(); %>
     <% String googleLoginLink = "https://accounts.google.com/o/oauth2/auth?scope=email https://www.googleapis.com/auth/userinfo.profile&redirect_uri="+client.getGoogleRedirectUri()+"&response_type=code &client_id="+client.getGoogleClientId()+"&approval_prompt=force";
     %>
-    <div class="bg-gray-50 grid place-items-center h-screen ">
-        <div class="bg-white rounded-xl shadow-lg p-9 h-98 w-10/12 sm:w-8/12 md:w-6/12">
-            <div class="p-0.5 h-full">
-                <div class="h-full w-full lg:grid lg:grid-cols-2 lg:divide-x">
-                    <div class="grid place-items-center lg:pr-6">
-                        <img src="https://cutewallpaper.org/23/minimalist-landscape-wallpaper/1099126829.jpg"
-                             alt="A cartoon pic" class="object-cover overflow-hidden h-full">
-                    </div>
-                    <div class="grid lg:pl-10 lg:pr-2 py-3 font-semibold text-sm text-gray-700 gap-y-2">
-                        <p class=" text-2xl">Welcome to <span class="text-purple-600">FPT<span
-                                class="font-normal">QnA</span></span></p>
-                        <form action="Login" method="POST" class="grid gap-y-4">
-                            <div>
-                                <p class="pb-1">Email</p>
-                                <p><input type="text" name="txtemail" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
-                            </div>
-                            <div>
-                                <p class="pb-1">Password</p>
-                                <p><input type="password" name="txtpassword" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
-                            </div>
-                            <div  class="text-red-500 text-sm">
-                                <%
-                                    String error = (String)request.getAttribute("ERROR");
-                                    if (error != null && error.equals("Account is already registered.")){
-                                %>
-                                    <p>Account is already registered.</p>
-                                <%
-                                    }else if (error != null && error.equals("Invalid email or password.")){
-                                %>
-                                    <p>Invalid email or password.</p>
-                                <%
-                                    }else if (error != null && error.equals("Do not leave form empty.")){
-                                %>
-                                    <p>Do not leave form empty.</p>
-                                <%
-                                    }
-                                %>
-                            </div>
-
+    <title> Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
                             <p>
                                 <input type="submit" name="action" value="Login" class="bg-purple-600 hover:bg-purple-800 text-white font-bold rounded w-full h-8">
                             </p>
@@ -76,13 +36,6 @@
                             <a href="<%=googleLoginLink%>"
                                class="font-semibold">
                                 Login with Google</a>
-
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
-

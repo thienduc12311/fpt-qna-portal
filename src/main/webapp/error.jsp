@@ -9,13 +9,6 @@
 <html>
 <head>
     <title>Error</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <style>
-        body {
-            font-family: 'Inter';
-        }
-    </style>
 </head>
 <body>
     <div class="bg-gray-50 grid place-items-center h-screen font-semibold">

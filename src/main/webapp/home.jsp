@@ -9,7 +9,6 @@
 <html>
 <head>
     <title>Home</title>
-
 </head>
 <body>
 <h1>Welcome ${sessionScope.USER.name}</h1>
