@@ -11,38 +11,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-
-</h1>
-<br/>
-
-<div class="text-center">
-    <a class="btn btn-outline-dark" href="<%=googleLoginLink%>"> <img
-            width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
-        Login
-        With Google</a>
-</div>
-
+                            <p>
+                                <input type="submit" name="action" value="Login" class="bg-purple-600 hover:bg-purple-800 text-white font-bold rounded w-full h-8">
+                            </p>
+                            <!-- submit? -->
+                        </form>
+                        <p class="text-purple-600 border-b border-gray-300 pb-3"><a href="#">Forgot password?</a> <span class="font-normal">or</span> <a
+                                href="redirectregister.jsp">Register</a></p>
+                        <button class="border rounded border-gray-300 w-full h-8 flex justify-center content-center pt-1.5 mt-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 class="h-9 w-9" viewBox="0 0 80 80">
+                                <defs>
+                                    <path id="a"
+                                          d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/>
+                                </defs>
+                                <clipPath id="b">
+                                    <use xlink:href="#a" overflow="visible"/>
+                                </clipPath>
+                                <path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"/>
+                                <path clip-path="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/>
+                                <path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/>
+                                <path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
+                            </svg>
+                            <a href="<%=googleLoginLink%>"
+                               class="font-semibold">
+                                Login with Google</a>
+                        </button>
 </body>
-<%--<!-- Include stylesheet -->--%>
-<%--<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">--%>
-
-<%--<!-- Create the editor container -->--%>
-<%--<div id="editor">--%>
-<%--    <p>Hello World!</p>--%>
-<%--    <p>Some initial <strong>bold</strong> text</p>--%>
-<%--    <p><br></p>--%>
-<%--</div>--%>
-
-<%--<!-- Include the Quill library -->--%>
-<%--<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>--%>
-
-<%--<!-- Initialize Quill editor -->--%>
-<%--<script>--%>
-<%--    var quill = new Quill('#editor', {--%>
-<%--        theme: 'snow'--%>
-<%--    });--%>
-<%--</script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>--%>
 </html>
