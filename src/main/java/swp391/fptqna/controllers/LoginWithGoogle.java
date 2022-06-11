@@ -21,6 +21,7 @@ public class LoginWithGoogle extends HttpServlet {
     private final String HOME_VIEW = "home.jsp";
     private final String ERROR_VIEW = "error.jsp";
     private final String LOGIN_VIEW = "index.jsp";
+    private final String REGISTER_VIEW = "register.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,6 +29,7 @@ public class LoginWithGoogle extends HttpServlet {
         System.out.println(System.getenv("STAGE"));
         HttpSession session = request.getSession(false);
         String code = request.getParameter("code");
+        String state = request.getParameter("state");
         if (code == null || code.isEmpty()) {
             RequestDispatcher dis = request.getRequestDispatcher("login.jsp");
             request.setAttribute("ERROR", "Something went wrong, please try again later");
@@ -54,17 +56,29 @@ public class LoginWithGoogle extends HttpServlet {
             }
             try {
                 UserDTO user = dao.getUser(email);
-                if (user == null) {
-                    log("new account");
-                    boolean isInserted = dao.insertUser(email,fullName,googleID,avtUrl);
-                    if (!isInserted) log("added");
-                    UserDTO newUser = new UserDTO(email,fullName,googleID,avtUrl,0,0);
-                    session.setAttribute("USER", newUser);
-                    response.sendRedirect(HOME_VIEW);
+                if (state == null || state.isEmpty()) {
+                    if (user == null) {
+                        log("new account");
+                        boolean isInserted = dao.insertUser(email, fullName, googleID, avtUrl);
+                        if (!isInserted) log("added");
+                        UserDTO newUser = new UserDTO(email, fullName, googleID, avtUrl, 0, 0);
+                        session.setAttribute("USER", newUser);
+                        response.sendRedirect(HOME_VIEW);
+                    } else {
+                        log("login success");
+                        session.setAttribute("USER", user);
+                        response.sendRedirect(HOME_VIEW);
+                    }
                 } else {
-                    log("login success");
-                    session.setAttribute("USER", user);
-                    response.sendRedirect(HOME_VIEW);
+                    if (user == null) {
+                        session.setAttribute("EMAIL", email);
+                        response.sendRedirect(REGISTER_VIEW);
+                    }
+                    else{
+                        request.setAttribute("ERROR", "Account is already registered.");
+                        RequestDispatcher dis = request.getRequestDispatcher(LOGIN_VIEW);
+                        dis.forward(request, response);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
