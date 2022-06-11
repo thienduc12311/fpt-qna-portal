@@ -53,10 +53,7 @@
                                 %>
                             </div>
                             <p><input type="submit" name="action" value="Register" class="bg-purple-600 hover:bg-purple-800 text-white font-bold rounded w-full h-8"> </p>
-
                         </form>
-
-
                     </div>
                 </div>
             </div>
