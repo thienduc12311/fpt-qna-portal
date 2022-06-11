@@ -26,7 +26,7 @@
 
                     <a href="<%=googleLoginLink%>"
                        class="font-semibold">
-                        Login with Google</a>
+                        Register with Google</a>
                 </button>
             </div>
         </div>

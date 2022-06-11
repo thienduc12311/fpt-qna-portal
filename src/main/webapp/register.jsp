@@ -27,15 +27,15 @@
 <%--                            note: action should be MainController if MVC2 is used. this is MVC1. - Ngan Ha--%>
                             <div>
                                 <p>Display name</p>
-                                <p><input type="text" name="txtdisplayname" value="" class="w-full border border-gray-300 h-8 rounded" placeholder="   Display name"></p>
+                                <p><input type="text" name="txtdisplayname" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
                             </div>
                             <div>
                                 <p>Password</p>
-                                <p><input type="password" name="txtpassword" value="" class="w-full border border-gray-300 h-8 rounded" placeholder="   **************"></p>
+                                <p><input type="password" name="txtpassword" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
                             </div>
                             <div>
                                 <p>Confirm password</p>
-                                <p><input type="password" name="txtpasswordconfirm" value="" class="w-full border border-gray-300 h-8 rounded" placeholder="   **************"></p>
+                                <p><input type="password" name="txtpasswordconfirm" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
 
                             </div>
                             <div class="text-red-500 text-sm">
@@ -53,7 +53,7 @@
                                 %>
                             </div>
                             <p><input type="submit" name="action" value="Register" class="bg-purple-600 hover:bg-purple-800 text-white font-bold rounded w-full h-8"> </p>
-<%--                            <p><button class="bg-purple-600 hover:bg-purple-800 text-white font-bold rounded w-full h-8">Register</button></p>--%>
+
                         </form>
 
 

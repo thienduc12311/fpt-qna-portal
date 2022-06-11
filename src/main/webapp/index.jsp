@@ -26,13 +26,11 @@
                         <form action="Login" method="POST" class="grid gap-y-4">
                             <div>
                                 <p class="pb-1">Email</p>
-                                <p><input type="text" name="txtemail" value="" class="w-full border border-gray-300 h-8 rounded"
-                                          placeholder="   Email"></p>
+                                <p><input type="text" name="txtemail" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
                             </div>
                             <div>
                                 <p class="pb-1">Password</p>
-                                <p><input type="password" name="txtpassword" value="" class="w-full border border-gray-300 h-8 rounded"
-                                          placeholder="   **************"></p>
+                                <p><input type="password" name="txtpassword" value="" class="w-full border border-gray-300 h-8 rounded px-3"></p>
                             </div>
                             <div  class="text-red-500 text-sm">
                                 <%
