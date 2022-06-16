@@ -3,7 +3,7 @@ package swp391.fptqna.dto;
 public class UserDTO {
   private String email;
   private String name;
-  private String googleId;
+  private String password;
   private String avtUrl;
 
     public String getAvtUrl() {
@@ -16,24 +16,46 @@ public class UserDTO {
 
     private int role;
   private int score;
+  private boolean state;
+  private String bio;
 
-    public String getGoogleId() {
-        return googleId;
-    }
 
-    public void setGoogleId(String googleId) {
-        this.googleId = googleId;
-    }
 
-    public UserDTO(String email, String name, String googleId, String avtUrl, int role, int score) {
+    public UserDTO(String email, String name, String password, String avtUrl, int score, int role, boolean state, String bio) {
         this.email = email;
         this.name = name;
-        this.googleId = googleId;
+        this.password = password;
         this.avtUrl = avtUrl;
-        this.role = role;
         this.score = score;
+        this.role = role;
+        this.state = state;
+        this.bio = bio;
+
     }
 
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public String getEmail() {
         return email;
     }

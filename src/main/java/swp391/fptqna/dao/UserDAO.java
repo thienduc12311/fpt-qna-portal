@@ -26,11 +26,13 @@ public class UserDAO {
                if (resultSet != null && resultSet.next()) {
                    int id = resultSet.getInt("Id");
                    String name = resultSet.getString("UserDisplayName");
-                   String googleId = resultSet.getString("GoogleId");
-                   String avtUrl = resultSet.getString("avt_url");
+                   String password = resultSet.getString("Password");
+                   String imgLink = resultSet.getString("ImgLink");
                    int score = resultSet.getInt("Score");
                    int role = resultSet.getInt("Role");
-                   UserDTO user = new UserDTO(email,name,googleId,avtUrl,role,score);
+                   boolean state = resultSet.getBoolean("State");
+                   String bio = resultSet.getString("Bio");
+                   UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
                    return user;
                }
 
@@ -48,7 +50,7 @@ public class UserDAO {
         cn = DButil.getMyConnection();
         if(cn!=null){
             try {
-                String query = "Select * from Users Where email = ? and GoogleId = ?";
+                String query = "Select * from Users Where email = ? and password = ?";
                 PreparedStatement preparedStatement = cn.prepareStatement(query);
                 preparedStatement.setString(1,email);
                 preparedStatement.setString(2,password);
@@ -56,11 +58,12 @@ public class UserDAO {
                 if (resultSet != null && resultSet.next()) {
                     int id = resultSet.getInt("Id");
                     String name = resultSet.getString("UserDisplayName");
-                    String googleId = resultSet.getString("GoogleId");
-                    String avtUrl = resultSet.getString("avt_url");
+                    String imgLink = resultSet.getString("ImgLink");
                     int score = resultSet.getInt("Score");
                     int role = resultSet.getInt("Role");
-                    UserDTO user = new UserDTO(email,name,googleId,avtUrl,role,score);
+                    boolean state = resultSet.getBoolean("State");
+                    String bio = resultSet.getString("Bio");
+                    UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
                     return user;
                 }
 
@@ -74,21 +77,24 @@ public class UserDAO {
         }
         return null;
     }
-    public boolean insertUser(String email, String fullName, String googleID, String avtUrl) throws Exception {
+    public boolean insertUser(String email, String fullName, String password, String avtUrl) throws Exception {
         int score = 0;
-         int role = 0;
-
+        int role = 0;
+        boolean state = true;
+        String bio = "";
         cn= DButil.getMyConnection();
         if (cn != null) {
            try {
-               String query = "Insert into Users values (?,?,?,?,?,?)";
+               String query = "Insert into Users values (?,?,?,?,?,?,?,?)";
                PreparedStatement preparedStatement = cn.prepareStatement(query);
                preparedStatement.setString(1, email);
                preparedStatement.setString(2, fullName);
-               preparedStatement.setString(3,googleID);
-               preparedStatement.setInt(4,score);
-               preparedStatement.setInt(5,role);
-               preparedStatement.setString(6,avtUrl);
+               preparedStatement.setString(3,password);
+               preparedStatement.setString(4,avtUrl);
+               preparedStatement.setInt(5,score);
+               preparedStatement.setInt(6,role);
+               preparedStatement.setBoolean(7,state);
+               preparedStatement.setString(8, bio);
                int rs = preparedStatement.executeUpdate();
                return rs > 0;
            } catch (Exception e){
@@ -103,19 +109,23 @@ public class UserDAO {
     public boolean registerUser(String email, String fullName, String password) throws Exception {
         int score = 0;
         int role = 0;
+        boolean state = true;
+        String bio = "";
         String avtUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
         cn= DButil.getMyConnection();
         if (cn != null) {
             try {
-                String query = "Insert into Users values (?,?,?,?,?,?)";
+                String query = "Insert into Users values (?,?,?,?,?,?,?,?)";
                 PreparedStatement preparedStatement = cn.prepareStatement(query);
                 preparedStatement.setString(1, email);
                 preparedStatement.setString(2, fullName);
                 preparedStatement.setString(3,password);
-                preparedStatement.setInt(4,score);
-                preparedStatement.setInt(5,role);
-                preparedStatement.setString(6,avtUrl);
+                preparedStatement.setString(4,avtUrl);
+                preparedStatement.setInt(5,score);
+                preparedStatement.setInt(6,role);
+                preparedStatement.setBoolean(7,state);
+                preparedStatement.setString(8, bio);
                 int rs = preparedStatement.executeUpdate();
                 return rs > 0;
             } catch (Exception e){
