@@ -9,7 +9,7 @@ public class DButil {
         Connection conn = null;
         String user = "swpadmin";
         String pass = "@@swp391";
-        String connString = "jdbc:sqlserver://portalstudent.database.windows.net:1433;database=swp391;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        String connString = "jdbc:sqlserver://qnaportal.database.windows.net:1433;database=QnAPortal1;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         //1
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
