@@ -13,10 +13,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="text-gray-800">
+<body class="text-gray-800 h-full w-full  bg-gray-50">
 <%--<h1>Welcome ${sessionScope.USER.name}</h1>--%>
 <%--<a href="/Logout">log out</a>--%>
-<div class="overflow-hidden bg-gray-50 h-full w-full ">
+<div class="">
     <div class="pt-10 pb-3 px-48 inline-flex space-x-8 ml-12 font-semibold">
         <a href="#">Newest</a>
         <a href="#">Most liked</a>
