@@ -37,7 +37,7 @@ public class Register extends HttpServlet {
                 if (user == null) {
                     boolean isInserted = dao.registerUser(email, txtdisplayname, txtpassword);
                     if (isInserted) {
-                        UserDTO newUser = new UserDTO(email, txtdisplayname, txtpassword, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png", 0, 0);
+                        UserDTO newUser = new UserDTO(email, txtdisplayname, txtpassword, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png", 0, 0, true, "");
                         session.setAttribute("USER", newUser);
                         response.sendRedirect(HOME_VIEW);
                     } else
