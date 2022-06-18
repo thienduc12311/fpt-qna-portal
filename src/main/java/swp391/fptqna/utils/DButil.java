@@ -8,8 +8,8 @@ public class DButil {
     public static Connection getMyConnection() throws Exception {
         Connection conn = null;
         String user = "swpadmin";
-        String pass = "@@swp391";
-        String connString = "jdbc:sqlserver://qnaportal.database.windows.net:1433;database=QnAPortal1;user=swpadmin@qnaportal;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        String pass = "admin123@";
+        String connString = "jdbc:sqlserver://fpt-qna-portal.database.windows.net:1433;database=fpt-qna-portal-db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         //1
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
