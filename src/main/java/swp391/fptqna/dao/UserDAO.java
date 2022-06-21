@@ -32,7 +32,7 @@ public class UserDAO {
                    int role = resultSet.getInt("Role");
                    boolean state = resultSet.getBoolean("State");
                    String bio = resultSet.getString("Bio");
-                   UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
+                   UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
                    return user;
                }
 
@@ -63,7 +63,7 @@ public class UserDAO {
                     int role = resultSet.getInt("Role");
                     boolean state = resultSet.getBoolean("State");
                     String bio = resultSet.getString("Bio");
-                    UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
+                    UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
                     return user;
                 }
 
@@ -89,7 +89,7 @@ public class UserDAO {
                PreparedStatement preparedStatement = cn.prepareStatement(query);
                preparedStatement.setString(1, email);
                preparedStatement.setString(2, fullName);
-               preparedStatement.setString(3,password);
+               preparedStatement.setString(3,"");
                preparedStatement.setString(4,avtUrl);
                preparedStatement.setInt(5,score);
                preparedStatement.setInt(6,role);
