@@ -16,12 +16,20 @@ public class UpdateUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+
+
+            //This class is used to 2 views, editprofile.jsp and changepassword.jsp
+
+
             String txtdisplayname = request.getParameter("txtdisplayname");
             String txtbio = request.getParameter("txtbio");
             String txtoldpassword = request.getParameter("txtoldpassword");
             String txtnewpassword = request.getParameter("txtnewpassword");
             String txtretypepassword = request.getParameter("txtretypepassword");
             String id = request.getParameter("id");
+
+
+            //this is for Edit Password view, where we have param "txtnewpassword" and "txtretypepassword"
             if (txtnewpassword != null && txtretypepassword != null) {
                 System.out.println("password ok");
 //                || txtoldpassword.trim().equals("")
@@ -51,6 +59,8 @@ public class UpdateUser extends HttpServlet {
                         }
                     }
                 }
+
+                //this is for Update Profile view
             } else {
                 if (txtdisplayname.trim().equals("")) {
                     System.out.println("Do not leave display name empty.");
