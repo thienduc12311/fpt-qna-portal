@@ -136,4 +136,25 @@ public class UserDAO {
         }
         return false;
     }
+    public boolean updateUser(String displayname, String password, String bio, int id) throws Exception {
+
+        cn= DButil.getMyConnection();
+        if (cn != null) {
+            try {
+                String query = "Update Users set UserDisplayName = ?, Password = ?, Bio = ? where Id = ?";
+                PreparedStatement preparedStatement = cn.prepareStatement(query);
+                preparedStatement.setString(1, displayname);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, bio);
+                preparedStatement.setInt(4, id);
+                int rs = preparedStatement.executeUpdate();
+                return rs > 0;
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }
+        return false;
+    }
 }
