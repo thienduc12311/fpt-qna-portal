@@ -61,7 +61,7 @@ public class LoginWithGoogle extends HttpServlet {
                         log("new account");
                         boolean isInserted = dao.insertUser(email, fullName, googleID, avtUrl);
                         if (!isInserted) log("added");
-                        UserDTO newUser = new UserDTO(email, fullName, googleID, avtUrl, 0, 0, true, "");
+                        UserDTO newUser = new UserDTO( email, fullName, googleID, avtUrl, 0, 0, true, "");
                         session.setAttribute("USER", newUser);
                         response.sendRedirect(HOME_VIEW);
                     } else {
