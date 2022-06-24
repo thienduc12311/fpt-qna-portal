@@ -20,6 +20,14 @@
             <!-- right-side  -->
             <div class="flex space-x-6 ">
                 <div>
+                    <button class="text-sm bg-purple-600 text-white font-semibold rounded-md h-8 flex items-center px-4 pb-0.5 space-x-2">
+                        <div>
+                            <svg class="w-4 h-4 fill-white" id="Layer_1"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm4 13h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 0 2z"/></svg>
+                        </div>
+                        <div>Ask Question</div>
+                    </button>
+                </div>
+                <div>
                     <div class="relative flex items-center shadow px-2 rounded w-8 h-8">
                         <svg class="w-4 h-4 text-gray-700 fill-gray-700" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" ><path d="M4.068,18H19.724a3,3,0,0,0,2.821-4.021L19.693,6.094A8.323,8.323,0,0,0,11.675,0h0A8.321,8.321,0,0,0,3.552,6.516l-2.35,7.6A3,3,0,0,0,4.068,18Z"/><path d="M7.1,20a5,5,0,0,0,9.8,0Z"/></svg>
                         <span class="absolute top-2 right-2.5 inline-block w-1.5 h-1.5 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full"></span>
@@ -50,8 +58,8 @@
                                     <p class="text-sm font-medium leading-5 text-gray-900 truncate">${sessionScope.USER.email}</p>
                                 </div>
                                 <div class="py-1">
-                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Profile</a>
-                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >Manage</a></div>
+<%--                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Profile</a>--%>
+                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >Profile</a></div>
                                 <div class="py-1">
                                     <a href="/Logout" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Sign out</a></div>
                             </div>
