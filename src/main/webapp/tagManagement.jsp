@@ -16,11 +16,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="h-full w-full m-0 text-gray-700 bg-gray-50">
+<jsp:include page="header.jsp"></jsp:include>
 <!-- container  -->
 <div class="fixed h-screen">
   <jsp:include page="managementSidebar.jsp"></jsp:include>
 </div>
-<div class=" ml-64 my-10 px-8">
+<div class=" ml-64 my-10 px-8 py-8">
 
   <!-- search bar  -->
   <div class="flex space-x-6">

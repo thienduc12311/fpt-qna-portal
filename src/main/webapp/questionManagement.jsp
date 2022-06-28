@@ -15,11 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="relative h-full w-full m-0 text-gray-800 bg-gray-50">
+<jsp:include page="header.jsp"></jsp:include>
 <div class="fixed h-screen">
     <jsp:include page="managementSidebar.jsp"></jsp:include>
 </div>
 <!-- container  -->
-<div class=" ml-64 my-10 px-8">
+<div class=" ml-64 my-10 px-8 py-8">
 
     <!-- search bar  -->
     <div class="flex space-x-6">
@@ -29,6 +30,7 @@
     </div>
 
     <!-- list wrap  -->
+
     <div class="bg-white rounded-md px-10 py-2 shadow-md mt-6">
         <table class="min-w-full text-sm">
             <thead>
@@ -112,6 +114,7 @@
 
     </div>
 </div>
+
 </body>
 </html>
 

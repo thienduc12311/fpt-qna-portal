@@ -1,4 +1,4 @@
-<div class="w-64 h-full shadow-md bg-white px-1 font-semibold">
+<div class="w-64 h-full shadow-md bg-white px-1 font-semibold pt-8">
     <div class="relative">
         <a class="flex items-center text-sm py-4 px-6 h-12 text-gray-400 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
            href="userManagement.jsp" data-mdb-ripple="true" data-mdb-ripple-color="dark">
