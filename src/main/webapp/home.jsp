@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/dist/output.css" rel="stylesheet">
 </head>
 
 <body class="text-gray-800 h-full w-full  bg-gray-50">

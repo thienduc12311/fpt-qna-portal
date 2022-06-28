@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="fluent-hc-4.5.13">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../workshop1/out/artifacts/sqljdbc42/fluent-hc-4.5.13.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
