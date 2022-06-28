@@ -14,6 +14,7 @@
 </head>
 
 <body class="text-gray-800 h-full w-full  bg-gray-50">
+<jsp:include page="header.jsp"></jsp:include>
 <%--<h1>Welcome ${sessionScope.USER.name}</h1>--%>
 <%--<a href="/Logout">log out</a>--%>
 <div class="">
