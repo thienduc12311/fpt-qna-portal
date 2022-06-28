@@ -30,7 +30,6 @@
     </div>
 
     <!-- list wrap  -->
-
     <div class="bg-white rounded-md px-10 py-2 shadow-md mt-6">
         <table class="min-w-full text-sm">
             <thead>
@@ -114,7 +113,6 @@
 
     </div>
 </div>
-
 </body>
 </html>
 

@@ -21,7 +21,6 @@
 </div>
 <!-- container  -->
 <div class=" ml-64 my-10 px-8 py-8">
-
     <!-- search bar  -->
     <div class="flex space-x-6">
         <div>
