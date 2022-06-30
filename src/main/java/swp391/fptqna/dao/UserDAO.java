@@ -32,7 +32,7 @@ public class UserDAO {
                    int role = resultSet.getInt("Role");
                    boolean state = resultSet.getBoolean("State");
                    String bio = resultSet.getString("Bio");
-                   UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
+                   UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
                    return user;
                }
 
@@ -63,7 +63,7 @@ public class UserDAO {
                     int role = resultSet.getInt("Role");
                     boolean state = resultSet.getBoolean("State");
                     String bio = resultSet.getString("Bio");
-                    UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
+                    UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
                     return user;
                 }
 
@@ -133,6 +133,20 @@ public class UserDAO {
             } finally {
                 closeConnection();
             }
+        }
+        return false;
+    }
+
+    public boolean setState(int userId, byte state) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Users SET State = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setByte(1,state);
+            preparedStatement.setInt(2, userId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

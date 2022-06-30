@@ -1,10 +1,11 @@
 package swp391.fptqna.dto;
 
 public class UserDTO {
-  private String email;
-  private String name;
-  private String password;
-  private String avtUrl;
+    private int id;
+    private String email;
+    private String name;
+    private String password;
+    private String avtUrl;
 
     public String getAvtUrl() {
         return avtUrl;
@@ -15,13 +16,12 @@ public class UserDTO {
     }
 
     private int role;
-  private int score;
-  private boolean state;
-  private String bio;
+    private int score;
+    private boolean state;
+    private String bio;
 
 
-
-    public UserDTO(String email, String name, String password, String avtUrl, int score, int role, boolean state, String bio) {
+    public UserDTO(int id, String email, String name, String password, String avtUrl, int score, int role, boolean state, String bio) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -30,7 +30,7 @@ public class UserDTO {
         this.role = role;
         this.state = state;
         this.bio = bio;
-
+        this.id = id;
     }
 
     public boolean isState() {
@@ -56,6 +56,7 @@ public class UserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getEmail() {
         return email;
     }
@@ -73,7 +74,6 @@ public class UserDTO {
     }
 
 
-
     public int getRole() {
         return role;
     }
@@ -88,5 +88,13 @@ public class UserDTO {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

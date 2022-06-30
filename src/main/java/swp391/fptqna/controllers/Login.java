@@ -12,6 +12,8 @@ import java.io.IOException;
 public class Login extends HttpServlet {
     private final String LOGIN_VIEW = "index.jsp";
     private final String HOME_VIEW = "home.jsp";
+
+    private final String ERROR_VIEW = "error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -38,6 +40,7 @@ public class Login extends HttpServlet {
             }
         } catch (Exception e){
             e.printStackTrace();
+            response.sendRedirect(ERROR_VIEW);
         }
     }
     @Override

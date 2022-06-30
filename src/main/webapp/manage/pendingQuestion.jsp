@@ -22,8 +22,9 @@
         </tr>
 
         <%
-            ArrayList<QuestionDTO> list = (ArrayList<QuestionDTO>) request.getAttribute("listPendingQuestion");
-            for (QuestionDTO question : list) {
+            try{
+                ArrayList<QuestionDTO> list = (ArrayList<QuestionDTO>) request.getAttribute("listPendingQuestion");
+                for (QuestionDTO question : list) {
         %>
                 <tr>
                     <a href="#">
@@ -34,6 +35,9 @@
                     <td><%=question.getCreationDate()%></td>
                 </tr>
         <%
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
         %>
 

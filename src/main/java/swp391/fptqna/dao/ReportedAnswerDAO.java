@@ -45,4 +45,31 @@ public class ReportedAnswerDAO {
         }
         return null;
     }
+
+    public boolean setState(int reportedAnswerId, byte state) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE AnswerFlag SET State = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setByte(1,state);
+            preparedStatement.setInt(2, reportedAnswerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(int reportedAnswerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "DELETE FROM AnswerFlag WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, reportedAnswerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

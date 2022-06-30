@@ -3,10 +3,7 @@ package swp391.fptqna.dao;
 import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.utils.DButil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,11 +47,7 @@ public class QuestionDAO {
 
     public ArrayList<QuestionDTO> getPendingQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT * FROM Questions \n" +
-                    "WHERE ApproveUserId IS NULL\n" +
-                    "ORDER BY CreationDate ASC \n" +
-                    "OFFSET ? ROWS\n" +
-                    "FETCH NEXT 10 ROWS ONLY;";
+            String query = "SELECT * FROM Questions \n" + "WHERE ApproveUserId = '' OR ApproveUserId IS NULL\n" + "ORDER BY CreationDate ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, 10 * (page - 1));
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -70,5 +63,46 @@ public class QuestionDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean approve(int questionId, int userId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Questions SET ApproveUserId = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, questionId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(int questionId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "DELETE FROM Questions WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteWithoutDB(int questionId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Questions SET DeletionDate = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(2, questionId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

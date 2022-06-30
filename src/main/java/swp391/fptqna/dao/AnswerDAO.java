@@ -67,4 +67,17 @@ public class AnswerDAO {
         }
         return null;
     }
+
+    public boolean delete(int answerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "DELETE FROM Answers WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, answerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

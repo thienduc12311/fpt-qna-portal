@@ -24,9 +24,10 @@
     </tr>
 
     <%
-        ArrayList<ReportedAnswerDTO> list = (ArrayList<ReportedAnswerDTO>) request.getAttribute("listReportedAnswer");
-        HashMap<Integer, ReportedAnswerDTO> listFlagType = (HashMap<Integer, ReportedAnswerDTO>) request.getAttribute("listFlagType");
-        for (ReportedAnswerDTO reportedAnswer : list) {
+        try {
+            ArrayList<ReportedAnswerDTO> list = (ArrayList<ReportedAnswerDTO>) request.getAttribute("listReportedAnswer");
+            HashMap<Integer, ReportedAnswerDTO> listFlagType = (HashMap<Integer, ReportedAnswerDTO>) request.getAttribute("listFlagType");
+            for (ReportedAnswerDTO reportedAnswer : list) {
     %>
     <tr>
         <a href="#">
@@ -38,6 +39,9 @@
         <td><%=listFlagType.get(reportedAnswer.getFlagTypeId())%></td>
     </tr>
     <%
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     %>
 

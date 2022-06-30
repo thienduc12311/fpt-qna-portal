@@ -24,20 +24,29 @@
     </tr>
 
     <%
-        ArrayList<ReportedQuestionDTO> list = (ArrayList<ReportedQuestionDTO>) request.getAttribute("listReportedQuestion");
-        HashMap<Integer, ReportedQuestionDTO> listFlagType = (HashMap<Integer, ReportedQuestionDTO>) request.getAttribute("listFlagType");
-        for (ReportedQuestionDTO reportedQuestion : list) {
+        try {
+            ArrayList<ReportedQuestionDTO> list = (ArrayList<ReportedQuestionDTO>) request.getAttribute("listReportedQuestion");
+            HashMap<Integer, ReportedQuestionDTO> listFlagType = (HashMap<Integer, ReportedQuestionDTO>) request.getAttribute("listFlagType");
+            for (ReportedQuestionDTO reportedQuestion : list) {
     %>
     <tr>
         <a href="#">
-            <td><%=reportedQuestion.getId()%></td>
-            <td><%= (100 > reportedQuestion.getDescription().length()) ? reportedQuestion.getDescription() : reportedQuestion.getDescription().substring(100) + "..."%></td>
+            <td><%=reportedQuestion.getId()%>
+            </td>
+            <td><%= (100 > reportedQuestion.getDescription().length()) ? reportedQuestion.getDescription() : reportedQuestion.getDescription().substring(100) + "..."%>
+            </td>
         </a>
-        <td><a href="#"><%=reportedQuestion.getOwnerUserId()%></a></td>
-        <td><%=reportedQuestion.getCreationDate()%></td>
-        <td><%=listFlagType.get(reportedQuestion.getFlagTypeId())%></td>
+        <td><a href="#"><%=reportedQuestion.getOwnerUserId()%>
+        </a></td>
+        <td><%=reportedQuestion.getCreationDate()%>
+        </td>
+        <td><%=listFlagType.get(reportedQuestion.getFlagTypeId())%>
+        </td>
     </tr>
     <%
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     %>
 
