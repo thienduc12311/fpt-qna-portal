@@ -1,4 +1,4 @@
-<div class="shadow">
+<div class="shadow bg-white fixed w-full top-0 z-10">
     <div class="pt-3 px-10">
         <div class="flex justify-between">
             <!-- left side -->
@@ -47,21 +47,33 @@
                 </div>
                 <div>
                     <!-- Dropdown toggle button -->
-                    <div class=" relative inline-block text-left dropdown">
+                    <div class=" relative inline-block text-left dropdown font-semibold">
                         <button class="py-2" type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
                             <svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
                         <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
                             <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
                                 <div class="px-4 py-3">
-                                    <p class="text-sm leading-5">Signed in as</p>
-                                    <p class="text-sm font-medium leading-5 text-gray-900 truncate">${sessionScope.USER.email}</p>
+                                    <p class="text-xs leading-5">Signed in as</p>
+                                    <p class="text-xs font-medium leading-5 text-gray-900 truncate">${sessionScope.USER.email}</p>
                                 </div>
-                                <div class="py-1">
-<%--                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Profile</a>--%>
-                                    <a href="" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >Profile</a></div>
-                                <div class="py-1">
-                                    <a href="/Logout" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Sign out</a></div>
+                                <div class="py-1 px-4">
+                                    <a href="" class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3" viewBox="0 0 1000 1000" >
+                                            <path fill="currentColor" d="M500,10C229.4,10,10,229.4,10,500c0,270.6,219.4,490,490,490c270.6,0,490-219.4,490-490C990,229.4,770.6,10,500,10z M500,156.5c89.5,0,162.1,72.6,162.1,162.1c0,89.5-72.6,162.1-162.1,162.1c-89.5,0-162.1-72.6-162.1-162.1C337.9,229.1,410.5,156.5,500,156.5z M499.9,861.9c-89.3,0-171.1-32.5-234.2-86.3c-15.4-13.1-24.2-32.3-24.2-52.5c0-90.8,73.5-163.4,164.3-163.4h188.6c90.8,0,164,72.6,164,163.4c0,20.2-8.8,39.4-24.2,52.5C671,829.3,589.2,861.9,499.9,861.9z"/>
+                                        </svg>
+                                        Profile
+                                    </a></div>
+                                <div class="py-1 px-4">
+                                    <a href="" class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >
+                                        <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" ><path fill="currentColor" d="M19,12h5v7c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5v-7H5v1c0,.552,.447,1,1,1s1-.448,1-1v-1h10v1c0,.552,.447,1,1,1s1-.448,1-1v-1Zm5-3v1h-5v-1c0-.552-.447-1-1-1s-1,.448-1,1v1H7v-1c0-.552-.447-1-1-1s-1,.448-1,1v1H0v-1c0-2.757,2.243-5,5-5h1.101C6.566,1.721,8.586,0,11,0h2c2.414,0,4.434,1.721,4.899,4h1.101c2.757,0,5,2.243,5,5ZM8.184,4h7.631c-.414-1.161-1.514-2-2.816-2h-2c-1.302,0-2.402,.839-2.816,2Z"/></svg>
+                                        Manage
+                                    </a></div>
+                                <div class="py-1 px-4">
+                                    <a href="/Logout" class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >
+                                        <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" ><path fill="currentColor" d="M11.5,16A1.5,1.5,0,0,0,10,17.5v.8A2.7,2.7,0,0,1,7.3,21H5.7A2.7,2.7,0,0,1,3,18.3V5.7A2.7,2.7,0,0,1,5.7,3H7.3A2.7,2.7,0,0,1,10,5.7v.8a1.5,1.5,0,0,0,3,0V5.7A5.706,5.706,0,0,0,7.3,0H5.7A5.706,5.706,0,0,0,0,5.7V18.3A5.706,5.706,0,0,0,5.7,24H7.3A5.706,5.706,0,0,0,13,18.3v-.8A1.5,1.5,0,0,0,11.5,16Z"/><path d="M22.561,9.525,17.975,4.939a1.5,1.5,0,0,0-2.121,2.122l3.411,3.411L7,10.5a1.5,1.5,0,0,0,0,3H7l12.318-.028-3.467,3.467a1.5,1.5,0,0,0,2.121,2.122l4.586-4.586A3.505,3.505,0,0,0,22.561,9.525Z"/></svg>
+                                        Sign out
+                                    </a></div>
                             </div>
                         </div>
                     </div>
