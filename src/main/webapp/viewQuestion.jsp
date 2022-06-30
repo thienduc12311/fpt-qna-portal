@@ -619,6 +619,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 </div>
               </div>
             </div>
+            <div class="font-semibold text-[#B9C1CC]">@ 2022 FPTQnA Portal</div>
           </div>
         </div>
       </div>
