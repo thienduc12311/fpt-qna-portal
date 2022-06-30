@@ -9,9 +9,10 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
     private final String REGISTER_CONTROLLER = "Register";
     private final String LOGIN_CONTROLLER = "Login";
-    private final String PENDING_QUESTION_CONTROLLER = "manage/PendingQuestion";
-    private final String REPORTED_ANSWER_CONTROLLER = "manage/ReportedAnswer";
-    private final String REPORTED_QUESTION_CONTROLLER = "manage/ReportedQuestion";
+    private final String PENDING_QUESTION_CONTROLLER = "/manage/PendingQuestion";
+    private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
+    private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
+    private final String TAG_CONTROLLER = "/manage/Tag";
     private final String LOGIN_VIEW = "index.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,6 +36,9 @@ public class MainController extends HttpServlet {
                 case "ReportedQuestion":
                     url = REPORTED_QUESTION_CONTROLLER;
                     break;
+                case "Tag":
+                    url = TAG_CONTROLLER;
+                    break;
             }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e){
@@ -43,11 +47,12 @@ public class MainController extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
 
     }
 }

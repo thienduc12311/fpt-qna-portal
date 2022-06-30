@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "PendingQuestion", value = "/manage/PendingQuestion")
 public class PendingQuestion extends HttpServlet {
-    private final String PENDING_QUESTION_VIEW = "pendingQuestion.jsp";
+    private final String PENDING_QUESTION_VIEW = "pendingQuestionManagement.jsp";
     private final String ERROR_VIEW = "../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

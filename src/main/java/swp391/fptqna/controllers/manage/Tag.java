@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "Tag", value = "/manage/Tag")
 public class Tag extends HttpServlet {
-    private final String TAG_VIEW = "tag.jsp";
+    private final String TAG_VIEW = "tagManagement.jsp";
     private final String ERROR_VIEW = "../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

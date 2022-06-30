@@ -31,7 +31,7 @@ public class ResolvePendingQuestion extends HttpServlet {
             } else {
                 throw new Exception("Sth fail");
             }
-            request.setAttribute("back", "/manage/pendingQuestion.jsp");
+            request.setAttribute("back", "/manage/pendingQuestionManagement.jsp");
             request.getRequestDispatcher("accepted.jsp").forward(request,response);
             response.sendRedirect(ACCEPTED_VIEW);
         } catch (Exception e) {

@@ -60,7 +60,7 @@ public class ResolveReportedAnswer extends HttpServlet {
                 }
             }
 
-            request.setAttribute("back", "/manage/reportedAnswer.jsp");
+            request.setAttribute("back", "/manage/reportedAnswerManagement.jsp");
             request.getRequestDispatcher("accepted.jsp").forward(request, response);
             response.sendRedirect(ACCEPTED_VIEW);
         } catch (Exception e) {

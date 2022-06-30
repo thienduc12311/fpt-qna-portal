@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ReportedQuetion", value = "/manage/ReportedQuestion")
 public class ReportedQuestion extends HttpServlet {
-    private final String REPORTED_QUESTION_VIEW = "reportedQuestion.jsp";
+    private final String REPORTED_QUESTION_VIEW = "reportedQuestionManagement.jsp";
     private final String ERROR_VIEW = "../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

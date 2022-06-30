@@ -89,7 +89,7 @@ public class UserDAO {
                PreparedStatement preparedStatement = cn.prepareStatement(query);
                preparedStatement.setString(1, email);
                preparedStatement.setString(2, fullName);
-               preparedStatement.setString(3,password);
+               preparedStatement.setString(3,"");
                preparedStatement.setString(4,avtUrl);
                preparedStatement.setInt(5,score);
                preparedStatement.setInt(6,role);
@@ -136,17 +136,44 @@ public class UserDAO {
         }
         return false;
     }
+    public boolean updateUser(String displayname, String password, String bio, int id) throws Exception {
 
-    public boolean setState(int userId, byte state) {
-        try (Connection cn = DButil.getMyConnection()) {
-            String query = "UPDATE Users SET State = ? WHERE Id = ?";
-            PreparedStatement preparedStatement = cn.prepareStatement(query);
-            preparedStatement.setByte(1,state);
-            preparedStatement.setInt(2, userId);
-            int rs = preparedStatement.executeUpdate();
-            return rs > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
+        cn= DButil.getMyConnection();
+        if (cn != null) {
+            try {
+                String query = "Update Users set UserDisplayName = ?, Password = ?, Bio = ? where Id = ?";
+                PreparedStatement preparedStatement = cn.prepareStatement(query);
+                preparedStatement.setString(1, displayname);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, bio);
+                preparedStatement.setInt(4, id);
+                int rs = preparedStatement.executeUpdate();
+                return rs > 0;
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }
+        return false;
+    }
+
+    public boolean setState(int id, byte state) throws Exception {
+
+        cn= DButil.getMyConnection();
+        if (cn != null) {
+            try {
+                String query = "UPDATE Users SET State = ? WHERE Id = ?";
+                PreparedStatement preparedStatement = cn.prepareStatement(query);
+                preparedStatement.setByte(1, state);
+                preparedStatement.setInt(2, id);
+                int rs = preparedStatement.executeUpdate();
+                return rs > 0;
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
         }
         return false;
     }

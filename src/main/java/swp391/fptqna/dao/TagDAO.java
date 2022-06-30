@@ -21,7 +21,7 @@ public class TagDAO {
 
     private TagDTO getTagById(int id) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "Select * from Tags Where id = ?";
+            String query = "Select * from Tags Where Id = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -40,7 +40,7 @@ public class TagDAO {
     public ArrayList<TagDTO> getTagByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Tags \n" +
-                    "ORDER BY QuestionCount DESC \n" +
+                    "ORDER BY Id DESC \n" +
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY;";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
