@@ -13,8 +13,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <jsp:include page="header.jsp"></jsp:include>
     <div class="h-auto pt-32 bg-[#F2F2F2]">
-      <div class="container min-h-screen mx-auto pb-12">
+      <div class="container min-h-screen mx-auto pb-12 pl-14">
         <div class="text-[#505059] mb-8">
           <!-- this is for the link address -->
 
@@ -43,7 +44,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         <div class="w-full flex">
           <!-- this section is for question info -->
 
-          <div class="content w-9/12">
+          <div class="content w-full lg:w-9/12">
             <div class="question bg-white rounded-lg drop-shadow-md relative">
               <div class="p-11">
                 <div class="flex items-center mb-6 mx-3">
@@ -466,7 +467,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </div>
             </div>
           </div>
-          <div class="trending w-3/12 ml-7">
+          <div class="trending w-3/12 ml-7 hidden lg:block">
             <div class="bg-white rounded-lg drop-shadow-md mb-6">
               <div class="p-9">
                 <div class="flex items-center text-[#505059]">
