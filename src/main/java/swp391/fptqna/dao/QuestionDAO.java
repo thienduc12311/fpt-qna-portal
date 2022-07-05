@@ -48,6 +48,54 @@ public class QuestionDAO {
         return null;
     }
 
+    public ArrayList<QuestionDTO> getAvailableQuestionByPage(int page) throws Exception{
+        try(Connection cn = DButil.getMyConnection()){
+            String query = "SELECT * FROM \n" +
+                    "(SELECT * FROM Questions \n" +
+                    "    WHERE ApproveUserId IS NOT NULL    \n" +
+                    "    ORDER BY CreationDate ASC \n" +
+                    "    OFFSET ? ROWS \n" +
+                    "    FETCH NEXT 10 ROWS ONLY) q \n" +
+                    "INNER JOIN Users u ON q.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public int getNumberOfPage() throws Exception{
+        int numberOfRecord = 0;
+        try(Connection cn = DButil.getMyConnection()){
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int)((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      return 0;
+    }
     public ArrayList<QuestionDTO> getPendingQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Questions \n" +

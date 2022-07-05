@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "LoginWithGoogle", value = "/login-google")
 public class LoginWithGoogle extends HttpServlet {
-    private final String HOME_VIEW = "home.jsp";
+    private final String HOME_VIEW = "/home?page=1";
     private final String ERROR_VIEW = "error.jsp";
     private final String LOGIN_VIEW = "index.jsp";
     private final String REGISTER_VIEW = "register.jsp";
