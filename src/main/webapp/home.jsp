@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>--%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html>
 <head>
     <title>Home</title>
@@ -14,22 +14,20 @@
 </head>
 
 <body class="text-gray-800 h-full w-full  bg-gray-50">
-<jsp:include page="header.jsp"></jsp:include>
-<%--<h1>Welcome ${sessionScope.USER.name}</h1>--%>
-<%--<a href="/Logout">log out</a>--%>
+
 <div class="">
-    <div class="pt-10 pb-3 px-48 inline-flex space-x-8 ml-12 font-semibold">
+    <div class="pt-10 pb-3 px-48 inline-flex space-x-8 ml-20 font-semibold">
         <a href="#">Newest</a>
         <a href="#">Most liked</a>
         <a href="#">Most answered</a>
     </div>
-    <div class="flex h-screen px-48 h-full -space-x-8">
+    <div class="flex h-screen px-48 h-full space-x-4">
 
         <!-- left column -->
         <div class="w-10/12">
 
             <!-- a post -->
-<%--            <c:forEach var = "i" begin = "1" end = "3">--%>
+            <c:forEach  items="${requestScope.questions}" var="question">
             <div class="flex gap-x-2 mb-4">
                 <div class="w-1/12 bg-gray-50 grid content-start pt-6 place-items-center font-semibold">
                     <a href="#">
@@ -38,7 +36,7 @@
                         </svg>
                     </a>
 
-                    <p>12</p>
+                    <p>${question.score}</p>
                     <a href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -46,50 +44,55 @@
                     </a>
                 </div>
 
-                <div >
                     <div class="w-11/12 bg-white p-8 grid content-start gap-y-3 rounded-xl shadow-lg">
                         <div class="flex gap-x-2">
-                            <p><img class="rounded-full h-8 w-8" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg"></p>
-                            <p class="text-sm font-semibold pt-1">Jane Dove</p>
+                            <img class="rounded-full h-8 w-8" src="${question.ownerAvt}">
+                            <p class="text-sm font-semibold pt-1">${question.ownerName}</p>
 
                         </div>
                         <div>
-                            <p class="font-semibold ">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <p class="font-semibold ">${question.title}</p>
                         </div>
                         <div>
-                            <p class="text-gray-500 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p class="text-gray-500 text-sm">${question.body}</p>
                         </div>
                         <div class="flex text-xs gap-x-1 h-5">
-                            <p class="border rounded border-gray-800 px-5">Java</p>
+                            <p class="border rounded border-gray-800 px-5">tag</p>
                         </div>
                         <div class="border-t border-gray-300 pt-4 mt-4 flex text-xs gap-x-1">
                             <p class="bg-purple-600 text-white rounded py-0.5 px-4 h-6 flex space-x-1 ">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
                                 </svg>
-                                <span>12 answers</span>
+                                <span>${question.answerCount} answers</span>
                             </p>
                             <p class="bg-purple-600 text-white rounded py-0.5 px-4 h-6 flex space-x-1 ">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
                                     <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
                                 </svg>
-                                <span>24 comments</span>
+                                <span>${question.commentCount} comments</span>
                             </p>
                         </div>
                     </div>
 
-                </div>
-
             </div>
-<%--            </c:forEach>--%>
+            </c:forEach>
 
             <!-- end -->
 
+            <%
+                String currentPage = request.getParameter("page");
+                String totalPage = request.getAttribute("numberOfPage").toString();
+                Integer numberOfPage = Integer.parseInt(totalPage);
+                Integer nextPage = Integer.parseInt(currentPage) + 1;
+                Integer previousPage = Integer.parseInt(currentPage) - 1 ;
+                if (previousPage < 1) previousPage = 1;
+                if (nextPage > numberOfPage) nextPage = numberOfPage;
+            %>
 
-
-            <div class="pagination p-3 inline-flex space-x-3 ml-12">
-                <a href="#" class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <div class="pagination p-3 inline-flex space-x-3 ml-20">
+                <a href="${pageContext.request.contextPath}/home?page=<%=previousPage%>" class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                     <span class="sr-only">Previous</span>
                     <!-- Heroicon name: solid/chevron-left -->
                     <svg class="h-4 w-4 text-purple-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -97,10 +100,9 @@
                     </svg>
                 </a>
                 <a href="#" class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="h-4 w-4 flex justify-center text-purple-600 text-xs">1</span>
-
+                    <span class="h-4 w-4 flex justify-center text-purple-600 text-xs"><%=currentPage%></span>
                 </a>
-                <a href="#" class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <a href="${pageContext.request.contextPath}/home?page=<%=nextPage%>" class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                     <span class="sr-only">Next</span>
                     <!-- Heroicon name: solid/chevron-right -->
                     <svg class="h-4 w-4 text-purple-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
