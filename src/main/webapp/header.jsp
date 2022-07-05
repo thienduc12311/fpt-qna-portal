@@ -37,7 +37,7 @@
                 <div>
                     <a href="#">
                         <label class="flex space-x-2 cursor-pointer">
-                            <img class="rounded-full h-9 w-9" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
+                            <img class="rounded-full h-9 w-9" src="${sessionScope.USER.avtUrl}">
                             <div class="flex flex-col">
                                 <div class="text-sm font-semibold">${sessionScope.USER.name}</div>
                                 <div class="text-xs font-semibold text-gray-600"> ${sessionScope.USER.email}</div>
@@ -58,7 +58,7 @@
                                     <p class="text-xs font-medium leading-5 text-gray-900 truncate">${sessionScope.USER.email}</p>
                                 </div>
                                 <div class="py-1 px-4">
-                                    <a href="" class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >
+                                    <a href="/personalprofile.jsp" class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3" viewBox="0 0 1000 1000" >
                                             <path fill="currentColor" d="M500,10C229.4,10,10,229.4,10,500c0,270.6,219.4,490,490,490c270.6,0,490-219.4,490-490C990,229.4,770.6,10,500,10z M500,156.5c89.5,0,162.1,72.6,162.1,162.1c0,89.5-72.6,162.1-162.1,162.1c-89.5,0-162.1-72.6-162.1-162.1C337.9,229.1,410.5,156.5,500,156.5z M499.9,861.9c-89.3,0-171.1-32.5-234.2-86.3c-15.4-13.1-24.2-32.3-24.2-52.5c0-90.8,73.5-163.4,164.3-163.4h188.6c90.8,0,164,72.6,164,163.4c0,20.2-8.8,39.4-24.2,52.5C671,829.3,589.2,861.9,499.9,861.9z"/>
                                         </svg>
