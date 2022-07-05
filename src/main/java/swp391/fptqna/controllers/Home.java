@@ -2,8 +2,6 @@ package swp391.fptqna.controllers;
 
 import swp391.fptqna.dao.QuestionDAO;
 import swp391.fptqna.dao.UserDAO;
-import swp391.fptqna.dto.ExtendQuestionList;
-import swp391.fptqna.dto.ExtendedQuestionDTO;
 import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.UserDTO;
 
@@ -18,7 +16,6 @@ public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 0;
         ArrayList<QuestionDTO> questionList = null;
-        ExtendQuestionList extendedQuestion = new ExtendQuestionList();
         QuestionDAO questionDAO = new QuestionDAO();
         try {
            page   = Integer.parseInt(request.getParameter("page"));
@@ -27,14 +24,9 @@ public class Home extends HttpServlet {
             if (questionList.isEmpty()) {
                 throw new Exception("List is empty");
             }
-            for ( QuestionDTO question : questionList ){
-                ExtendedQuestionDTO exQuestion = new ExtendedQuestionDTO(question);
-                extendedQuestion.add(exQuestion);
-            }
-            questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("numberOfPage", numberOfPage);
-            request.setAttribute("questions", extendedQuestion);
+            request.setAttribute("questions", questionList);
             request.getRequestDispatcher("home.jsp").forward(request,response);
         } catch (Exception ex){
             response.sendRedirect("error.jsp");
