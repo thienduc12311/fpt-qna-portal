@@ -48,12 +48,12 @@
             class="mb-5 w-8/12 bg-white p-11 grid content-start gap-y-4 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.06),0px_4px_6px_rgba(0,0,0,0.1)]">
         <!-- Info start -->
         <div class="flex justify-start items-center gap-x-3">
-            <div>
+            <a href="" class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
                      src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
-            </div>
-            <p class="font-semibold">Jane Dove</p>
-            <p class="text-xs text-slate-400">March 12, 2022</p>
+            </a>
+            <a href="" class="font-semibold cursor-pointer">Jane Dove</a>
+            <span class="text-xs text-slate-400">March 12, 2022</span>
         </div>
         <!-- Info end -->
         <!-- Content start -->
