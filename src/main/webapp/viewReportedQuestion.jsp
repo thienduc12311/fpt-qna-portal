@@ -10,7 +10,7 @@
 <html>
 <head>
     <%-- We can put question's title in the title --%>
-    <title>Pending Question | Question's Title</title>
+    <title>Reported Question | Question's Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
