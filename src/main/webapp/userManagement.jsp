@@ -29,12 +29,12 @@
             <div class="text-2xl font-semibold">Users</div>
         </div>
         <div class="flex">
-            <form action="Search" method="post">
+            <form action="Search" method="post" class="p-0 m-0 inline">
                 <div class="relative">
-                    <input type="text" name="txtdisplayname" value="" class="text-sm h-8 w-60 rounded px-3 shadow"
+                    <input type="text" name="txtdisplayname" value="" class="text-sm h-8 w-60 rounded px-3 shadow focus:outline-none focus:ring-1 focus:ring-purple-500"
                            placeholder="Search...">
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2">
-              <button type="submit" class="p-1  bg-gray-200 rounded">
+              <button type="submit" class="p-1  bg-gray-200 rounded hover:bg-slate-100 transition ease-in-out duration-300">
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                      viewBox="0 0 24 24" class="w-3 h-3">
                   <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
