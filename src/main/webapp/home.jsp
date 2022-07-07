@@ -12,10 +12,9 @@
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="text-gray-800 h-full w-full  bg-gray-50">
-
-<div class="">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="mt-10">
     <div class="pt-10 pb-3 px-48 inline-flex space-x-8 ml-20 font-semibold">
         <a href="#">Newest</a>
         <a href="#">Most liked</a>
@@ -57,7 +56,9 @@
                             <p class="text-gray-500 text-sm">${question.body}</p>
                         </div>
                         <div class="flex text-xs gap-x-1 h-5">
-                            <p class="border rounded border-gray-800 px-5">tag</p>
+                        <c:forEach items="${question.tags}" var="tag">
+                                <p class="border rounded border-gray-800 px-5">${tag.tagName}</p>
+                        </c:forEach>
                         </div>
                         <div class="border-t border-gray-300 pt-4 mt-4 flex text-xs gap-x-1">
                             <p class="bg-purple-600 text-white rounded py-0.5 px-4 h-6 flex space-x-1 ">
