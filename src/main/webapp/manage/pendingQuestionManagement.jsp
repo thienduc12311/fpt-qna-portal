@@ -55,9 +55,10 @@
                 try{
                     ArrayList<QuestionDTO> list = (ArrayList<QuestionDTO>) request.getAttribute("listPendingQuestion");
                     for (QuestionDTO question : list) {
+                        String url = "/MainController?action=ViewPendingQuestion&questionId="+question.getId();
             %>
-            <a href="#" class="hover:bg-gray-100">
-            <tr>
+            <a href=<%=url%> class="hover:bg-gray-100">
+            <tr onclick="window.location='<%=url%>';" class="cursor-pointer">
 
                 <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                     <p class="text-gray-900 whitespace-no-wrap">

@@ -1,5 +1,6 @@
 package swp391.fptqna.dao;
 
+import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.ReportedAnswerDTO;
 import swp391.fptqna.utils.DButil;
 
@@ -20,6 +21,24 @@ public class ReportedAnswerDAO {
         byte state = resultSet.getByte("State");
         String description = resultSet.getString("Description");
         return new ReportedAnswerDTO(id, flagTypeId, answerId, ownerUserId, creationDate, state, description);
+    }
+
+    public ReportedAnswerDTO getReportedAnswerById(int id) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "Select * from AnswerFlag Where id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet != null && resultSet.next()) {
+                    return parseFromDB(resultSet);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<ReportedAnswerDTO> getReportedAnswerByPage(int page) throws Exception {

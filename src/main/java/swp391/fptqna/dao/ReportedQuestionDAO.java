@@ -1,6 +1,7 @@
 package swp391.fptqna.dao;
 
 import swp391.fptqna.dto.ReportedQuestionDTO;
+import swp391.fptqna.dto.ReportedQuestionDTO;
 import swp391.fptqna.utils.DButil;
 
 import java.sql.*;
@@ -11,7 +12,7 @@ public class ReportedQuestionDAO {
     private ReportedQuestionDTO parseFromDB(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("Id");
         byte flagTypeId = resultSet.getByte("FlagTypeId");
-        int questionId = resultSet.getInt("AnswerId");
+        int questionId = resultSet.getInt("QuestionId");
         int ownerUserId = resultSet.getInt("OwnerUserId");
         Date creationDate = resultSet.getDate("CreationDate");
         byte state = resultSet.getByte("State");
@@ -19,6 +20,23 @@ public class ReportedQuestionDAO {
         return new ReportedQuestionDTO(id, flagTypeId, questionId, ownerUserId, creationDate, state, description);
     }
 
+    public ReportedQuestionDTO getReportedQuestionById(int id) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "Select * from QuestionFlag Where id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet != null && resultSet.next()) {
+                    return parseFromDB(resultSet);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public ArrayList<ReportedQuestionDTO> getReportedQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM QuestionFlag \n" +

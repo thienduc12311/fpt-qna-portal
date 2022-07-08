@@ -12,6 +12,6 @@
 </head>
 <body>
     <h1>Thanh cong</h1>
-    <a href="<%=request.getParameter("back")%>">click</a>
+    <a href="<%=request.getAttribute("back")%>">click</a>
 </body>
 </html>

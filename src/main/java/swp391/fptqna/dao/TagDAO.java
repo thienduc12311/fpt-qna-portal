@@ -60,6 +60,31 @@ public class TagDAO {
         return null;
     }
 
+    public ArrayList<TagDTO> getListTagByQuestionId(int questionId) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT Tags.Id as Id, Tags.TagName as TagName FROM \n" +
+                    "(SELECT * FROM QuestionTags\n" +
+                    "WHERE QuestionId = ?) as QT LEFT JOIN Tags ON QT.TagId = Tags.Id;";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<TagDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("Id");
+                    String tagName = resultSet.getString("TagName");
+                    TagDTO tag = new TagDTO(id, tagName);
+                    list.add(tag);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean addTag(String tagName, String description, int userId) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "Insert into Tags values (?,?,?,?,?,?)";

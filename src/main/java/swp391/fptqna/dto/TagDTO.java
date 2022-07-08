@@ -22,6 +22,11 @@ public class TagDTO {
         this.state = state;
     }
 
+    public TagDTO(int id, String tagName){
+        this.id = id;
+        this.tagName = tagName;
+    }
+
     public TagDTO() {
     }
 
