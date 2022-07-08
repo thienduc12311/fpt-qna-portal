@@ -1,5 +1,6 @@
 package swp391.fptqna.dao;
 
+import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.UserDTO;
 import swp391.fptqna.utils.DButil;
 
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAO {
     Connection cn = null;
@@ -176,5 +178,35 @@ public class UserDAO {
             }
         }
         return false;
+    }
+
+    public ArrayList<UserDTO> getUserByPage(int page) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM Users \n" + "ORDER BY Id ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<UserDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("Id");
+                    String email = resultSet.getString("Email");
+                    String name = resultSet.getString("UserDisplayName");
+                    String password = resultSet.getString("Password");
+                    String imgLink = resultSet.getString("ImgLink");
+                    int score = resultSet.getInt("Score");
+                    int role = resultSet.getInt("Role");
+                    boolean state = resultSet.getBoolean("State");
+                    String bio = resultSet.getString("Bio");
+                    UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
+                    list.add(user);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -46,7 +46,7 @@ public class UserDTO {
 
     }
 
-    public boolean isState() {
+    public boolean getState() {
         return state;
     }
 

@@ -93,7 +93,12 @@
                 </a>
             </tr>
             <!-- end record  -->
-
+            <%
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            %>
             </tbody>
         </table>
 
@@ -116,12 +121,7 @@
                 </svg>
             </a>
         </div>
-        <%
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        %>
+
 
     </div>
 </div>
