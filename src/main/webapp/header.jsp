@@ -33,7 +33,7 @@
             <div class="flex space-x-6 items-center">
                 <div>
                     <a href="/CreateQuestion"
-                       class="text-sm bg-purple-600 text-white font-semibold rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-purple-800 transition ease-in-out duration-300">
+                       class="text-sm bg-purple-600 text-white font-medium rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-purple-800 transition ease-in-out duration-300">
                         <div>
                             <svg class="w-4 h-4 fill-white" id="Layer_1" viewBox="0 0 24 24"
                                  xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
@@ -58,9 +58,9 @@
                             </div>
                         </a>
                         <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
-                            <div class="absolute right-0 w-96 mt-2.5 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                            <div class="absolute right-0 w-80 mt-2.5 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                                  aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
-                                <div class="px-6 pt-8 pb-2">
+                                <div class="px-6 pt-6 pb-2">
                                     <p class="text-lg leading-5 font-bold">Notifications</p>
                                 </div>
                                 <div class="py-1 px-6 hover:bg-slate-100">
@@ -70,11 +70,10 @@
                                         <img class="rounded-full h-9 w-9"
                                              src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
                                         <div>
-                                            <div>Jane Dove<span
-                                                    class="font-normal"> has recently answered your question </span>"Why
+                                            <div class="text-xs">Jane Dove<span class="font-normal text-xs"> has recently answered your question </span>"Why
                                                 do birds fly, they want to look down on us or ..."
                                             </div>
-                                            <div class="text-slate-300 font-normal">March 3, 2022</div>
+                                            <div class="text-slate-300 font-normal text-xs">March 3, 2022</div>
                                         </div>
                                     </a>
                                 </div>
