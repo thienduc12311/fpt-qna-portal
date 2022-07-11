@@ -1,7 +1,4 @@
-<%-- Created by IntelliJ IDEA. User: markhipz Date: 6/2/2022 Time: 2:57 PM To
-change this template use File | Settings | File Templates. --%>
-<%@ page
-        contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>View Question</title>
@@ -12,6 +9,20 @@ change this template use File | Settings | File Templates. --%>
             href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html * {
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+        }
+
+        .drop ion-icon {
+            font-size: 20px;
+        }
+
+        .vote ion-icon {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -92,8 +103,9 @@ change this template use File | Settings | File Templates. --%>
                                 >
                                     <li>
                                         <a
-                                                href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                type="button"
+                                                data-modal-toggle="reportModalQuestion"
                                         >Report</a
                                         >
                                     </li>
@@ -259,6 +271,130 @@ change this template use File | Settings | File Templates. --%>
                     </div>
                 </div>
 
+                <div
+                        id="reportModalQuestion"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+                >
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                    class="flex justify-between items-start p-4 rounded-t border-b"
+                            >
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Report Question
+                                </h3>
+                                <button
+                                        type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                        data-modal-toggle="reportModalQuestion"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mx-8 pt-6">
+                                <form action="">
+                                    <label
+                                            for="question-flag"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Select a flag</label
+                                    >
+                                    <select
+                                            required
+                                            onchange="questionFlagSelect(this)"
+                                            id="question-flag"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    >
+                                        <option selected value="">Choose a flag</option>
+                                        <option value="flag-1">Flag 1</option>
+                                        <option value="flag-2">Flag 2</option>
+                                        <option value="flag-3">Flag 3</option>
+                                    </select>
+
+                                    <!-- description go here -->
+
+                                    <div class="my-6 bg-[#F3F4F6] rounded-md">
+                                        <p
+                                                class="p-6 text-sm font-semibold"
+                                                id="question-flag-0"
+                                        >
+                                            Please choose a flag
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="question-flag-1"
+                                        >
+                                            des 1
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="question-flag-2"
+                                        >
+                                            des 2
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="question-flag-3"
+                                        >
+                                            des 3
+                                        </p>
+                                    </div>
+
+                                    <label
+                                            for="question-description"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Description</label
+                                    >
+                                    <div class="relative w-full">
+                                        <input
+                                                type="text"
+                                                id="question-description"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                placeholder="More detail"
+                                                required
+                                        />
+                                    </div>
+                                    <div
+                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
+                                    >
+                                        <button
+                                                data-modal-toggle="reportModalQuestion"
+                                                type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                        >
+                                            Report
+                                        </button>
+                                        <button
+                                                data-modal-toggle="reportModalQuestion"
+                                                type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- number of answers here -->
 
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
@@ -319,9 +455,11 @@ change this template use File | Settings | File Templates. --%>
                                         aria-labelledby="dropdownLeftStartButton"
                                 >
                                     <li>
+                                        <!-- put loop index here -->
                                         <a
-                                                href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                type="button"
+                                                data-modal-toggle="reportModalAnswer-1"
                                         >Report</a
                                         >
                                     </li>
@@ -427,6 +565,134 @@ change this template use File | Settings | File Templates. --%>
                         </a>
                     </div>
                 </div>
+
+                <!-- place loop index here -->
+
+                <div
+                        id="reportModalAnswer-1"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+                >
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                    class="flex justify-between items-start p-4 rounded-t border-b"
+                            >
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Report Answer
+                                </h3>
+                                <button
+                                        type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                        data-modal-toggle="reportModalAnswer-1"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mx-8 pt-6">
+                                <form action="">
+                                    <label
+                                            for="answer-1-flag"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Select a flag</label
+                                    >
+                                    <select
+                                            required
+                                            onchange="answerFlagSelect(1, this)"
+                                            id="answer-1-flag"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    >
+                                        <option selected value="">Choose a flag</option>
+                                        <option value="flag-1">Flag 1</option>
+                                        <option value="flag-2">Flag 2</option>
+                                        <option value="flag-3">Flag 3</option>
+                                    </select>
+
+                                    <!-- description go here -->
+
+                                    <div class="my-6 bg-[#F3F4F6] rounded-md">
+                                        <p
+                                                class="p-6 text-sm font-semibold"
+                                                id="answer-1-flag-0"
+                                        >
+                                            Please choose a flag
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="answer-1-flag-1"
+                                        >
+                                            des 1
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="answer-1-flag-2"
+                                        >
+                                            des 2
+                                        </p>
+
+                                        <p
+                                                class="hidden p-6 text-sm font-semibold"
+                                                id="answer-1-flag-3"
+                                        >
+                                            des 3
+                                        </p>
+                                    </div>
+
+                                    <label
+                                            for="answer-1-description"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Description</label
+                                    >
+                                    <div class="relative w-full">
+                                        <input
+                                                type="text"
+                                                id="answer-1-description"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                placeholder="More detail"
+                                                required
+                                        />
+                                    </div>
+                                    <div
+                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
+                                    >
+                                        <button
+                                                data-modal-toggle="reportModalAnswer-1"
+                                                type="button"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                        >
+                                            Report
+                                        </button>
+                                        <button
+                                                data-modal-toggle="reportModalAnswer-1"
+                                                type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- answer end here -->
 
                 <!-- answer form -->
 
@@ -636,6 +902,7 @@ change this template use File | Settings | File Templates. --%>
         </div>
     </div>
 </div>
+
 <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 <script
         type="module"
@@ -645,5 +912,67 @@ change this template use File | Settings | File Templates. --%>
         nomodule
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
 ></script>
+
+<script>
+    const questionFlagSelect = (props) => {
+        let value = props.value;
+        if (value === "") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-0").classList.remove("hidden");
+        } else if (value === "flag-1") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-1").classList.remove("hidden");
+        } else if (value === "flag-2") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-2").classList.remove("hidden");
+        } else if (value === "flag-3") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-3").classList.remove("hidden");
+        }
+    };
+
+    const hideQuestionFlagDescription = () => {
+        for (let i = 0; i <= 3; i++) {
+            let current = document.getElementById("question-flag-" + i);
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+    };
+
+    const answerFlagSelect = (idx, props) => {
+        let value = props.value;
+        if (value === "") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-0")
+                .classList.remove("hidden");
+        } else if (value === "flag-1") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-1")
+                .classList.remove("hidden");
+        } else if (value === "flag-2") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-2")
+                .classList.remove("hidden");
+        } else if (value === "flag-3") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-3")
+                .classList.remove("hidden");
+        }
+    };
+
+    const hideAnswerFlagDescription = (idx) => {
+        for (let i = 0; i <= 3; i++) {
+            let current = document.getElementById("answer-" + idx + "-flag-" + i);
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+    };
+</script>
 </body>
 </html>
