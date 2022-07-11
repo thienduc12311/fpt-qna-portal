@@ -52,7 +52,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM \n" +
                     "(SELECT * FROM Questions \n" +
-                    "    WHERE ApproveUserId IS NOT NULL    \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL)   \n" +
                     "    ORDER BY CreationDate ASC \n" +
                     "    OFFSET ? ROWS \n" +
                     "    FETCH NEXT 10 ROWS ONLY) q \n" +
@@ -79,10 +79,10 @@ public class QuestionDAO {
         return null;
     }
 
-    public int getNumberOfPage() throws Exception {
+    public int getNumberOfAvailablePage() throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions";
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {

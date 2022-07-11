@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,12 +18,13 @@ import java.util.ArrayList;
 public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 0;
+        HttpSession session = request.getSession();
         ArrayList<QuestionDTO> questionList = null;
         ExtendQuestionList extendedQuestion = new ExtendQuestionList();
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             page = Integer.parseInt(request.getParameter("page"));
-            int numberOfPage = questionDAO.getNumberOfPage();
+            int numberOfPage = questionDAO.getNumberOfAvailablePage();
             questionList = questionDAO.getAvailableQuestionByPage(page);
             if (questionList.isEmpty()) {
                 throw new Exception("List is empty");
@@ -34,7 +36,8 @@ public class Home extends HttpServlet {
             questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("numberOfPage", numberOfPage);
-            request.setAttribute("questions", extendedQuestion);
+            session.removeAttribute("questions");
+            session.setAttribute("questions", extendedQuestion);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } catch (Exception ex) {
             response.sendRedirect("error.jsp");

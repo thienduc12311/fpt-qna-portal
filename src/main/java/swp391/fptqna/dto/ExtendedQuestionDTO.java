@@ -3,7 +3,9 @@ package swp391.fptqna.dto;
 import java.util.ArrayList;
 
 public class ExtendedQuestionDTO extends QuestionDTO {
-    private ArrayList<TagDTO> tags = new ArrayList<TagDTO>();
+    private ArrayList<TagDTO> tags = new ArrayList<>();
+    private ArrayList<CommentDTO> comments = new ArrayList<>();
+    private ExtendedAnswerList answerList = new ExtendedAnswerList();
 
     public ExtendedQuestionDTO(QuestionDTO question) {
         super();
@@ -32,5 +34,21 @@ public class ExtendedQuestionDTO extends QuestionDTO {
 
     public void setTags(ArrayList<TagDTO> tags) {
         this.tags = tags;
+    }
+
+    public ArrayList<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<CommentDTO> comments) {
+        this.comments = comments;
+    }
+
+    public ExtendedAnswerList getAnswerList() {
+        return answerList;
+    }
+
+    public void setAnswerList(ExtendedAnswerList answerList) {
+        this.answerList = answerList;
     }
 }

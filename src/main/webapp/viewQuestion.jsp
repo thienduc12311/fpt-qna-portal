@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- Created by IntelliJ IDEA. User: markhipz Date: 6/2/2022 Time: 2:57 PM To
 change this template use File | Settings | File Templates. --%>
 <%@ page
@@ -26,7 +27,7 @@ change this template use File | Settings | File Templates. --%>
                 >
             </a>
             <a
-                    href=""
+                    href="/home?page=1"
                     class="font-bold cursor-pointer hover:opacity-75 duration-150"
             >Home</a
             >
@@ -40,7 +41,7 @@ change this template use File | Settings | File Templates. --%>
             <a
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150 text-[#252530]"
-            >Q14</a
+            >Q${requestScope.question.id}</a
             >
         </div>
 
@@ -58,19 +59,19 @@ change this template use File | Settings | File Templates. --%>
 
                                 <img
                                         class="w-9 rounded-full"
-                                        src="https://www.w3schools.com/howto/img_avatar.png"
+                                        src="${requestScope.question.ownerAvt}"
                                         alt="avatar"
                                 />
                             </a>
                             <!-- put the link to profile here in href-->
 
                             <a href="" class="font-semibold ml-3 text-[#505059]"
-                            >Author
+                            >${requestScope.question.ownerName}
                                 <!-- put the author name here -->
                             </a>
 
                             <!-- put date here -->
-                            <span class="ml-4 text-xs text-[#B9C1CC]">March 3, 2022</span>
+                            <span class="ml-4 text-xs text-[#B9C1CC]">${requestScope.question.stringCreationDate}</span>
 
                             <button
                                     id="dropdownLeftStartButton"
@@ -105,36 +106,22 @@ change this template use File | Settings | File Templates. --%>
 
                         <div class="content mr-16">
                             <h3 class="text-[#252530] font-semibold text-xl mb-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua.
+                                ${requestScope.question.title}
                             </h3>
                             <p class="text-[#505059]">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur.
+                                ${requestScope.question.body}
                             </p>
                         </div>
 
                         <!-- place a loop for tags here -->
 
                         <div class="flex mt-6">
-                            <a
-                                    href=""
-                                    class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
-                            >Lifestyle</a
-                            ><a
-                                href=""
-                                class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
-                        >Java </a
-                        ><a
-                                href=""
-                                class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
-                        >C#</a
-                        >
+                            <c:forEach items="${requestScope.question.tags}" var="tag">
+                                <a
+                                        href=""
+                                        class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
+                                >${tag.tagName}</a>
+                            </c:forEach>
                         </div>
                         <div class="border-b my-7"></div>
 
@@ -146,14 +133,14 @@ change this template use File | Settings | File Templates. --%>
                             >
                                 <ion-icon name="chatbox-ellipses"></ion-icon>
                                 <!-- number of answers here -->
-                                <div class="ml-2 text-xs">12 answers</div>
+                                <div class="ml-2 text-xs">${requestScope.question.answerCount} answers</div>
                             </div>
                             <div
                                     class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center"
                             >
                                 <ion-icon name="chatbubbles"></ion-icon>
                                 <!-- number of answers here -->
-                                <div class="ml-2 text-xs">24 comments</div>
+                                <div class="ml-2 text-xs">${requestScope.question.commentCount} comments</div>
                             </div>
                             <a
                                     href=""
@@ -164,17 +151,20 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- comment form -->
 
-                        <form action="" class="mt-8">
+                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8">
                             <div class="flex">
+                                <input name="action" value="comment" hidden/>
+                                <input name="parentId" value="${requestScope.question.id}" hidden>
+                                <input name="type" value="question" hidden>
                                 <input
                                         type="text"
+                                        name="commentContent"
                                         class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
                                         placeholder="Write a comment here..."
                                 />
                                 <button
                                         class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
-                                        name=""
-                                        value=""
+                                        type="submit"
                                 >
                                     <ion-icon name="paper-plane"></ion-icon>
                                 </button>
@@ -183,43 +173,42 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- put comment here -->
                         <!-- open loop -->
-                        <div class="comment my-8">
-                            <div class="flex items-center mb-4 mx-3">
-                                <!-- put the link to profile here in href -->
+                        <c:forEach items="${requestScope.question.comments}" var="comment">
+                            <div class="comment my-8">
+                                <div class="flex items-center mb-4 mx-3">
+                                    <!-- put the link to profile here in href -->
 
-                                <a href="" class="cursor-pointer">
-                                    <!-- put avatar link here -->
+                                    <a href="" class="cursor-pointer">
+                                        <!-- put avatar link here -->
 
-                                    <img
-                                            class="w-9 rounded-full"
-                                            src="https://www.w3schools.com/howto/img_avatar.png"
-                                            alt="avatar"
-                                    />
-                                </a>
-                                <!-- put the link to profile here in href-->
+                                        <img
+                                                class="w-9 rounded-full"
+                                                src="${comment.userAvt}"
+                                                alt="avatar"
+                                        />
+                                    </a>
+                                    <!-- put the link to profile here in href-->
 
-                                <a href="" class="font-semibold ml-3 text-[#505059]"
-                                >Author
-                                    <!-- put the author name here -->
-                                </a>
+                                    <a href="" class="font-semibold ml-3 text-[#505059]"
+                                    >${comment.userName}
+                                        <!-- put the author name here -->
+                                    </a>
 
-                                <!-- put date here -->
-                                <span class="ml-4 text-xs text-[#B9C1CC]"
-                                >March 3, 2022</span
-                                >
+                                    <!-- put date here -->
+                                    <span class="ml-4 text-xs text-[#B9C1CC]"
+                                    >${comment.stringCreationDate}</span
+                                    >
+                                </div>
+                                <div class="content mr-16 ml-14">
+                                    <p class="text-[#505059]">
+                                        <!-- comment content here -->
+                                            ${comment.content}
+                                    </p>
+                                </div>
+                                <div class="border-b mt-7"></div>
                             </div>
-                            <div class="content mr-16 ml-14">
-                                <p class="text-[#505059]">
-                                    <!-- comment content here -->
+                        </c:forEach>
 
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip
-                                </p>
-                            </div>
-                            <div class="border-b mt-7"></div>
-                        </div>
 
                         <!--this button is for show more comment -->
                         <!--place a condition for show more comments -->
@@ -247,7 +236,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- number of votes -->
 
-                        <div class="font-bold">150</div>
+                        <div class="font-bold">${requestScope.question.score}</div>
 
                         <!-- downvote button -->
 
@@ -264,105 +253,19 @@ change this template use File | Settings | File Templates. --%>
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
                     <div class="p-8">
                         <h1 class="font-semibold text-xl text-[#7E3AF2]">
-                            ANSWERS (12)
+                            ANSWERS (${requestScope.question.answerCount})
                         </h1>
                     </div>
                 </div>
 
                 <!-- answers start her -->
 
-                <div
-                        class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-6"
-                >
-                    <div class="p-11">
-                        <div class="flex items-center mb-6 mx-3">
-                            <!-- put the link to profile here in href -->
-
-                            <a href="" class="cursor-pointer">
-                                <!-- put avatar link here -->
-
-                                <img
-                                        class="w-9 rounded-full"
-                                        src="https://www.w3schools.com/howto/img_avatar.png"
-                                        alt="avatar"
-                                />
-                            </a>
-                            <!-- put the link to profile here in href-->
-
-                            <a href="" class="font-semibold ml-3 text-[#505059]"
-                            >Author
-                                <!-- put the author name here -->
-                            </a>
-
-                            <!-- put date here -->
-                            <span class="ml-4 text-xs text-[#B9C1CC]">March 3, 2022</span>
-
-                            <!-- this button is for report this answer loop the ans1 ans2 ans3 here -->
-
-                            <button
-                                    data-dropdown-toggle="dropdownLeftStartAns1"
-                                    data-dropdown-placement="left-start"
-                                    class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
-                                    type="button"
-                            >
-                                <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
-                            </button>
-
-                            <!-- ans1 ans2 ans3 here too -->
-
-                            <div
-                                    id="dropdownLeftStartAns1"
-                                    class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
-                            >
-                                <ul
-                                        class="py-1 text-sm text-gray-700"
-                                        aria-labelledby="dropdownLeftStartButton"
-                                >
-                                    <li>
-                                        <a
-                                                href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                        >Report</a
-                                        >
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- this to show answer detail -->
-
-                        <div class="content mr-16">
-                            <p class="text-[#505059]">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur.
-                            </p>
-                        </div>
-
-                        <!-- comment form -->
-
-                        <form action="" class="mt-8">
-                            <div class="flex">
-                                <input
-                                        type="text"
-                                        class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                        placeholder="Write a comment here..."
-                                />
-                                <button
-                                        class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
-                                >
-                                    <ion-icon name="paper-plane"></ion-icon>
-                                </button>
-                            </div>
-                        </form>
-
-                        <!-- put comment here -->
-                        <!-- open loop -->
-                        <div class="comment my-8">
-                            <div class="flex items-center mb-4 mx-3">
+                <c:forEach items="${requestScope.question.answerList}" var="answer">
+                    <div
+                            class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-6"
+                    >
+                        <div class="p-11">
+                            <div class="flex items-center mb-6 mx-3">
                                 <!-- put the link to profile here in href -->
 
                                 <a href="" class="cursor-pointer">
@@ -370,63 +273,150 @@ change this template use File | Settings | File Templates. --%>
 
                                     <img
                                             class="w-9 rounded-full"
-                                            src="https://www.w3schools.com/howto/img_avatar.png"
+                                            src="${answer.ownerUserAvt}"
                                             alt="avatar"
                                     />
                                 </a>
                                 <!-- put the link to profile here in href-->
 
                                 <a href="" class="font-semibold ml-3 text-[#505059]"
-                                >Author
+                                >${answer.ownerUserName}
                                     <!-- put the author name here -->
                                 </a>
 
                                 <!-- put date here -->
-                                <span class="ml-4 text-xs text-[#B9C1CC]"
-                                >March 3, 2022</span
-                                >
-                            </div>
-                            <div class="content mr-16 ml-14">
-                                <p class="text-[#505059]">
-                                    <!-- comment content here -->
+                                <span class="ml-4 text-xs text-[#B9C1CC]">${answer.getStringCreationDate()}</span>
 
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip
+                                <!-- this button is for report this answer loop the ans1 ans2 ans3 here -->
+
+                                <button
+                                        data-dropdown-toggle="dropdownLeftStartAns1"
+                                        data-dropdown-placement="left-start"
+                                        class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
+                                        type="button"
+                                >
+                                    <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
+                                </button>
+
+                                <!-- ans1 ans2 ans3 here too -->
+
+                                <div
+                                        id="dropdownLeftStartAns1"
+                                        class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                >
+                                    <ul
+                                            class="py-1 text-sm text-gray-700"
+                                            aria-labelledby="dropdownLeftStartButton"
+                                    >
+                                        <li>
+                                            <a
+                                                    href="#"
+                                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                            >Report</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- this to show answer detail -->
+
+                            <div class="content mr-16">
+                                <p class="text-[#505059]">
+                                        ${answer.getBody()}
                                 </p>
                             </div>
 
-                            <div class="border-b mt-7"></div>
+                            <!-- comment form -->
+
+                            <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post"
+                                  class="mt-8">
+                                <div class="flex">
+                                    <input name="action" value="comment" hidden/>
+                                    <input name="parentId" value="${answer.getId()}" hidden>
+                                    <input name="type" value="answer" hidden>
+                                    <input
+                                            type="text"
+                                            name="commentContent"
+                                            class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
+                                            placeholder="Write a comment here..."
+                                    />
+                                    <button
+                                            class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
+                                    >
+                                        <ion-icon name="paper-plane"></ion-icon>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- put comment here -->
+                            <!-- open loop -->
+                            <c:forEach items="${answer.getComments()}" var="comment">
+                                <div class="comment my-8">
+                                    <div class="flex items-center mb-4 mx-3">
+                                        <!-- put the link to profile here in href -->
+
+                                        <a href="" class="cursor-pointer">
+                                            <!-- put avatar link here -->
+
+                                            <img
+                                                    class="w-9 rounded-full"
+                                                    src="${comment.userAvt}"
+                                                    alt="avatar"
+                                            />
+                                        </a>
+                                        <!-- put the link to profile here in href-->
+
+                                        <a href="" class="font-semibold ml-3 text-[#505059]"
+                                        >${comment.userName}
+                                            <!-- put the author name here -->
+                                        </a>
+
+                                        <!-- put date here -->
+                                        <span class="ml-4 text-xs text-[#B9C1CC]"
+                                        >${comment.getStringCreationDate()}</span
+                                        >
+                                    </div>
+                                    <div class="content mr-16 ml-14">
+                                        <p class="text-[#505059]">
+                                            <!-- comment content here -->
+                                                ${comment.content}
+                                        </p>
+                                    </div>
+
+                                    <div class="border-b mt-7"></div>
+                                </div>
+                            </c:forEach>
+
+
+                            <!-- close loop  -->
                         </div>
 
-                        <!-- close loop  -->
-                    </div>
+                        <!-- this is for vote -->
 
-                    <!-- this is for vote -->
+                        <div class="vote absolute flex-col text-center top-10 -left-12">
+                            <!-- upvote button -->
 
-                    <div class="vote absolute flex-col text-center top-10 -left-12">
-                        <!-- upvote button -->
-
-                        <a href="" class="hover:opacity-60 duration-150"
-                        >
-                            <ion-icon name="caret-up"></ion-icon
+                            <a href="" class="hover:opacity-60 duration-150"
                             >
-                        </a>
+                                <ion-icon name="caret-up"></ion-icon
+                                >
+                            </a>
 
-                        <!-- number of votes -->
+                            <!-- number of votes -->
 
-                        <div class="font-bold">150</div>
+                            <div class="font-bold">${answer.score}</div>
 
-                        <!-- downvote button -->
+                            <!-- downvote button -->
 
-                        <a href="" class="hover:opacity-60 duration-150"
-                        >
-                            <ion-icon name="caret-down"></ion-icon
+                            <a href="" class="hover:opacity-60 duration-150"
                             >
-                        </a>
+                                <ion-icon name="caret-down"></ion-icon
+                                >
+                            </a>
+                        </div>
                     </div>
-                </div>
+                </c:forEach>
 
                 <!-- answer form -->
 
@@ -446,7 +436,7 @@ change this template use File | Settings | File Templates. --%>
 
                                 <img
                                         class="w-9 rounded-full"
-                                        src="https://www.w3schools.com/howto/img_avatar.png"
+                                        src="${sessionScope.USER.avtUrl}"
                                         alt="avatar"
                                 />
                             </a>
@@ -454,22 +444,24 @@ change this template use File | Settings | File Templates. --%>
                             <!-- put the User name here -->
                             <!-- put the link to profile here in href-->
 
-                            <a href="" class="font-semibold ml-3 text-[#505059]">User </a>
+                            <a href="" class="font-semibold ml-3 text-[#505059]">${sessionScope.USER.name} </a>
                         </div>
 
                         <!-- start answer form -->
 
-                        <form action="" id="answer-form">
-                  <textarea
-                          rows="4"
-                          name="answer"
-                          class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Start typing..."
-                  ></textarea>
+                        <form action="ViewQuestion" id="answer-form">
+                            <input name="action" value="answer" hidden>
+                            <input name="questionId" value="${requestScope.question.id}" hidden>
+                            <textarea
+                                    rows="4"
+                                    name="answerContent"
+                                    class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Start typing..."
+                                    required
+                            ></textarea>
                             <button
                                     class="text-[#fff] bg-[#7E3AF2] px-11 py-2 mt-6 hover:opacity-90 duration-150 rounded-md items-center justify-center flex"
-                                    name=""
-                                    value=""
+                                    type="submit"
                             >
                                 <ion-icon name="paper-plane"></ion-icon>
                                 <span class="ml-1 text-xs">Post</span>
