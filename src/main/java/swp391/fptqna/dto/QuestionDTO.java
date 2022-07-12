@@ -1,5 +1,7 @@
 package swp391.fptqna.dto;
 
+import swp391.fptqna.utils.DateFormatter;
+
 import java.util.Date;
 
 public class QuestionDTO {
@@ -11,7 +13,44 @@ public class QuestionDTO {
     private String title;
     private String body;
     private int ownerUserId;
+    private String ownerAvt;
+
+    public String getOwnerAvt() {
+        return ownerAvt;
+    }
+
+    public void setOwnerAvt(String ownerAvt) {
+        this.ownerAvt = ownerAvt;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getApproveUserName() {
+        return approveUserName;
+    }
+
+    public void setApproveUserName(String approveUserName) {
+        this.approveUserName = approveUserName;
+    }
+
+    public String getApproveUserAvt() {
+        return approveUserAvt;
+    }
+
+    public void setApproveUserAvt(String approveUserAvt) {
+        this.approveUserAvt = approveUserAvt;
+    }
+
+    private String ownerName;
     private int approveUserId;
+    private String approveUserName;
+    private String approveUserAvt;
     private int lastEditorUserId;
     private Date lastEditDate;
     private int answerCount;
@@ -138,6 +177,15 @@ public class QuestionDTO {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+    public String getStringCreationDate (){
+        return DateFormatter.convertFromDateToString(creationDate);
+    }
+    public String getStringDeletionDate(){
+        return DateFormatter.convertFromDateToString(deletionDate);
+    }
+    public  String getStringClosedDate(){
+        return DateFormatter.convertFromDateToString(closedDate);
     }
 
     @Override

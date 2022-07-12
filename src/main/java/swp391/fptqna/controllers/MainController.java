@@ -14,6 +14,7 @@ public class MainController extends HttpServlet {
     private final String REPORTED_ANSWER_CONTROLLER = "manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "manage/ReportedQuestion";
     private final String LOGIN_VIEW = "index.jsp";
+    private final String CREATE_QUESTION_CONTROLLER = "CreateQuestion";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,6 +39,9 @@ public class MainController extends HttpServlet {
                     break;
                 case "ReportedQuestion":
                     url = REPORTED_QUESTION_CONTROLLER;
+                    break;
+                case "CreateQuestion":
+                    url = CREATE_QUESTION_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

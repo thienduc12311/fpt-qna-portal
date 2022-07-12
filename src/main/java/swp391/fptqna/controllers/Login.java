@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
     private final String LOGIN_VIEW = "index.jsp";
-    private final String HOME_VIEW = "home.jsp";
+    private final String HOME_VIEW = "/home?page=1";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

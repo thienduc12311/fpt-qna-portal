@@ -19,7 +19,7 @@
     <!-- left side -->
     <div class="basis-4/12 h-full fixed left-4/12">
         <div class="flex flex-col items-center space-y-6">
-            <div><img  class="rounded-full w-48" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg" alt=""></div>
+            <div><img  class="rounded-full w-48" src="${sessionScope.USER.avtUrl}" alt=""></div>
             <div class="flex flex-col items-center">
                 <div class="font-semibold text-lg">${sessionScope.USER.name}</div>
                 <div class="text-sm">${sessionScope.USER.email}</div>

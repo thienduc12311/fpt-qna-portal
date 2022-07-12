@@ -1,12 +1,12 @@
 package swp391.fptqna.dao;
 
+import swp391.fptqna.dto.ExtendQuestionList;
 import swp391.fptqna.dto.QuestionDTO;
+import swp391.fptqna.dto.TagDTO;
+import swp391.fptqna.utils.CustomException;
 import swp391.fptqna.utils.DButil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,6 +48,89 @@ public class QuestionDAO {
         return null;
     }
 
+    public ArrayList<QuestionDTO> getAvailableQuestionByPage(int page) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM \n" +
+                    "(SELECT * FROM Questions \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL)   \n" +
+                    "    ORDER BY CreationDate ASC \n" +
+                    "    OFFSET ? ROWS \n" +
+                    "    FETCH NEXT 10 ROWS ONLY) q \n" +
+                    "INNER JOIN Users u ON q.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumberOfAvailablePage() throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ExtendQuestionList getAllTagsOfQuestion(ExtendQuestionList questions) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM (SELECT * FROM QuestionTags WHERE QuestionId IN (?,?,?,?,?,?,?,?,?,?)) q INNER JOIN Tags t ON q.TagId = t.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            for (int i = 0; i < questions.size(); i++) {
+                preparedStatement.setInt(i + 1, questions.get(i).getId());
+            }
+            for (int i = questions.size(); i < 11; i++) {
+                preparedStatement.setString(i, null);
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int questionId = resultSet.getInt("QuestionId");
+                    int id = resultSet.getInt("Id");
+                    String tagName = resultSet.getString("TagName");
+                    String description = resultSet.getString("Discription");
+                    Date creationDate = resultSet.getDate("CreationDate");
+                    int ownerUserId = resultSet.getInt("OwnerUserId");
+                    int questionCount = resultSet.getInt("QuestionCount");
+                    byte state = resultSet.getByte("State");
+                    TagDTO tag = new TagDTO(id, tagName, description, creationDate, ownerUserId, questionCount, state);
+                    questions.getQuestionById(questionId).getTags().add(tag);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return questions;
+    }
+
     public ArrayList<QuestionDTO> getPendingQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Questions \n" +
@@ -70,5 +153,59 @@ public class QuestionDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean createNewQuestion(int userId, String questionTilte, String questionBody, String[] tags, Timestamp createdDate) {
+
+        String createQuestion = "INSERT INTO Questions(OwnerUserId, Title, Body, CreationDate) OUTPUT INSERTED.Id  VALUES (?,?,?,?)";
+        String createQuestionTag = "INSERT INTO QuestionTags(QuestionId, TagId) VALUES (?,?)";
+        try (Connection con = DButil.getMyConnection()) {
+            boolean success = false;
+            try (
+                    PreparedStatement questionStm = con.prepareStatement(createQuestion);
+                    PreparedStatement questionTagStm = con.prepareStatement(createQuestionTag)) {
+                con.setAutoCommit(false);
+
+                int questionId = 0;
+                questionStm.setInt(1, userId);
+                questionStm.setString(2, questionTilte);
+                questionStm.setString(3, questionBody);
+                questionStm.setTimestamp(4, createdDate);
+                try (ResultSet rs = questionStm.executeQuery();) {
+                    if (rs.next()) {
+                        questionId = rs.getInt("Id");
+                        success = true;
+                    }
+                }
+
+
+                if (success) {
+                    questionTagStm.setInt(1, questionId);
+                    for (String tagId : tags) {
+                        questionTagStm.setInt(2, Integer.parseInt(tagId));
+                        questionTagStm.addBatch();
+                    }
+                    int[] questionTagResult = questionTagStm.executeBatch();
+
+                    for (int r : questionTagResult) {
+                        if (r == 0) {
+                            success = false;
+                        }
+                    }
+                }
+
+                if (success) {
+                    con.commit();
+                    return true;
+                } else {
+                    throw new CustomException("Something went wrong, please try again later");
+                }
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return false;
     }
 }
