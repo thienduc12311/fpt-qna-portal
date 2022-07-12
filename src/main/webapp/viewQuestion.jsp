@@ -13,7 +13,13 @@ change this template use File | Settings | File Templates. --%>
             href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
+<style>
+    .ql-toolbar {
+        border-radius: 10px !important;
+    }
+</style>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <div class="h-auto pt-32 bg-[#F2F2F2]">
@@ -452,13 +458,17 @@ change this template use File | Settings | File Templates. --%>
                         <form action="ViewQuestion" id="answer-form">
                             <input name="action" value="answer" hidden>
                             <input name="questionId" value="${requestScope.question.id}" hidden>
-                            <textarea
-                                    rows="4"
-                                    name="answerContent"
-                                    class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Start typing..."
-                                    required
-                            ></textarea>
+                            <div id="editor"
+                                 class="block p-4 h-40 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                 placeholder="Your question here..."></div>
+                            <%--                            <textarea--%>
+                            <%--                                    rows="4"--%>
+                            <%--                                    name="answerContent"--%>
+                            <%--                                    class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"--%>
+                            <%--                                    placeholder="Start typing..."--%>
+                            <%--                                    required--%>
+                            <%--                            ></textarea>--%>
+                            <input id="answerContent" name="answerContent" style="display: none">
                             <button
                                     class="text-[#fff] bg-[#7E3AF2] px-11 py-2 mt-6 hover:opacity-90 duration-150 rounded-md items-center justify-center flex"
                                     type="submit"
@@ -685,5 +695,18 @@ change this template use File | Settings | File Templates. --%>
         nomodule
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
 ></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: true
+        }
+    });
+    quill.on('text-change', function (delta, oldDelta, source) {
+        $('#answerContent').val(quill.container.firstChild.innerHTML);
+    });
+</script>
 </body>
 </html>
