@@ -1,8 +1,5 @@
-<%@ page import="swp391.fptqna.dto.AnswerDTO" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="swp391.fptqna.dto.QuestionDTO" %>
-<%@ page import="swp391.fptqna.dto.ReportedAnswerDTO" %>
-<%@ page import="swp391.fptqna.dto.TagDTO" %><%--
+<%@ page import="swp391.fptqna.dto.*" %><%--
   Created by IntelliJ IDEA.
   User: tnahuy
   Date: 6/19/2022
@@ -51,6 +48,9 @@
             AnswerDTO answer = (AnswerDTO) request.getAttribute("answer");
             ReportedAnswerDTO reportedAnswer = (ReportedAnswerDTO) request.getAttribute("reportedAnswer");
             ArrayList<TagDTO> listTag = (ArrayList<TagDTO>) request.getAttribute("listTag");
+            UserDTO ownerQuestionUser = (UserDTO) request.getAttribute("ownerQuestionUser");
+            UserDTO ownerAnswerUser = (UserDTO) request.getAttribute("ownerAnswerUser");
+
     %>
     <!-- Card start -->
     <div
@@ -59,9 +59,9 @@
         <div class="flex justify-start items-center gap-x-3">
             <a href="" class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
-                     src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
+                     src="<%=ownerQuestionUser.getAvtUrl()%>">
             </a>
-            <a href="" class="font-semibold cursor-pointer">Jane Dove</a>
+            <a href="" class="font-semibold cursor-pointer"><%=ownerQuestionUser.getName()%></a>
             <span class="text-xs text-slate-400"><%= question.getCreationDate() %></span>
         </div>
         <!-- Info end -->
@@ -88,10 +88,10 @@
         <div class="p-11">
             <div class="flex items-center mb-6 gap-x-3">
                 <a href="" class="cursor-pointer">
-                    <img class="w-9 rounded-full" src="https://www.w3schools.com/howto/img_avatar.png" alt="avatar"/>
+                    <img class="w-9 rounded-full" src="<%=ownerAnswerUser.getAvtUrl()%>" alt="avatar"/>
                 </a>
                 <a href="" class="font-semibold text-[#505059]">
-                    Author
+                    <%=ownerAnswerUser.getName()%>
                 </a>
                 <span class="text-xs text-[#B9C1CC] flex items-center"><%= answer.getCreationDate() %></span>
             </div>
@@ -108,21 +108,26 @@
     <div class="w-8/12 flex flex-col gap-4 justify-between sm:flex-row mb-5">
         <a onclick="history.back()" class="text-[#B9C1CC] hover:text-[#9aa0a8] font-semibold">Back to previous page...</a>
         <div class="w-[100%] sm:w-auto flex gap-2 flex-col sm:flex-row">
-            <button type="button"
+            <form action="MainController" method="post" class="m-0">
+                <input hidden name="action" value="ResolveReportedAnswer"/>
+                <input class="hidden" name="reportedAnswerId" value="<%=reportedAnswer.getId()%>"/>
+                <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
+                <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
+                <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
+                <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+            <button type="submit" name="state" value="REJECT"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#0694A2] rounded-lg hover:bg-[#057c87] focus:ring-2 focus:outline-none focus:ring-[#0694A230] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
-                Resolve
-                with no violation
+                Resolve with no violation
             </button>
             <button type="button" data-modal-toggle="deleteModal"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#FF5A1F] rounded-lg hover:bg-[#a53b15] focus:ring-2 focus:ring-[#FF5A1F30] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
-                Delete
-                answer
+                Delete answer
             </button>
-            <button type="button" data-modal-toggle="deleteModal"
+            <button type="submit" name="state" value="DELETE_BAN"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#C81E1E] rounded-lg hover:bg-[#911717] focus:ring-2 focus:ring-[#C81E1E30] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
-                Delete
-                answer and ban user
+                Delete answer and ban user
             </button>
+            </form>
         </div>
     </div>
     <!-- Card footer end -->
@@ -168,26 +173,24 @@
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Reason</label>
-                    <textarea id="message" rows="4"
+                    <textarea id="message" rows="4" name="reason"
                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Leave your reason here..."></textarea>
-                    <label for="violationTypes" class="block mb-2 text-sm font-medium text-gray-90">Violation
-                        types</label>
-                    <select id="violationTypes"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option selected>Select a type</option>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="FR">France</option>
-                        <option value="DE">Germany</option>
-                    </select>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
-                    <button data-modal-toggle="deleteModal" type="button"
+                    <form action="MainController" method="post" class="m-0">
+                        <input hidden name="action" value="ResolveReportedAnswer"/>
+                        <input class="hidden" name="reportedAnswerId" value="<%=reportedAnswer.getId()%>"/>
+                        <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
+                        <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
+                        <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
+                        <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+                    <button data-modal-toggle="deleteModal" type="submit" name="state" value="DELETE"
                             class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Reject
                     </button>
+                    </form>
                     <button data-modal-toggle="deleteModal" type="button"
                             class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                         Cancel

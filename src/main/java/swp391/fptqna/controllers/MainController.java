@@ -17,9 +17,9 @@ public class MainController extends HttpServlet {
     private final String VIEW_REPORTED_QUESTION_CONTROLLER = "/manage/ViewReportedQuestion";
     private final String VIEW_REPORTED_ANSWER_CONTROLLER = "/manage/ViewReportedAnswer";
     private final String RESOLVE_PENDING_QUESTION_CONTROLLER = "/manage/ResolvePendingQuestion";
-    private final String RESOLVE_REPORTED_QUESTION_CONTROLLER = "/manage/ResolveReportedAnswer";
+    private final String RESOLVE_REPORTED_QUESTION_CONTROLLER = "/manage/ResolveReportedQuestion";
     private final String RESOLVE_REPORTED_ANSWER_CONTROLLER = "/manage/ResolveReportedAnswer";
-
+    private final String BAN_OR_UNBAN_USER = "/manage/BanUser";
     private final String MANAGE_QUESTION_CONTROLLER = "/manage/admin/ManageQuestions";
     private final String MANAGE_USER_CONTROLLER = "/manage/admin/ManageUsers";
     private final String LOGIN_VIEW = "index.jsp";
@@ -72,7 +72,9 @@ public class MainController extends HttpServlet {
                 case "ResolveReportedAnswer":
                     url = RESOLVE_REPORTED_ANSWER_CONTROLLER;
                     break;
-
+                case "BanOrUnBanUser":
+                    url = BAN_OR_UNBAN_USER;
+                    break;
             }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e){

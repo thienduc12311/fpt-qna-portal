@@ -1,7 +1,8 @@
 <%@ page import="swp391.fptqna.dto.AnswerDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="swp391.fptqna.dto.QuestionDTO" %>
-<%@ page import="swp391.fptqna.dto.TagDTO" %><%--
+<%@ page import="swp391.fptqna.dto.TagDTO" %>
+<%@ page import="swp391.fptqna.dto.UserDTO" %><%--
   Created by IntelliJ IDEA.
   User: tnahuy
   Date: 6/19/2022
@@ -47,6 +48,7 @@
         try {
             QuestionDTO question = (QuestionDTO) request.getAttribute("question");
             ArrayList<TagDTO> listTag = (ArrayList<TagDTO>) request.getAttribute("listTag");
+            UserDTO ownerUser = (UserDTO) request.getAttribute("ownerUser");
     %>
     <!-- Card start -->
     <div
@@ -55,17 +57,17 @@
         <div class="flex justify-start items-center gap-x-3">
             <a href="#" class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
-                     src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
+                     src="<%=ownerUser.getAvtUrl()%>">
             </a>
-            <a href="#" class="font-semibold cursor-pointer">Jane Dove</a>
-            <span class="text-xs text-slate-400">March 12, 2022</span>
+            <a href="#" class="font-semibold cursor-pointer"><%=ownerUser.getName()%></a>
+            <span class="text-xs text-slate-400"><%=question.getCreationDate()%></span>
         </div>
         <!-- Info end -->
 
         <!-- Content start -->
         <div class="mb-2">
-            <p class="font-semibold text-xl mb-2"><%=question.getTitle()%>></p>
-            <p class="text-gray-500"><%=question.getBody()%>/p>
+            <p class="font-semibold text-xl mb-2"><%=question.getTitle()%></p>
+            <p class="text-gray-500"><%=question.getBody()%></p>
         </div>
         <!-- Content end -->
 

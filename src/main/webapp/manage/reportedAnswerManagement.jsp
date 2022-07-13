@@ -1,6 +1,7 @@
 <%@ page import="swp391.fptqna.dto.ReportedAnswerDTO" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.HashMap" %><%--
+<%@ page import="java.util.HashMap" %>
+<%@ page import="swp391.fptqna.dto.FlagTypeDTO" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 28/6/2022
@@ -39,10 +40,10 @@
                 <th class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold ">
                     ID
                 </th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold">
-                    Title
+                <th class="px-5 py-3 border-b-2 w-96 border-gray-200 text-left font-semibold">
+                    Description
                 </th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold">
+                <th class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
                     Reported by
                 </th>
                 <th
@@ -60,11 +61,11 @@
             <%
                 try {
                     ArrayList<ReportedAnswerDTO> list = (ArrayList<ReportedAnswerDTO>) request.getAttribute("listReportedAnswer");
-                    HashMap<Integer, ReportedAnswerDTO> listFlagType = (HashMap<Integer, ReportedAnswerDTO>) request.getAttribute("listFlagType");
+                    HashMap<Integer, FlagTypeDTO> listFlagType = (HashMap<Integer, FlagTypeDTO>) request.getAttribute("listFlagType");
                     for (ReportedAnswerDTO reportedAnswer : list) {
+                        String url = "/MainController?action=ViewReportedAnswer&reportedAnswerId="+reportedAnswer.getId();
             %>
-            <tr>
-                <a href="#" class="hover:bg-gray-100">
+            <tr onclick="window.location='<%=url%>';" class="cursor-pointer">
                 <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                     <p class="text-gray-900 whitespace-no-wrap">
                         <%=reportedAnswer.getId()%>
@@ -72,10 +73,10 @@
                 </td>
                 <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-left">
                     <p class="text-gray-900 whitespace-no-wrap font-semibold">
-                        <%= (70 < reportedAnswer.getDescription().length()) ? reportedAnswer.getDescription() : reportedAnswer.getDescription().substring(0,70) + "..."%>
+                        <%= (70 > reportedAnswer.getDescription().length()) ? reportedAnswer.getDescription() : reportedAnswer.getDescription().substring(0,70) + "..."%>
                     </p>
                 </td>
-                <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-left">
+                <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                     <p class="text-gray-900 whitespace-no-wrap">
                         <%=reportedAnswer.getOwnerUserId()%>
                     </p>
@@ -87,10 +88,9 @@
                 </td>
                 <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                     <p class="text-gray-900 whitespace-no-wrap">
-                        <%=listFlagType.get(reportedAnswer.getFlagTypeId())%>
+                        <%=listFlagType.get((int) reportedAnswer.getFlagTypeId()).getName()%>
                     </p>
                 </td>
-                </a>
             </tr>
             <!-- end record  -->
             <%
@@ -103,20 +103,28 @@
         </table>
 
         <!-- pagination  -->
-        <div class="pagination p-2 inline-flex space-x-3 pl-8">
-            <a href="#" class="group relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-purple-600 transition duration-300 ease-in-out">
+        <%
+            int currentPage = Integer.parseInt(request.getParameter("page"));
+            int numberOfPage = Integer.parseInt(request.getAttribute("numberOfPage").toString());
+            int nextPage = currentPage + 1;
+            int previousPage = currentPage - 1 ;
+            if (previousPage < 1) previousPage = 1;
+            if (nextPage > numberOfPage) nextPage = numberOfPage;
+        %>
+
+        <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12">
+            <a href="MainController?action=ReportedAnswer&page=<%=previousPage%>" class="relative px-2 py-2 rounded border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span class="sr-only">Previous</span>
-                <svg class="h-4 w-4 text-purple-600 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg class="h-4 w-4 text-purple-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
             </a>
-            <a href="#" class="group relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-purple-600 transition duration-300 ease-in-out">
-                <span class="h-4 w-4 flex justify-center text-purple-600 text-xs group-hover:text-white">1</span>
-
+            <a href="#" class="relative px-2 py-2 rounded border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="h-4 w-4 flex justify-center text-purple-600 text-xs"><%=currentPage%>/<%=numberOfPage%></span>
             </a>
-            <a href="#" class="group relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-purple-600 hover:text-white transition duration-300 ease-in-out">
+            <a href="MainController?action=ReportedAnswer&page=<%=nextPage%>" class="relative px-2 py-2 rounded border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span class="sr-only">Next</span>
-                <svg class="h-4 w-4 text-purple-600 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg class="h-4 w-4 text-purple-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
             </a>

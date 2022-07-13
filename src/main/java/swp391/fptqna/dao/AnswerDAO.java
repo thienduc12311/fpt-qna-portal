@@ -3,10 +3,7 @@ package swp391.fptqna.dao;
 import swp391.fptqna.dto.AnswerDTO;
 import swp391.fptqna.utils.DButil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -73,6 +70,20 @@ public class AnswerDAO {
             String query = "DELETE FROM Answers WHERE Id = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, answerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteWithoutDB(int answerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Answers SET DeletionDate = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(2, answerId);
             int rs = preparedStatement.executeUpdate();
             return rs > 0;
         } catch (Exception e) {

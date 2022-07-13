@@ -1,13 +1,9 @@
 package swp391.fptqna.controllers.manage;
 
+import swp391.fptqna.dao.*;
 import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dao.ReportedQuestionDAO;
-import swp391.fptqna.dao.TagDAO;
+import swp391.fptqna.dto.*;
 import swp391.fptqna.dto.QuestionDTO;
-import swp391.fptqna.dto.QuestionDTO;
-import swp391.fptqna.dto.ReportedQuestionDTO;
-import swp391.fptqna.dto.TagDTO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,17 +21,21 @@ public class ViewReportedQuestion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            int questionId = Integer.parseInt(request.getParameter("questionId"));
+
             int reportedQuestionId = Integer.parseInt(request.getParameter("reportedQuestionId"));
-            QuestionDAO questionDAO = new QuestionDAO();
-            QuestionDTO question = questionDAO.getQuestionById(questionId);
             ReportedQuestionDAO reportedQuestionDAO = new ReportedQuestionDAO();
             ReportedQuestionDTO reportedQuestion = reportedQuestionDAO.getReportedQuestionById(reportedQuestionId);
+            int questionId = reportedQuestion.getQuestionId();
+            QuestionDAO questionDAO = new QuestionDAO();
+            QuestionDTO question = questionDAO.getQuestionById(questionId);
             TagDAO tagDAO = new TagDAO();
             ArrayList<TagDTO> listTag = tagDAO.getListTagByQuestionId(questionId);
+            UserDAO userDAO = new UserDAO();
+            UserDTO ownerQuestionUser = userDAO.getUserById(question.getOwnerUserId());
             request.setAttribute("question", question);
             request.setAttribute("reportedQuestion", reportedQuestion);
             request.setAttribute("listTag", listTag);
+            request.setAttribute("ownerQuestionUser",ownerQuestionUser);
             request.getRequestDispatcher(PENDING_QUESTION_VIEW).forward(request,response);
         } catch (Exception e){
             e.printStackTrace();

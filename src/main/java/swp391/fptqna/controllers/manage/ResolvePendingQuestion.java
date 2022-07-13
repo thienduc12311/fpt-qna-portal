@@ -29,7 +29,7 @@ public class ResolvePendingQuestion extends HttpServlet {
             NotificationDAO notificationDAO = new NotificationDAO();
             if (state.equals("APPROVE")) {
                 if (!questionDAO.approve(questionId, user.getId())) throw new Exception("Approved fail");
-                if (!notificationDAO.insert(2,"",ownerUserId)) throw new Exception("Approved fail");
+                if (!notificationDAO.insert(2, questionId + "|" ,ownerUserId)) throw new Exception("Approved fail");
             } else if (state.equals("REJECT")) {
                 String reason = request.getParameter("reasonText");
                 reason = questionId + "|" + reason;

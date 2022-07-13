@@ -87,4 +87,23 @@ public class ReportedQuestionDAO {
         }
         return false;
     }
+
+    public int getNumberOfPage() throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM QuestionFlag WHERE State = 0";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecord;
+    }
 }

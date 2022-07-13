@@ -22,8 +22,12 @@ public class ManageUsers extends HttpServlet {
 
         try {
             int page = Integer.parseInt(request.getParameter("page"));
+            String search = request.getParameter("search");
+            if (search == null) search = "";
             UserDAO userDAO = new UserDAO();
-            ArrayList<UserDTO> list = userDAO.getUserByPage(page);
+            ArrayList<UserDTO> list = userDAO.searchByName(search,page);;
+            int numberOfPage = userDAO.getNumberOfPage(search);
+            request.setAttribute("numberOfPage", numberOfPage);
             request.setAttribute("listUser", list);
             request.getRequestDispatcher(MANAGED_USER_VIEW).forward(request,response);
         } catch (Exception e){

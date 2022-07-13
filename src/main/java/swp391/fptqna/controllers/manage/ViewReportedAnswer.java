@@ -1,13 +1,7 @@
 package swp391.fptqna.controllers.manage;
 
-import swp391.fptqna.dao.AnswerDAO;
-import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dao.ReportedAnswerDAO;
-import swp391.fptqna.dao.TagDAO;
-import swp391.fptqna.dto.AnswerDTO;
-import swp391.fptqna.dto.QuestionDTO;
-import swp391.fptqna.dto.ReportedAnswerDTO;
-import swp391.fptqna.dto.TagDTO;
+import swp391.fptqna.dao.*;
+import swp391.fptqna.dto.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,21 +19,27 @@ public class ViewReportedAnswer extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            int questionId = Integer.parseInt(request.getParameter("questionId"));
-            int answerId = Integer.parseInt(request.getParameter("answerId"));
+
             int reportedAnswerId = Integer.parseInt(request.getParameter("reportedAnswerId"));
-            QuestionDAO questionDAO = new QuestionDAO();
-            QuestionDTO question = questionDAO.getQuestionById(questionId);
-            AnswerDAO answerDAO = new AnswerDAO();
-            AnswerDTO answer = answerDAO.getAnswerById(answerId);
             ReportedAnswerDAO reportedAnswerDAO = new ReportedAnswerDAO();
             ReportedAnswerDTO reportedAnswer = reportedAnswerDAO.getReportedAnswerById(reportedAnswerId);
+            int answerId = reportedAnswer.getAnswerId();
+            AnswerDAO answerDAO = new AnswerDAO();
+            AnswerDTO answer = answerDAO.getAnswerById(answerId);
+            int questionId = answer.getQuestionId();
+            QuestionDAO questionDAO = new QuestionDAO();
+            QuestionDTO question = questionDAO.getQuestionById(questionId);
             TagDAO tagDAO = new TagDAO();
             ArrayList<TagDTO> listTag = tagDAO.getListTagByQuestionId(questionId);
+            UserDAO userDAO = new UserDAO();
+            UserDTO ownerQuestionUser = userDAO.getUserById(question.getOwnerUserId());
+            UserDTO ownerAnswerUser = userDAO.getUserById(answer.getOwnerUserId());
             request.setAttribute("question", question);
             request.setAttribute("answer",answer);
             request.setAttribute("reportedAnswer", reportedAnswer);
             request.setAttribute("listTag", listTag);
+            request.setAttribute("ownerQuestionUser",ownerQuestionUser);
+            request.setAttribute("ownerAnswerUser", ownerAnswerUser);
             request.getRequestDispatcher(PENDING_QUESTION_VIEW).forward(request,response);
         } catch (Exception e){
             e.printStackTrace();

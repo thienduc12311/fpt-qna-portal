@@ -29,7 +29,7 @@ public class QuestionDAO {
 
     public QuestionDTO getQuestionById(int id) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "Select * from Questions Where id = ?";
+            String query = "Select * from Questions Where Id = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -124,5 +124,43 @@ public class QuestionDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getNumberOfPagePendingQuestion() throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE ApproveUserId IS NULL AND DeletionDate IS NULL  ";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecord;
+    }
+
+    public int getNumberOfPage() throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecord;
     }
 }
