@@ -57,7 +57,7 @@
                         </div>
                         <div class="flex text-xs gap-x-1">
                             <c:forEach items="${question.tags}" var="tag">
-                                <a href="">
+                                <a href="/home?action=tag&tag=${tag.tagName}&page=1">
                                     <div class="text-xs border rounded border-gray-400 text-gray-400 px-4 py-1 text-justify hover:backdrop-brightness-95 duration-50">${tag.tagName}</div>
                                 </a>
                             </c:forEach>

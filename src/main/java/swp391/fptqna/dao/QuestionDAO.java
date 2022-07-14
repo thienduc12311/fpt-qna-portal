@@ -98,6 +98,67 @@ public class QuestionDAO {
         return 0;
     }
 
+    //Filter by Tag
+    public int getNumberOfAvailablePageFilterTag(String tag) throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(q.Id) AS numOfQuestions\n" +
+                    "FROM Questions q, [dbo].[QuestionTags] qt, [dbo].[Tags] t\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "AND q.Id = qt.QuestionId AND qt.TagId = t.Id\n" +
+                    "AND t.TagName = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, tag);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ArrayList<QuestionDTO> getAvailableQuestionFilterTagByPage(int page, String tag) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM (\n" +
+                    "SELECT q.*\n" +
+                    "FROM Questions q, [dbo].[QuestionTags] qt, [dbo].[Tags] t\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "AND q.Id = qt.QuestionId AND qt.TagId = t.Id\n" +
+                    "AND t.TagName = ?\n" +
+                    "ORDER BY q.CreationDate DESC \n" +
+                    "OFFSET ? ROWS\n" +
+                    "FETCH NEXT 10 ROWS ONLY\n" +
+                    ") question\n" +
+                    "INNER JOIN Users u ON question.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, tag);
+            preparedStatement.setInt(2, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public ExtendQuestionList getAllTagsOfQuestion(ExtendQuestionList questions) {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM (SELECT * FROM QuestionTags WHERE QuestionId IN (?,?,?,?,?,?,?,?,?,?)) q INNER JOIN Tags t ON q.TagId = t.Id";

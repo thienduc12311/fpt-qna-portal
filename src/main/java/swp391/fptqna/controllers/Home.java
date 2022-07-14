@@ -23,9 +23,35 @@ public class Home extends HttpServlet {
         ExtendQuestionList extendedQuestion = new ExtendQuestionList();
         QuestionDAO questionDAO = new QuestionDAO();
         try {
-            page = Integer.parseInt(request.getParameter("page"));
-            int numberOfPage = questionDAO.getNumberOfAvailablePage();
-            questionList = questionDAO.getAvailableQuestionByPage(page);
+            String action = request.getParameter("action");
+            System.out.println(action);
+            String tag = request.getParameter("tag");
+            System.out.println(tag);
+
+            if (action == null) action = "latest";
+            int numberOfPage = 0;
+
+            //5 filter actions: latest, search, tag, most voted, most answered
+
+            switch (action){
+                case "latest":
+                    numberOfPage = questionDAO.getNumberOfAvailablePage();
+                    page = Integer.parseInt(request.getParameter("page"));
+                    questionList = questionDAO.getAvailableQuestionByPage(page);
+                    break;
+                case "search":
+                    break;
+                case "tag":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterTag(tag);
+                    page = Integer.parseInt(request.getParameter("page"));
+                    questionList = questionDAO.getAvailableQuestionFilterTagByPage(page, tag);
+                    break;
+                case "mostVoted":
+                    break;
+                case "mostAnswered":
+                    break;
+            }
+
             if (questionList.isEmpty()) {
                 throw new Exception("List is empty");
             }

@@ -54,7 +54,7 @@
 
   <div class="basis-8/12 relative left-80">
     <div class=" bg-white items-center rounded-xl shadow-lg ">
-    <form action="UpdateUser" method="POST">
+    <form action="/UpdateUser" method="POST">
       <div class="flex flex-col items-center p-20 space-y-6">
         <div class="font-bold text-xl">Edit Profile</div>
         <div><img class="rounded-full w-24" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg" alt=""></div>
