@@ -53,7 +53,7 @@ public class QuestionDAO {
             String query = "SELECT * FROM \n" +
                     "(SELECT * FROM Questions \n" +
                     "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL)   \n" +
-                    "    ORDER BY CreationDate ASC \n" +
+                    "    ORDER BY CreationDate DESC \n" +
                     "    OFFSET ? ROWS \n" +
                     "    FETCH NEXT 10 ROWS ONLY) q \n" +
                     "INNER JOIN Users u ON q.OwnerUserId = u.Id";
@@ -159,6 +159,106 @@ public class QuestionDAO {
         return null;
     }
 
+    //Filter by Most liked
+    public ArrayList<QuestionDTO> getAvailableQuestionFilterMostLikedByPage(int page) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM (\n" +
+                    "SELECT *\n" +
+                    "FROM Questions q\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "ORDER BY Score DESC " +
+                    "OFFSET ? ROWS\n" +
+                    "FETCH NEXT 10 ROWS ONLY\n" +
+                    ") question\n" +
+                    "INNER JOIN Users u ON question.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //Filter by Most Answered
+    public ArrayList<QuestionDTO> getAvailableQuestionFilterMostAnsweredByPage(int page) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM (\n" +
+                    "SELECT *\n" +
+                    "FROM Questions q\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "ORDER BY AnswerCount DESC " +
+                    "OFFSET ? ROWS\n" +
+                    "FETCH NEXT 10 ROWS ONLY\n" +
+                    ") question\n" +
+                    "INNER JOIN Users u ON question.OwnerUserId = u.Id";;
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //Filter by User Id
+    public ArrayList<QuestionDTO> getAvailableQuestionFilterUserIdByPage(int page, int userId) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM \n" +
+                    "(SELECT * FROM Questions \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND OwnerUserId = ?)   \n" +
+                    "    ORDER BY CreationDate DESC \n" +
+                    "    OFFSET ? ROWS \n" +
+                    "    FETCH NEXT 10 ROWS ONLY) q \n" +
+                    "INNER JOIN Users u ON q.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, 10 * (page - 1));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    QuestionDTO question = parseFromDB(resultSet);
+                    String userName = resultSet.getString("UserDisplayName");
+                    String avtUrl = resultSet.getString("ImgLink");
+                    question.setOwnerName(userName);
+                    question.setOwnerAvt(avtUrl);
+                    list.add(question);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public ExtendQuestionList getAllTagsOfQuestion(ExtendQuestionList questions) {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM (SELECT * FROM QuestionTags WHERE QuestionId IN (?,?,?,?,?,?,?,?,?,?)) q INNER JOIN Tags t ON q.TagId = t.Id";
@@ -166,7 +266,7 @@ public class QuestionDAO {
             for (int i = 0; i < questions.size(); i++) {
                 preparedStatement.setInt(i + 1, questions.get(i).getId());
             }
-            for (int i = questions.size(); i < 11; i++) {
+            for (int i = questions.size() + 1; i < 11; i++) {
                 preparedStatement.setString(i, null);
             }
 

@@ -16,9 +16,9 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div class="pt-14">
     <div class="pt-10 pb-3 px-1 xl:px-40 md:px-24 sm:px-10 inline-flex space-x-8 ml-20 font-semibold">
-        <a href="#" class="text-sm hover:opacity-60 duration-150">Newest</a>
-        <a href="#" class="text-sm hover:opacity-60 duration-150">Most liked</a>
-        <a href="#" class="text-sm hover:opacity-60 duration-150">Most answered</a>
+        <a href="" class="text-sm hover:opacity-60 duration-150">Newest</a>
+        <a href="/home?action=mostLiked&page=1" class="text-sm hover:opacity-60 duration-150">Most liked</a>
+        <a href="/home?action=mostAnswered&page=1" class="text-sm hover:opacity-60 duration-150">Most answered</a>
     </div>
     <div class="flex justify-center h-screen px-2 xl:px-40 lg:px-24 md:px-18 sm:px-8 h-full space-x-4">
 

@@ -32,11 +32,10 @@ public class Home extends HttpServlet {
             int numberOfPage = 0;
 
             //5 filter actions: latest, search, tag, most voted, most answered
-
+            numberOfPage = questionDAO.getNumberOfAvailablePage();
+            page = Integer.parseInt(request.getParameter("page"));
             switch (action){
                 case "latest":
-                    numberOfPage = questionDAO.getNumberOfAvailablePage();
-                    page = Integer.parseInt(request.getParameter("page"));
                     questionList = questionDAO.getAvailableQuestionByPage(page);
                     break;
                 case "search":
@@ -46,9 +45,11 @@ public class Home extends HttpServlet {
                     page = Integer.parseInt(request.getParameter("page"));
                     questionList = questionDAO.getAvailableQuestionFilterTagByPage(page, tag);
                     break;
-                case "mostVoted":
+                case "mostLiked":
+                    questionList = questionDAO.getAvailableQuestionFilterMostLikedByPage(page);
                     break;
                 case "mostAnswered":
+                    questionList = questionDAO.getAvailableQuestionFilterMostAnsweredByPage(page);
                     break;
             }
 
