@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "PendingQuestion", value = "/manage/PendingQuestion")
 public class PendingQuestion extends HttpServlet {
-    private final String PENDING_QUESTION_VIEW = "pendingQuestion.jsp";
+    private final String PENDING_QUESTION_VIEW = "pendingQuestionManagement.jsp";
     private final String ERROR_VIEW = "../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -23,6 +23,8 @@ public class PendingQuestion extends HttpServlet {
         try {
             int page = Integer.parseInt(request.getParameter("page"));
             QuestionDAO questionDAO = new QuestionDAO();
+            int numberOfPage = questionDAO.getNumberOfPagePendingQuestion();
+            request.setAttribute("numberOfPage", numberOfPage);
             ArrayList<QuestionDTO> list = questionDAO.getPendingQuestionByPage(page);
             request.setAttribute("listPendingQuestion", list);
             request.getRequestDispatcher(PENDING_QUESTION_VIEW).forward(request,response);
