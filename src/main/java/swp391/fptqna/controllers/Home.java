@@ -27,6 +27,9 @@ public class Home extends HttpServlet {
             System.out.println(action);
             String tag = request.getParameter("tag");
             System.out.println(tag);
+            String txtSearch = request.getParameter("txtSearch");
+            System.out.println(txtSearch);
+
 
             if (action == null) action = "latest";
             int numberOfPage = 0;
@@ -39,10 +42,11 @@ public class Home extends HttpServlet {
                     questionList = questionDAO.getAvailableQuestionByPage(page);
                     break;
                 case "search":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterKeyword(txtSearch);
+                    questionList = questionDAO.getAvailableQuestionFilterKeywordByPage(page, txtSearch);
                     break;
                 case "tag":
                     numberOfPage = questionDAO.getNumberOfAvailablePageFilterTag(tag);
-                    page = Integer.parseInt(request.getParameter("page"));
                     questionList = questionDAO.getAvailableQuestionFilterTagByPage(page, tag);
                     break;
                 case "mostLiked":

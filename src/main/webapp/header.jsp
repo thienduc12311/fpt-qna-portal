@@ -11,9 +11,10 @@
                     </a>
                 </div>
                 <div class="hidden md:block ">
-                    <form action="Search" method="post" class="p-0 m-0 inline">
+                    <form action="/home?action=search&page=1" method="post" class="p-0 m-0 inline">
                         <div class="relative">
-                            <input type="text" name="txtdisplayname" value=""
+
+                            <input type="text" name="txtSearch" value="${param.txtSearch}"
                                    class="text-sm py-1.5 w-60 rounded px-3 shadow focus:outline-none focus:ring-1 focus:ring-[#7E3AF2]"
                                    placeholder="Search...">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-2">
