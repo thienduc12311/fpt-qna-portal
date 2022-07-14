@@ -154,14 +154,14 @@
 
                         <div class="flex items-center flex-col md:flex-row gap-y-3">
                             <div
-                                    class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center md:mr-6"
+                                    class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-38 justify-center md:mr-6"
                             >
                                 <ion-icon name="chatbox-ellipses"></ion-icon>
                                 <!-- number of answers here -->
                                 <div class="ml-2 text-xs">12 answers</div>
                             </div>
                             <div
-                                    class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center"
+                                    class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-38 justify-center"
                             >
                                 <ion-icon name="chatbubbles"></ion-icon>
                                 <!-- number of answers here -->
