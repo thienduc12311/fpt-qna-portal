@@ -1,5 +1,6 @@
-package swp391.fptqna.controllers.manage;
+package swp391.fptqna.controllers.manage.admin;
 
+import com.microsoft.sqlserver.jdbc.StringUtils;
 import swp391.fptqna.dao.QuestionDAO;
 import swp391.fptqna.dao.UserDAO;
 import swp391.fptqna.dto.QuestionDTO;
@@ -11,23 +12,32 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "PendingQuestion", value = "/manage/PendingQuestion")
-public class PendingQuestion extends HttpServlet {
-    private final String PENDING_QUESTION_VIEW = "pendingQuestionManagement.jsp";
-    private final String ERROR_VIEW = "../error.jsp";
+@WebServlet(name = "ManageQuestions", value = "/manage/admin/ManageQuestions")
+public class ManageQuestions extends HttpServlet {
+    private final String MANAGED_QUESTION_VIEW = "questionManagement.jsp";
+    private final String ERROR_VIEW = "../../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-
         try {
             int page = Integer.parseInt(request.getParameter("page"));
+            String search = request.getParameter("search");
             QuestionDAO questionDAO = new QuestionDAO();
-            int numberOfPage = questionDAO.getNumberOfPagePendingQuestion();
+            int numberOfPage = questionDAO.getNumberOfPage();
+            if (search == null || search.equals("")) {
+                ArrayList<QuestionDTO> list = questionDAO.getQuestionByPage(page) ;
+                request.setAttribute("listQuestion", list);
+            } else {
+                ArrayList<QuestionDTO> list = new ArrayList<>();
+                if (StringUtils.isNumeric(search)) {
+                    list.add(questionDAO.getQuestionById(Integer.parseInt(search)));
+                }
+                numberOfPage = 1;
+                request.setAttribute("listQuestion", list);
+            }
             request.setAttribute("numberOfPage", numberOfPage);
-            ArrayList<QuestionDTO> list = questionDAO.getPendingQuestionByPage(page);
-            request.setAttribute("listPendingQuestion", list);
-            request.getRequestDispatcher(PENDING_QUESTION_VIEW).forward(request,response);
+
+            request.getRequestDispatcher(MANAGED_QUESTION_VIEW).forward(request,response);
         } catch (Exception e){
             e.printStackTrace();
             response.sendRedirect(ERROR_VIEW);
@@ -42,6 +52,4 @@ public class PendingQuestion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-
-
 }

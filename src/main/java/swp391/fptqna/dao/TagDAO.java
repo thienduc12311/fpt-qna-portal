@@ -16,7 +16,7 @@ public class TagDAO {
         int ownerUserId = resultSet.getInt("OwnerUserId");
         int questionCount = resultSet.getInt("QuestionCount");
         byte state = resultSet.getByte("State");
-        return new TagDTO(id, tagName, description, creationDate, ownerUserId, questionCount, state);
+        return new TagDTO(id, tagName, description, creationDate, ownerUserId, questionCount,state);
     }
 
     private TagDTO getTagById(int id) throws Exception {
@@ -55,7 +55,6 @@ public class TagDAO {
         }
         return null;
     }
-
     public ArrayList<TagDTO> getTagByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Tags \n" +
@@ -79,6 +78,31 @@ public class TagDAO {
         return null;
     }
 
+    public ArrayList<TagDTO> getListTagByQuestionId(int questionId) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT Tags.Id as Id, Tags.TagName as TagName FROM \n" +
+                    "(SELECT * FROM QuestionTags\n" +
+                    "WHERE QuestionId = ?) as QT LEFT JOIN Tags ON QT.TagId = Tags.Id;";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                ArrayList<TagDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("Id");
+                    String tagName = resultSet.getString("TagName");
+                    TagDTO tag = new TagDTO(id, tagName);
+                    list.add(tag);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean addTag(String tagName, String description, int userId) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "Insert into Tags values (?,?,?,?,?,?)";
@@ -87,8 +111,8 @@ public class TagDAO {
             preparedStatement.setString(2, description);
             preparedStatement.setTimestamp(3, new Timestamp(new Date().getTime()));
             preparedStatement.setInt(4, userId);
-            preparedStatement.setInt(5, 0);
-            preparedStatement.setInt(6, 1);
+            preparedStatement.setInt(5,0);
+            preparedStatement.setInt(6,1);
             int rs = preparedStatement.executeUpdate();
             return rs > 0;
         } catch (Exception e) {
@@ -104,7 +128,7 @@ public class TagDAO {
             preparedStatement.setString(1, tagName);
             preparedStatement.setString(2, description);
             preparedStatement.setByte(3, state);
-            preparedStatement.setInt(4, tagId);
+            preparedStatement.setInt(4,tagId);
             int rs = preparedStatement.executeUpdate();
             return rs > 0;
         } catch (Exception e) {

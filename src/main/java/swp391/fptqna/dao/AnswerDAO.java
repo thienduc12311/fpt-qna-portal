@@ -80,6 +80,18 @@ public class AnswerDAO {
         }
         return false;
     }
+    public boolean delete(int answerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "DELETE FROM Answers WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, answerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean addNewAnswer(int userId, int questionId, String content) {
         String query = "INSERT INTO Answers(QuestionId, CreationDate, Body, OwnerUserId) VALUES (?,?,?,?)";
@@ -89,6 +101,19 @@ public class AnswerDAO {
             preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
             preparedStatement.setString(3, content);
             preparedStatement.setInt(4, userId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean deleteWithoutDB(int answerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Answers SET DeletionDate = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(2, answerId);
             int rs = preparedStatement.executeUpdate();
             return rs > 0;
         } catch (Exception e) {

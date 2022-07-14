@@ -12,6 +12,11 @@ public class TagDTO {
     private int questionCount;
     private byte state;
 
+    public TagDTO(int id, String tagName) {
+        this.id = id;
+        this.tagName = tagName;
+    }
+
     public TagDTO(int id, String tagName, String description, Date creationDate, int ownUserId, int questionCount, byte state) {
         this.id = id;
         this.tagName = tagName;

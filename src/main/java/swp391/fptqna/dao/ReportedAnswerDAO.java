@@ -1,12 +1,10 @@
 package swp391.fptqna.dao;
 
+import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.ReportedAnswerDTO;
 import swp391.fptqna.utils.DButil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,10 +20,28 @@ public class ReportedAnswerDAO {
         return new ReportedAnswerDTO(id, flagTypeId, answerId, ownerUserId, creationDate, state, description);
     }
 
+    public ReportedAnswerDTO getReportedAnswerById(int id) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "Select * from AnswerFlag Where id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet != null && resultSet.next()) {
+                    return parseFromDB(resultSet);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public ArrayList<ReportedAnswerDTO> getReportedAnswerByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM AnswerFlag \n" +
-                    "WHERE State = 2\n" +
+                    "WHERE State = 0\n" +
                     "ORDER BY CreationDate ASC \n" +
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY;";
@@ -44,5 +60,52 @@ public class ReportedAnswerDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean setState(int reportedAnswerId, byte state) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE AnswerFlag SET State = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setByte(1,state);
+            preparedStatement.setInt(2, reportedAnswerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(int reportedAnswerId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "DELETE FROM AnswerFlag WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, reportedAnswerId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public int getNumberOfPage() throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM AnswerFlag WHERE State = 0";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecord;
     }
 }

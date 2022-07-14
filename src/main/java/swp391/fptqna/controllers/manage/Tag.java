@@ -1,9 +1,8 @@
 package swp391.fptqna.controllers.manage;
 
-import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dao.UserDAO;
-import swp391.fptqna.dto.QuestionDTO;
-import swp391.fptqna.dto.UserDTO;
+
+import swp391.fptqna.dao.TagDAO;
+import swp391.fptqna.dto.TagDTO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,9 +10,9 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "PendingQuestion", value = "/manage/PendingQuestion")
-public class PendingQuestion extends HttpServlet {
-    private final String PENDING_QUESTION_VIEW = "pendingQuestionManagement.jsp";
+@WebServlet(name = "Tag", value = "/manage/Tag")
+public class Tag extends HttpServlet {
+    private final String TAG_VIEW = "tagManagement.jsp";
     private final String ERROR_VIEW = "../error.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -22,12 +21,10 @@ public class PendingQuestion extends HttpServlet {
 
         try {
             int page = Integer.parseInt(request.getParameter("page"));
-            QuestionDAO questionDAO = new QuestionDAO();
-            int numberOfPage = questionDAO.getNumberOfPagePendingQuestion();
-            request.setAttribute("numberOfPage", numberOfPage);
-            ArrayList<QuestionDTO> list = questionDAO.getPendingQuestionByPage(page);
-            request.setAttribute("listPendingQuestion", list);
-            request.getRequestDispatcher(PENDING_QUESTION_VIEW).forward(request,response);
+            TagDAO tagDAO = new TagDAO();
+            ArrayList<TagDTO> list = tagDAO.getTagByPage(page);
+            request.setAttribute("listTag", list);
+            request.getRequestDispatcher(TAG_VIEW).forward(request,response);
         } catch (Exception e){
             e.printStackTrace();
             response.sendRedirect(ERROR_VIEW);
@@ -35,13 +32,11 @@ public class PendingQuestion extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
-
-
 }
