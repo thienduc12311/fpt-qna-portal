@@ -23,9 +23,40 @@ public class Home extends HttpServlet {
         ExtendQuestionList extendedQuestion = new ExtendQuestionList();
         QuestionDAO questionDAO = new QuestionDAO();
         try {
+            String action = request.getParameter("action");
+            System.out.println(action);
+            String tag = request.getParameter("tag");
+            System.out.println(tag);
+            String txtSearch = request.getParameter("txtSearch");
+            System.out.println(txtSearch);
+
+
+            if (action == null) action = "latest";
+            int numberOfPage = 0;
+
+            //5 filter actions: latest, search, tag, most voted, most answered
+            numberOfPage = questionDAO.getNumberOfAvailablePage();
             page = Integer.parseInt(request.getParameter("page"));
-            int numberOfPage = questionDAO.getNumberOfAvailablePage();
-            questionList = questionDAO.getAvailableQuestionByPage(page);
+            switch (action){
+                case "latest":
+                    questionList = questionDAO.getAvailableQuestionByPage(page);
+                    break;
+                case "search":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterKeyword(txtSearch);
+                    questionList = questionDAO.getAvailableQuestionFilterKeywordByPage(page, txtSearch);
+                    break;
+                case "tag":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterTag(tag);
+                    questionList = questionDAO.getAvailableQuestionFilterTagByPage(page, tag);
+                    break;
+                case "mostLiked":
+                    questionList = questionDAO.getAvailableQuestionFilterMostLikedByPage(page);
+                    break;
+                case "mostAnswered":
+                    questionList = questionDAO.getAvailableQuestionFilterMostAnsweredByPage(page);
+                    break;
+            }
+
             if (questionList.isEmpty()) {
                 throw new Exception("List is empty");
             }

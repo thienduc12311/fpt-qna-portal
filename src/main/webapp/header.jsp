@@ -5,16 +5,17 @@
             <div class="flex space-x-6 items-center">
                 <div>
                     <a href="home?page=1">
-                        <div class="text-sm bg-purple-600 text-white font-semibold rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-purple-800 transition ease-in-out duration-300">
+                        <div class="text-sm bg-[#7E3AF2] text-white font-semibold rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-[#5828a9] transition ease-in-out duration-300">
                             <span class="font-bold">FPT</span>QnA Portal
                         </div>
                     </a>
                 </div>
                 <div class="hidden md:block ">
-                    <form action="Search" method="post" class="p-0 m-0 inline">
+                    <form action="/home?action=search&page=1" method="post" class="p-0 m-0 inline">
                         <div class="relative">
-                            <input type="text" name="txtdisplayname" value=""
-                                   class="text-sm py-1.5 w-60 rounded px-3 shadow focus:outline-none focus:ring-1 focus:ring-purple-500"
+
+                            <input type="text" name="txtSearch" value="${param.txtSearch}"
+                                   class="text-sm py-1.5 w-60 rounded px-3 shadow focus:outline-none focus:ring-1 focus:ring-[#7E3AF2]"
                                    placeholder="Search...">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-2">
                                     <button type="submit"
@@ -33,7 +34,7 @@
             <div class="flex space-x-6 items-center">
                 <div>
                     <a href="/CreateQuestion"
-                       class="text-sm bg-purple-600 text-white font-medium rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-purple-800 transition ease-in-out duration-300">
+                       class="text-sm bg-[#7E3AF2] text-white font-medium rounded-md py-1.5 flex items-center px-4 space-x-2 hover:bg-[#5828a9] transition ease-in-out duration-300">
                         <div>
                             <svg class="w-4 h-4 fill-white" id="Layer_1" viewBox="0 0 24 24"
                                  xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
@@ -73,7 +74,7 @@
                                             <div class="text-xs">Jane Dove<span class="font-normal text-xs"> has recently answered your question </span>"Why
                                                 do birds fly, they want to look down on us or ..."
                                             </div>
-                                            <div class="text-slate-300 font-normal text-xs">March 3, 2022</div>
+                                            <div class="text-slate-300 font-normal text-xs mt-1">March 3, 2022</div>
                                         </div>
                                     </a>
                                 </div>
