@@ -54,7 +54,9 @@
   <!-- right side -->
 
   <div class="basis-8/12 relative left-80">
+
     <div class=" bg-white items-center rounded shadow ">
+
     <form action="/UpdateUser" method="POST">
       <div class="flex flex-col items-center p-20 space-y-6">
         <div class="font-bold text-xl">Edit Profile</div>
