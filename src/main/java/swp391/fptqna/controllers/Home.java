@@ -24,8 +24,10 @@ public class Home extends HttpServlet {
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             String action = request.getParameter("action");
+
             String tag = request.getParameter("tag");
             String txtSearch = request.getParameter("txtSearch");
+
 
 
             if (action == null) action = "latest";
