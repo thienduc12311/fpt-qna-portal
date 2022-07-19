@@ -95,6 +95,7 @@
                             <c:param name="page" value="${1}"></c:param>
                         </c:url>
                         <a href="${tagUrl}">
+
                             <div class="text-xs border rounded border-gray-400 text-gray-400 px-4 py-1 text-justify hover:backdrop-brightness-95 duration-50">${tag.tagName}</div>
                         </a>
                     </c:forEach>

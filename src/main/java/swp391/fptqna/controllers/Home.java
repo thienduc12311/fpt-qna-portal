@@ -27,6 +27,7 @@ public class Home extends HttpServlet {
             String tag = request.getParameter("tag");
             String txtSearch = request.getParameter("txtSearch");
 
+
             if (action == null) action = "latest";
             int numberOfPage = 0;
 
