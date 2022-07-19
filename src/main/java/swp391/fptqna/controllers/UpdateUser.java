@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet(name = "UpdateUser", value = "/UpdateUser")
 public class UpdateUser extends HttpServlet {
     private final String EDIT_PROFILE_VIEW = "editprofile.jsp";
-    private final String PERSONAL_PROFILE_VIEW = "personalprofile.jsp";
+    private final String PERSONAL_PROFILE_VIEW = "/PersonalProfile?page=1";
     private final String CHANGE_PASSWORD_VIEW = "changepassword.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

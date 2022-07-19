@@ -65,7 +65,7 @@
                                     <p class="text-lg leading-5 font-bold">Notifications</p>
                                 </div>
                                 <div class="py-1 px-6 hover:bg-slate-100">
-                                    <a href="personalprofile.jsp"
+                                    <a href="/PersonalProfile?page=1"
                                        class="text-gray-700 flex w-full pt-4 py-2 text-xs leading-5 text-left space-x-2"
                                        role="menuitem">
                                         <img class="rounded-full h-9 w-9"
@@ -84,7 +84,7 @@
                 </div>
 
                 <div>
-                    <a href="personalprofile.jsp">
+                    <a href="/PersonalProfile?page=1">
                         <label class="flex lg:space-x-2 cursor-pointer">
                             <img class="rounded-full h-9 w-9" src="${sessionScope.USER.avtUrl}">
                             <div class="hidden lg:flex lg:flex-col">
@@ -113,7 +113,7 @@
                                     <p class="text-xs font-medium leading-5 text-gray-900 truncate">${sessionScope.USER.email}</p>
                                 </div>
                                 <div class="py-1 px-4 hover:bg-slate-100">
-                                    <a href="personalprofile.jsp"
+                                    <a href="/PersonalProfile?page=1"
                                        class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"
                                        role="menuitem">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3"

@@ -97,7 +97,7 @@ public class UserDAO {
                     int role = resultSet.getInt("Role");
                     boolean state = resultSet.getBoolean("State");
                     String bio = resultSet.getString("Bio");
-                    UserDTO user = new UserDTO(email,name,password,imgLink,score,role,state,bio);
+                    UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
                     return user;
                 }
 

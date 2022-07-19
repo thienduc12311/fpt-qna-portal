@@ -227,6 +227,29 @@ public class QuestionDAO {
         return null;
     }
 
+    public int getNumberOfAvailablePageFilterUserId(int userId) throws Exception {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(q.Id) AS numOfQuestions\n" +
+                    "FROM Questions q " +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     //Filter by User Id
     public ArrayList<QuestionDTO> getAvailableQuestionFilterUserIdByPage(int page, int userId) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
