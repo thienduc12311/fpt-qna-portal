@@ -21,6 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
+    <link href="./asset/style/dracula.css" rel="stylesheet">
     <style>
         @tailwind base;
 
@@ -59,15 +60,18 @@
                 <img class="rounded-full h-8 w-8"
                      src="<%=ownerUser.getAvtUrl()%>">
             </a>
-            <a href="#" class="font-semibold cursor-pointer"><%=ownerUser.getName()%></a>
+            <a href="#" class="font-semibold cursor-pointer"><%=ownerUser.getName()%>
+            </a>
             <span class="text-xs text-slate-400"><%=question.getCreationDate()%></span>
         </div>
         <!-- Info end -->
 
         <!-- Content start -->
         <div class="mb-2">
-            <p class="font-semibold text-xl mb-2"><%=question.getTitle()%></p>
-            <p class="text-gray-500"><%=question.getBody()%></p>
+            <p class="font-semibold text-xl mb-2"><%=question.getTitle()%>
+            </p>
+            <p class="text-gray-500"><%=question.getBody()%>
+            </p>
         </div>
         <!-- Content end -->
 
@@ -170,6 +174,15 @@
         e.printStackTrace();
     }
 %>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<script>
+    hljs.configure({
+        languages: ['javascript', 'java', 'python']
+    });
+    document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+    })
+</script>
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
 <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 

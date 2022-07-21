@@ -11,6 +11,7 @@
 <head>
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./asset/style/dracula.css" rel="stylesheet">
 </head>
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
 <jsp:include page="header.jsp"></jsp:include>
@@ -124,27 +125,33 @@
             <div class=" bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                              d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+                              clip-rule="evenodd"/>
                     </svg>
                     <span class="text-sm">Trending Tags</span>
                 </div>
                 <div class="flex flex-wrap text-xs gap-x-1 gap-y-1 pt-3">
                     <a href="#">
-                        <div class="text-xs border rounded border-gray-400 text-gray-400 px-4 py-1 text-justify hover:backdrop-brightness-95 duration-50">Java</div>
+                        <div class="text-xs border rounded border-gray-400 text-gray-400 px-4 py-1 text-justify hover:backdrop-brightness-95 duration-50">
+                            Java
+                        </div>
                     </a>
                 </div>
             </div>
             <div class="bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                     </svg>
                     <span class="text-sm">Top Users</span>
                 </div>
                 <div class="divide-y">
                     <a href="#">
                         <div class="flex flex-wrap space-x-3 items-center p-2 hover:opacity-60 duration-150">
-                            <p><img class="rounded h-9 w-9" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg"></p>
+                            <p><img class="rounded h-9 w-9"
+                                    src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
+                            </p>
                             <div>
                                 <p class="font-semibold text-xs">Jane Dove</p>
                                 <p class="text-xs">100 points</p>
@@ -157,14 +164,18 @@
             <div class="bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                              d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                              clip-rule="evenodd"/>
                     </svg>
                     <span class="text-sm">New Users</span>
                 </div>
                 <div class="divide-y">
                     <a href="#">
                         <div class="flex flex-wrap space-x-3 items-center p-2 hover:opacity-60 duration-150">
-                            <p><img class="rounded h-9 w-9" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg"></p>
+                            <p><img class="rounded h-9 w-9"
+                                    src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
+                            </p>
                             <div>
                                 <p class="font-semibold text-xs">Jane Dove</p>
                                 <p class="text-xs">100 points</p>
@@ -176,6 +187,15 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<script>
+    hljs.configure({
+        languages: ['javascript', 'java', 'python']
+    });
+    document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+    })
+</script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
