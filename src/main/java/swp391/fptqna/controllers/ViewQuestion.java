@@ -2,6 +2,7 @@ package swp391.fptqna.controllers;
 
 import swp391.fptqna.dao.AnswerDAO;
 import swp391.fptqna.dao.CommentDAO;
+import swp391.fptqna.dao.QuestionDAO;
 import swp391.fptqna.dto.*;
 
 import javax.servlet.ServletException;
@@ -21,16 +22,22 @@ public class ViewQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
+            int questionId = Integer.parseInt(request.getParameter("questionId"));
+            ExtendQuestionList questionList = new ExtendQuestionList();
+            QuestionDAO questionDAO = new QuestionDAO();
+            questionList.add(questionDAO.getExtendQuestionById(questionId));
+            questionDAO.getAllTagsOfQuestion(questionList);
+            ExtendedQuestionDTO question = questionList.getQuestionById(questionId);
             if (action == null) action = "view";
             switch (action) {
                 case "view":
-                    viewQuestion(request, response);
+                    viewQuestion(request, response, question);
                     break;
                 case "comment":
-                    addComment(request, response);
+                    addComment(request, response, question);
                     break;
                 case "answer":
-                    addAnswer(request, response);
+                    addAnswer(request, response, question);
                     break;
             }
         } catch (Exception ex) {
@@ -40,12 +47,10 @@ public class ViewQuestion extends HttpServlet {
 
     }
 
-    private void addAnswer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addAnswer(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
             int questionId = Integer.parseInt(request.getParameter("questionId"));
-            ExtendQuestionList questionList = (ExtendQuestionList) session.getAttribute("questions");
-            ExtendedQuestionDTO question = questionList.getQuestionById(questionId);
             UserDTO user = (UserDTO) session.getAttribute("USER");
             String content = request.getParameter("answerContent");
             if (content == null) {
@@ -72,13 +77,10 @@ public class ViewQuestion extends HttpServlet {
         }
     }
 
-    private void addComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addComment(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            int questionId = Integer.parseInt(request.getParameter("questionId"));
             int parentId = Integer.parseInt(request.getParameter("parentId"));
-            ExtendQuestionList questionList = (ExtendQuestionList) session.getAttribute("questions");
-            ExtendedQuestionDTO question = questionList.getQuestionById(questionId);
             UserDTO user = (UserDTO) session.getAttribute("USER");
             String type = request.getParameter("type");
             String content = request.getParameter("commentContent");
@@ -112,12 +114,8 @@ public class ViewQuestion extends HttpServlet {
         request.getRequestDispatcher(QUESTION_VIEW).forward(request, response);
     }
 
-    private void viewQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void viewQuestion(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
         try {
-            HttpSession session = request.getSession();
-            int questionId = Integer.parseInt(request.getParameter("questionId"));
-            ExtendQuestionList questionList = (ExtendQuestionList) session.getAttribute("questions");
-            ExtendedQuestionDTO question = questionList.getQuestionById(questionId);
             forwardRequest(request, response, question);
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
