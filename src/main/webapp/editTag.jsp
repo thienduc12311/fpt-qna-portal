@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+<%@include file="header.jsp"%>
 <div class="container w-50% p-5 md:p-0 h-[100vh] mx-auto flex flex-col justify-center">
     <h3 class="text-2xl font-bold mb-5">Edit tag</h3>
     <div class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-8">
