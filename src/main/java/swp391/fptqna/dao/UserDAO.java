@@ -292,4 +292,45 @@ public class UserDAO {
         }
         return numberOfRecord;
     }
+
+    public int countUserQuestions (int userId) throws Exception{
+        int numberofQuestions = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQues\n" +
+                    "FROM Questions\n" +
+                    "WHERE OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    numberofQuestions = resultSet.getInt("numOfQues");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberofQuestions;
+    }
+    public int countUserAnswers (int userId) throws Exception{
+        int numberofAnswers = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfAns\n" +
+                    "FROM Answers\n" +
+                    "WHERE OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    numberofAnswers = resultSet.getInt("numOfAns");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberofAnswers;
+    }
 }

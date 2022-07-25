@@ -15,7 +15,7 @@
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
 <jsp:include page="header.jsp"></jsp:include>
 <div class="pt-14">
-    <div class="pt-10 pb-3 px-1 xl:px-40 md:px-24 sm:px-10 inline-flex space-x-8 ml-20 font-semibold">
+    <div class="pt-10 pb-3 px-10 xl:px-52 lg:48 md:px-32 sm:px-20 inline-flex space-x-8 ml-20 font-semibold">
 
         <a href="/home?action=latest&page=1" class="text-sm hover:opacity-60 duration-150">Newest</a>
 
@@ -25,7 +25,7 @@
     <div class="flex justify-center h-screen px-2 xl:px-40 lg:px-24 md:px-18 sm:px-8 h-full space-x-4">
 
         <!-- left column -->
-        <div class="w-10/12">
+        <div class="w-10/12 sm:w-8/12">
 
             <!-- a post -->
             <c:forEach items="${sessionScope.questions}" var="question">
@@ -43,10 +43,10 @@
 
                     <div class="w-11/12 bg-white p-8 grid content-start gap-y-3 rounded shadow-md">
                         <div class="flex gap-x-2 items-center">
-                            <a href="#">
+                            <a href="/PersonalProfile?page=1&userid=${question.ownerUserId}">
                                 <img class="rounded-full h-8 w-8" src="${question.ownerAvt}">
                             </a>
-                            <a href="#">
+                            <a href="/PersonalProfile?page=1&userid=${question.ownerUserId}">
                                 <p class="text-sm font-semibold pt-1">${question.ownerName}</p>
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                             <a href="/ViewQuestion?questionId=${question.id}"
                                class="font-semibold hover:opacity-60 duration-150">${question.title}</a>
                         </div>
-                        <div>
+                        <div class="overflow-x-auto">
                             <p class="text-gray-500 text-sm">${question.body}</p>
                         </div>
                         <div class="flex text-xs gap-x-1">
@@ -120,7 +120,7 @@
                 </a>
             </div>
         </div>
-        <div class="hidden lg:block w-4/12">
+        <div class="hidden lg:block w-3/12">
             <div class=" bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">

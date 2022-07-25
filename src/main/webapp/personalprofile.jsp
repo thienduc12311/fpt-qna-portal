@@ -14,8 +14,9 @@
 </head>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<body class="h-full w-full flex justify-center bg-gray-50 text-gray-800">
-<div class="flex flex-row justify-between h-full w-8/12 mt-20 relative">
+<body class="h-full w-full flex justify-center bg-[#F2F2F2] text-gray-800">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="flex flex-row justify-between h-full w-8/12 pt-32 relative">
 
     <!-- left side -->
     <div class="basis-4/12 h-full fixed left-4/12">
@@ -31,11 +32,11 @@
                     <div class="text-sm">Scores</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
-                    <div class="text-sm">Posts</div>
+                    <div class="font-semibold">${requestScope.numberofQuestions}</div>
+                    <div class="text-sm">Questions</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
+                    <div class="font-semibold">${requestScope.numberofAnswers}</div>
                     <div class="text-sm">Answers</div>
                 </div>
 
@@ -84,7 +85,7 @@
                     <a href="/ViewQuestion?questionId=${question.id}"
                        class="font-semibold text-gray-800 hover:opacity-60 duration-150">${question.title}</a>
                 </div>
-                <div>
+                <div class="overflow-x-auto">
                     <p class="text-gray-500 text-sm">${question.body}</p>
                 </div>
                 <div class="flex text-xs gap-x-1">
