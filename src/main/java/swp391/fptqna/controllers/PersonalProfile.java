@@ -53,12 +53,14 @@ public class PersonalProfile extends HttpServlet {
             session.removeAttribute("questions");
             session.setAttribute("questions", extendedQuestion);
             request.setAttribute("userProfile", user);
-            request.setAttribute("numberofAnswers", numberofAnswers);
-            request.setAttribute("numberofQuestions", numberofQuestions);
             if (userid != null){
+                request.setAttribute("numberofAnswers", numberofAnswers);
+                request.setAttribute("numberofQuestions", numberofQuestions);
                 request.getRequestDispatcher("otherProfile.jsp").forward(request, response);
             }
             else {
+                session.setAttribute("numberofAnswers", numberofAnswers);
+                session.setAttribute("numberofQuestions", numberofQuestions);
                 request.getRequestDispatcher("personalprofile.jsp").forward(request, response);
             }
         } catch (Exception ex) {
