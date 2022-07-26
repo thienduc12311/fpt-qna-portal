@@ -11,6 +11,10 @@
 <head>
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
+    />
     <link href="./asset/style/dracula.css" rel="stylesheet">
 </head>
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
@@ -32,12 +36,14 @@
             <c:forEach items="${sessionScope.questions}" var="question">
                 <div class="flex gap-x-2 mb-4">
                     <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold">
-                        <a href="" class="hover:opacity-60 duration-150">
+                        <a href="/Vote?action=upVote&currentView=home?page=1&type=question&typeId=${question.id}"
+                           class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-up"></ion-icon>
                         </a>
 
                         <p>${question.score}</p>
-                        <a href="" class="hover:opacity-60 duration-150">
+                        <a href="/Vote?action=downVote&currentView=home&type=question&typeId=${question.id}"
+                           class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-down"></ion-icon>
                         </a>
                     </div>
@@ -188,6 +194,54 @@
         </div>
     </div>
 </div>
+<c:if test="${requestScope.SUCCESS_MESSAGE != null}">
+    <div id="toast-success"
+         class="fixed top-20 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+         role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div class="ml-3 text-sm font-normal">${requestScope.SUCCESS_MESSAGE}</div>
+        <button type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-success" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+</c:if>
+<c:if test="${requestScope.ERROR_MESSAGE != null}">
+    <div id="toast-danger"
+         class="fixed top-20 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+         role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div class="ml-3 text-sm font-normal">${requestScope.ERROR_MESSAGE}</div>
+        <button type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-danger" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+</c:if>
 <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
 <script>
     hljs.configure({

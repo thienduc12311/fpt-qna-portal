@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class VoteDAO {
-    public boolean unvote(int userId, int typeId, String type) {
+    public boolean unVote(int userId, int typeId, String type) {
         String questionVoteSql = "DELETE from QuestionVote Where OwnerUserId = ? AND QuestionId = ?";
         String answerVoteSql = "DELETE from AnswerVote Where OwnerUserId = ? AND AnswerId = ?";
 
@@ -64,8 +64,8 @@ public class VoteDAO {
             } else if (type.equals("answer")) {
                 preparedStatement = cn.prepareStatement(answerVoteSql);
             }
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, typeId);
+            preparedStatement.setInt(1, typeId);
+            preparedStatement.setInt(2, userId);
             preparedStatement.setInt(3, state);
             preparedStatement.setTimestamp(4, new Timestamp(new Date().getTime()));
             int result = preparedStatement.executeUpdate();
