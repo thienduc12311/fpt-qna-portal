@@ -13,6 +13,7 @@ change this template use File | Settings | File Templates. --%>
             href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./asset/style/dracula.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <style>
@@ -226,11 +227,11 @@ change this template use File | Settings | File Templates. --%>
                         <!--place a condition for show more comments -->
                         <!-- if there is no more comment, hide this button -->
                         <!-- best case is to show 2 comments -->
-                        <a
-                                href=""
-                                class="text-[#7E3AF2] font-semibold hover:opacity-70 duration-150"
-                        >See 22 more comments</a
-                        >
+                        <%--                        <a--%>
+                        <%--                                href=""--%>
+                        <%--                                class="text-[#7E3AF2] font-semibold hover:opacity-70 duration-150"--%>
+                        <%--                        >See 22 more comments</a--%>
+                        <%--                        >--%>
 
                         <!-- close loop  -->
                     </div>
@@ -240,19 +241,20 @@ change this template use File | Settings | File Templates. --%>
                     <div class="vote absolute flex-col text-center top-32 -left-12">
                         <!-- upvote button -->
 
-                        <a href="" class="hover:opacity-60 duration-150"
+                        <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
+                           class="hover:opacity-60 duration-150"
                         >
                             <ion-icon name="caret-up"></ion-icon
                             >
                         </a>
 
                         <!-- number of votes -->
-
                         <div class="font-bold">${requestScope.question.score}</div>
 
                         <!-- downvote button -->
 
-                        <a href="" class="hover:opacity-60 duration-150"
+                        <a href="/Vote?action=downVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
+                           class="hover:opacity-60 duration-150"
                         >
                             <ion-icon name="caret-down"></ion-icon
                             >
@@ -409,7 +411,8 @@ change this template use File | Settings | File Templates. --%>
                         <div class="vote absolute flex-col text-center top-10 -left-12">
                             <!-- upvote button -->
 
-                            <a href="" class="hover:opacity-60 duration-150"
+                            <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
+                               class="hover:opacity-60 duration-150"
                             >
                                 <ion-icon name="caret-up"></ion-icon
                                 >
@@ -421,7 +424,8 @@ change this template use File | Settings | File Templates. --%>
 
                             <!-- downvote button -->
 
-                            <a href="" class="hover:opacity-60 duration-150"
+                            <a href="/Vote?action=downVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
+                               class="hover:opacity-60 duration-150"
                             >
                                 <ion-icon name="caret-down"></ion-icon
                                 >
@@ -701,13 +705,24 @@ change this template use File | Settings | File Templates. --%>
         nomodule
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
 ></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
 <script>
+    var toolbarOptions = [
+        ['bold', 'italic'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        ['link', 'underline', 'blockquote', 'code-block']
+    ];
+    document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+    })
     var quill = new Quill('#editor', {
         theme: 'snow',
+        placeholder: "Write your answer here...",
         modules: {
-            toolbar: true
+            syntax: true,
+            toolbar: toolbarOptions
         }
     });
     quill.on('text-change', function (delta, oldDelta, source) {

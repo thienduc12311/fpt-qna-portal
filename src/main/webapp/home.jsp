@@ -11,9 +11,23 @@
 <head>
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
+    />
+    <link href="./asset/style/dracula.css" rel="stylesheet">
 </head>
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
 <jsp:include page="header.jsp"></jsp:include>
+<%
+    String currentPage = request.getParameter("page");
+    String totalPage = request.getAttribute("numberOfPage").toString();
+    int numberOfPage = Integer.parseInt(totalPage);
+    int nextPage = Integer.parseInt(currentPage) + 1;
+    int previousPage = Integer.parseInt(currentPage) - 1;
+    if (previousPage < 1) previousPage = 1;
+    if (nextPage > numberOfPage) nextPage = numberOfPage;
+%>
 <div class="pt-14">
     <div class="pt-10 pb-3 px-10 xl:px-52 lg:48 md:px-32 sm:px-20 inline-flex space-x-8 ml-20 font-semibold">
 
@@ -31,12 +45,14 @@
             <c:forEach items="${sessionScope.questions}" var="question">
                 <div class="flex gap-x-2 mb-4">
                     <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold">
-                        <a href="" class="hover:opacity-60 duration-150">
+                        <a href="/Vote?action=upVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
+                           class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-up"></ion-icon>
                         </a>
 
                         <p>${question.score}</p>
-                        <a href="" class="hover:opacity-60 duration-150">
+                        <a href="/Vote?action=downVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
+                           class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-down"></ion-icon>
                         </a>
                     </div>
@@ -86,15 +102,6 @@
 
             <!-- end -->
 
-            <%
-                String currentPage = request.getParameter("page");
-                String totalPage = request.getAttribute("numberOfPage").toString();
-                Integer numberOfPage = Integer.parseInt(totalPage);
-                Integer nextPage = Integer.parseInt(currentPage) + 1;
-                Integer previousPage = Integer.parseInt(currentPage) - 1;
-                if (previousPage < 1) previousPage = 1;
-                if (nextPage > numberOfPage) nextPage = numberOfPage;
-            %>
 
             <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12">
                 <a href="${pageContext.request.contextPath}/home?page=<%=previousPage%>"
@@ -129,7 +136,9 @@
             <div class=" bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                              d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+                              clip-rule="evenodd"/>
                     </svg>
                     <span class="text-sm">Trending Tags</span>
                 </div>
@@ -144,7 +153,7 @@
             <div class="bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">
                 <div class="font-semibold flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                     </svg>
                     <span class="text-sm">Top Users</span>
                 </div>
@@ -163,28 +172,85 @@
                 </div>
             </div>
 
-<%--            <div class="bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">--%>
-<%--                <div class="font-semibold flex items-center space-x-2">--%>
-<%--                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">--%>
-<%--                        <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />--%>
-<%--                    </svg>--%>
-<%--                    <span class="text-sm">New Users</span>--%>
-<%--                </div>--%>
-<%--                <div class="divide-y">--%>
-<%--                    <a href="#">--%>
-<%--                        <div class="flex flex-wrap space-x-3 items-center p-2 hover:opacity-60 duration-150">--%>
-<%--                            <p><img class="rounded h-9 w-9" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg"></p>--%>
-<%--                            <div>--%>
-<%--                                <p class="font-semibold text-xs">Jane Dove</p>--%>
-<%--                                <p class="text-xs">100 points</p>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+            <%--            <div class="bg-white p-6 grid content-start gap-y-3 mb-4 rounded shadow-md divide-y">--%>
+            <%--                <div class="font-semibold flex items-center space-x-2">--%>
+            <%--                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">--%>
+            <%--                        <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />--%>
+            <%--                    </svg>--%>
+            <%--                    <span class="text-sm">New Users</span>--%>
+            <%--                </div>--%>
+            <%--                <div class="divide-y">--%>
+            <%--                    <a href="#">--%>
+            <%--                        <div class="flex flex-wrap space-x-3 items-center p-2 hover:opacity-60 duration-150">--%>
+            <%--                            <p><img class="rounded h-9 w-9" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg"></p>--%>
+            <%--                            <div>--%>
+            <%--                                <p class="font-semibold text-xs">Jane Dove</p>--%>
+            <%--                                <p class="text-xs">100 points</p>--%>
+            <%--                            </div>--%>
+            <%--                        </div>--%>
+            <%--                    </a>--%>
+            <%--                </div>--%>
+            <%--            </div>--%>
         </div>
     </div>
 </div>
+<c:if test="${requestScope.SUCCESS_MESSAGE != null}">
+    <div id="toast-success"
+         class="fixed top-20 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+         role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div class="ml-3 text-sm font-normal">${requestScope.SUCCESS_MESSAGE}</div>
+        <button type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-success" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+</c:if>
+<c:if test="${requestScope.ERROR_MESSAGE != null}">
+    <div id="toast-danger"
+         class="fixed top-20 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+         role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div class="ml-3 text-sm font-normal">${requestScope.ERROR_MESSAGE}</div>
+        <button type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-danger" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+</c:if>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<script>
+    hljs.configure({
+        languages: ['javascript', 'java', 'python']
+    });
+    document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+    })
+</script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

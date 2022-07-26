@@ -19,6 +19,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="./asset/style/dracula.css" rel="stylesheet">
+
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
@@ -119,6 +121,12 @@
                             <ion-icon name="close-circle" class="btn-icon"></ion-icon>
                             Cancel
                         </a>
+                        <%--                        <button type="button"--%>
+                        <%--                                name="preview"--%>
+                        <%--                                class="preview text-white bg-[#7E3AF2] hover:bg-[#442083] cursor-pointer focus:ring-4 focus:outline-none focus:ring-[#7E3AF220] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center gap-x-2 mr-2">--%>
+                        <%--                            <ion-icon name="chatbubbles" class="btn-icon"></ion-icon>--%>
+                        <%--                            Preview Question--%>
+                        <%--                        </button>--%>
                         <button type="submit"
                                 class="text-white bg-[#7E3AF2] hover:bg-[#442083] cursor-pointer focus:ring-4 focus:outline-none focus:ring-[#7E3AF220] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center gap-x-2 mr-2">
                             <ion-icon name="chatbubbles" class="btn-icon"></ion-icon>
@@ -205,13 +213,30 @@
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
     <script>
+        hljs.configure({
+            languages: ['javascript', 'java', 'python']
+        });
+        // document.getElementsByClassName('preview')[0].onclick = function () {
+        //     document.querySelectorAll('pre').forEach((block) => {
+        //         hljs.highlightBlock(block);
+        //     })
+        // }
+        var toolbarOptions = [
+            ['bold', 'italic'],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+            ['link', 'underline', 'blockquote', 'code-block']
+        ];
         var quill = new Quill('#editor', {
             theme: 'snow',
+            required: true,
+            placeholder: 'Write your question...',
             modules: {
-                toolbar: true
+                toolbar: toolbarOptions,
+                syntax: true,
             }
         });
         quill.on('text-change', function (delta, oldDelta, source) {

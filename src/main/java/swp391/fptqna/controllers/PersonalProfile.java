@@ -7,10 +7,11 @@ import swp391.fptqna.dto.ExtendedQuestionDTO;
 import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.UserDTO;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @WebServlet(name = "PersonalProfile", value = "/PersonalProfile")
@@ -18,11 +19,11 @@ public class PersonalProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int page = 0;
         HttpSession session = request.getSession(false);
-        UserDTO user = (UserDTO)session.getAttribute("USER");
+        UserDTO user = (UserDTO) session.getAttribute("USER");
         String userid = request.getParameter("userid");
         System.out.println(userid);
         UserDAO userDAO = new UserDAO();
-        if (userid != null){
+        if (userid != null) {
             user = userDAO.getUserById(Integer.parseInt(userid));
         }
         ArrayList<QuestionDTO> questionList = null;
@@ -45,7 +46,6 @@ public class PersonalProfile extends HttpServlet {
             for (QuestionDTO question : questionList) {
                 ExtendedQuestionDTO exQuestion = new ExtendedQuestionDTO(question);
                 extendedQuestion.add(exQuestion);
-                System.out.println(exQuestion);
             }
             questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
@@ -53,12 +53,11 @@ public class PersonalProfile extends HttpServlet {
             session.removeAttribute("questions");
             session.setAttribute("questions", extendedQuestion);
             request.setAttribute("userProfile", user);
-            if (userid != null){
+            if (userid != null) {
                 request.setAttribute("numberofAnswers", numberofAnswers);
                 request.setAttribute("numberofQuestions", numberofQuestions);
                 request.getRequestDispatcher("otherProfile.jsp").forward(request, response);
-            }
-            else {
+            } else {
                 session.setAttribute("numberofAnswers", numberofAnswers);
                 session.setAttribute("numberofQuestions", numberofQuestions);
                 request.getRequestDispatcher("personalprofile.jsp").forward(request, response);
@@ -70,6 +69,7 @@ public class PersonalProfile extends HttpServlet {
 
 
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {

@@ -1,6 +1,7 @@
 package swp391.fptqna.dao;
 
 import swp391.fptqna.dto.ExtendQuestionList;
+import swp391.fptqna.dto.ExtendedQuestionDTO;
 import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.TagDTO;
 import swp391.fptqna.utils.CustomException;
@@ -96,6 +97,27 @@ public class QuestionDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public ExtendedQuestionDTO getExtendQuestionById(int questionId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "Select  * From (Select * From Questions WHERE ApproveUserId IS NOT NULL and DeletionDate IS NULL And Id = ?) q INNER JOIN Users u ON q.OwnerUserId = u.Id";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                QuestionDTO question = parseFromDB(resultSet);
+                String userName = resultSet.getString("UserDisplayName");
+                String avtUrl = resultSet.getString("ImgLink");
+                question.setOwnerName(userName);
+                question.setOwnerAvt(avtUrl);
+                ExtendedQuestionDTO extendedQuestion = new ExtendedQuestionDTO(question);
+                return extendedQuestion;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //Filter by Tag
@@ -204,7 +226,8 @@ public class QuestionDAO {
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY\n" +
                     ") question\n" +
-                    "INNER JOIN Users u ON question.OwnerUserId = u.Id";;
+                    "INNER JOIN Users u ON question.OwnerUserId = u.Id";
+            ;
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, 10 * (page - 1));
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -315,6 +338,7 @@ public class QuestionDAO {
         }
         return null;
     }
+
     public int getNumberOfAvailablePageFilterKeyword(String txtSearch) throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {
