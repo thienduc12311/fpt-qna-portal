@@ -14,10 +14,11 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full w-full flex justify-center bg-gray-50 text-gray-800 overflow-hidden">
+<body class="h-full w-full flex justify-center bg-[#F2F2F2] text-gray-800 overflow-hidden">
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<div class="flex flex-row justify-between h-full w-8/12 mt-20 relative">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="flex flex-row justify-between h-full w-8/12 pt-32 relative">
 
     <!-- left side -->
     <div class="basis-4/12 h-full fixed left-4/12">
@@ -33,11 +34,11 @@
                     <div class="text-sm">Scores</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
-                    <div class="text-sm">Posts</div>
+                    <div class="font-semibold">${sessionScope.numberofQuestions}</div>
+                    <div class="text-sm">Questions</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
+                    <div class="font-semibold">${sessionScope.numberofAnswers}</div>
                     <div class="text-sm">Answers</div>
                 </div>
 
@@ -54,7 +55,7 @@
     <!-- right side -->
 
     <div class="basis-8/12 left-80 relative ">
-        <div class="bg-white items-center rounded-xl shadow-lg  ">
+        <div class="bg-white items-center rounded shadow-md">
         <form action="UpdateUser" method="POST">
         <div class="flex flex-col items-center p-20 space-y-8 items-start">
             <div class="font-bold text-xl">Change Password</div>

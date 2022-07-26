@@ -14,11 +14,12 @@
 </head>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<body class="h-full w-full flex justify-center bg-gray-50 text-gray-800">
-<div class="flex flex-row justify-between h-full w-8/12 mt-20 relative">
+<body class="h-full w-full flex justify-center bg-[#F2F2F2] text-gray-800">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="flex flex-row justify-between h-full w-8/12 pt-32 relative">
 
     <!-- left side -->
-    <div class="basis-4/12 h-full fixed left-4/12">
+    <div class="hidden md:block basis-4/12 h-full fixed left-4/12">
         <div class="flex flex-col items-center space-y-6">
             <div><img  class="rounded-full w-48" src="${sessionScope.USER.avtUrl}" alt=""></div>
             <div class="flex flex-col items-center">
@@ -31,11 +32,11 @@
                     <div class="text-sm">Scores</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
-                    <div class="text-sm">Posts</div>
+                    <div class="font-semibold">${sessionScope.numberofQuestions}</div>
+                    <div class="text-sm">Questions</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
+                    <div class="font-semibold">${sessionScope.numberofAnswers}</div>
                     <div class="text-sm">Answers</div>
                 </div>
 
@@ -50,14 +51,14 @@
     </div>
 
     <!-- right side -->
-    <div class="basis-8/12 h-full space-y-5 relative left-80">
+    <div class="md:basis-8/12 h-full space-y-5 relative md:left-80">
         <!-- bio and badge  -->
         <div class="flex space-x-3">
-            <div class="bg-white rounded p-10 w-1/2 shadow-md divide-y space-y-3">
+            <div class="bg-white rounded p-6 md:p-10 w-1/2 shadow-md divide-y space-y-3">
                 <div class="font-semibold">Bio</div>
                 <div class="text-sm pt-3">${sessionScope.USER.bio}</div>
             </div>
-            <div class="bg-white rounded p-10 w-1/2 shadow-md divide-y space-y-3">
+            <div class="bg-white rounded p-6 md:p-10 w-1/2 shadow-md divide-y space-y-3">
                 <div class="font-semibold">Badges</div>
                 <div class="text-xs pt-3">
                     <div class="rounded py-0.5 px-3 text-red-700 bg-red-100  w-min">Newbie</div>
@@ -84,7 +85,7 @@
                     <a href="/ViewQuestion?questionId=${question.id}"
                        class="font-semibold text-gray-800 hover:opacity-60 duration-150">${question.title}</a>
                 </div>
-                <div>
+                <div class="overflow-x-auto">
                     <p class="text-gray-500 text-sm">${question.body}</p>
                 </div>
                 <div class="flex text-xs gap-x-1">

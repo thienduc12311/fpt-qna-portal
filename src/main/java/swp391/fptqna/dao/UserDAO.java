@@ -4,10 +4,7 @@ import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.UserDTO;
 import swp391.fptqna.utils.DButil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UserDAO {
@@ -291,5 +288,77 @@ public class UserDAO {
             e.printStackTrace();
         }
         return numberOfRecord;
+    }
+
+    public int countUserQuestions (int userId) throws Exception{
+        int numberofQuestions = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQues\n" +
+                    "FROM Questions\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    numberofQuestions = resultSet.getInt("numOfQues");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberofQuestions;
+    }
+    public int countUserAnswers (int userId) throws Exception{
+        int numberofAnswers = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfAns\n" +
+                    "FROM Answers\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    numberofAnswers = resultSet.getInt("numOfAns");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberofAnswers;
+    }
+
+    public ArrayList<UserDTO> getTopFiveUser() throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT TOP 5 * FROM Users WHERE State = 1 ORDER BY Score DESC";
+            Statement stmt = cn.createStatement();
+            try (ResultSet resultSet = stmt.executeQuery(query)) {
+                ArrayList<UserDTO> list = new ArrayList<>();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("Id");
+                    String email = resultSet.getString("Email");
+                    String name = resultSet.getString("UserDisplayName");
+                    String password = resultSet.getString("Password");
+                    String imgLink = resultSet.getString("ImgLink");
+                    int score = resultSet.getInt("Score");
+                    int role = resultSet.getInt("Role");
+                    boolean state = resultSet.getBoolean("State");
+                    String bio = resultSet.getString("Bio");
+                    UserDTO user = new UserDTO(id,email,name,password,imgLink,score,role,state,bio);
+                    list.add(user);
+                }
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

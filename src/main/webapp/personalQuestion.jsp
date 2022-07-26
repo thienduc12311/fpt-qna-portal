@@ -13,13 +13,14 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full w-full flex justify-center bg-gray-50 text-gray-800">
-<div class="flex flex-row justify-between h-full w-8/12 mt-20 relative">
+<body class="h-full w-full flex justify-center bg-[#F2F2F2] text-gray-800">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="flex flex-row justify-between h-full w-8/12 pt-32 relative">
 
     <!-- left side -->
     <div class="basis-4/12 h-full fixed left-4/12">
         <div class="flex flex-col items-center space-y-6">
-            <div><img  class="rounded-full w-48" src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg" alt=""></div>
+            <div><img  class="rounded-full w-48" src="${sessionScope.USER.avtUrl}" alt=""></div>
             <div class="flex flex-col items-center">
                 <div class="font-semibold text-lg">${sessionScope.USER.name}</div>
                 <div class="text-sm">${sessionScope.USER.email}</div>
@@ -30,11 +31,11 @@
                     <div class="text-sm">Scores</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
-                    <div class="text-sm">Posts</div>
+                    <div class="font-semibold">${sessionScope.numberofQuestions}</div>
+                    <div class="text-sm">Questions</div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-semibold">0</div>
+                    <div class="font-semibold">${sessionScope.numberofAnswers}</div>
                     <div class="text-sm">Answers</div>
                 </div>
 
