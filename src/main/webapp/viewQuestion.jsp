@@ -253,7 +253,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- downvote button -->
 
-                        <a href="/Vote?action=downVote&currentView=${request.getRequestURI()}&type=question&typeId=${requestScope.question.id}"
+                        <a href="/Vote?action=downVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
                            class="hover:opacity-60 duration-150"
                         >
                             <ion-icon name="caret-down"></ion-icon
