@@ -5,7 +5,7 @@
   Time: 07:58
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -60,7 +60,12 @@
                         </div>
                         <div class="flex text-xs gap-x-1">
                             <c:forEach items="${question.tags}" var="tag">
-                                <a href="/home?action=tag&tag=${tag.tagName}&page=1">
+                                <c:url var="tagUrl" value="/home">
+                                    <c:param name="action" value="tag"></c:param>
+                                    <c:param name="tag" value="${tag.tagName}"></c:param>
+                                    <c:param name="page" value="${1}"></c:param>
+                                </c:url>
+                                <a href="${tagUrl}">
                                     <div class="text-xs border rounded border-gray-400 text-gray-400 px-4 py-1 text-justify hover:backdrop-brightness-95 duration-50">${tag.tagName}</div>
                                 </a>
                             </c:forEach>

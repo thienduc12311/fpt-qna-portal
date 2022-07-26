@@ -123,9 +123,15 @@ change this template use File | Settings | File Templates. --%>
                         <!-- place a loop for tags here -->
 
                         <div class="flex mt-6">
+
                             <c:forEach items="${requestScope.question.tags}" var="tag">
+                                <c:url var="tagUrl" value="/home">
+                                    <c:param name="action" value="tag"></c:param>
+                                    <c:param name="tag" value="${tag.tagName}"></c:param>
+                                    <c:param name="page" value="${1}"></c:param>
+                                </c:url>
                                 <a
-                                        href=""
+                                        href="${tagUrl}"
                                         class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
                                 >${tag.tagName}</a>
                             </c:forEach>
