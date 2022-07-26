@@ -19,6 +19,15 @@
 </head>
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
 <jsp:include page="header.jsp"></jsp:include>
+<%
+    String currentPage = request.getParameter("page");
+    String totalPage = request.getAttribute("numberOfPage").toString();
+    int numberOfPage = Integer.parseInt(totalPage);
+    int nextPage = Integer.parseInt(currentPage) + 1;
+    int previousPage = Integer.parseInt(currentPage) - 1;
+    if (previousPage < 1) previousPage = 1;
+    if (nextPage > numberOfPage) nextPage = numberOfPage;
+%>
 <div class="pt-14">
     <div class="pt-10 pb-3 px-10 xl:px-52 lg:48 md:px-32 sm:px-20 inline-flex space-x-8 ml-20 font-semibold">
 
@@ -36,13 +45,13 @@
             <c:forEach items="${sessionScope.questions}" var="question">
                 <div class="flex gap-x-2 mb-4">
                     <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold">
-                        <a href="/Vote?action=upVote&currentView=home?page=1&type=question&typeId=${question.id}"
+                        <a href="/Vote?action=upVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
                            class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-up"></ion-icon>
                         </a>
 
                         <p>${question.score}</p>
-                        <a href="/Vote?action=downVote&currentView=home&type=question&typeId=${question.id}"
+                        <a href="/Vote?action=downVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
                            class="hover:opacity-60 duration-150">
                             <ion-icon name="caret-down"></ion-icon>
                         </a>
@@ -93,15 +102,6 @@
 
             <!-- end -->
 
-            <%
-                String currentPage = request.getParameter("page");
-                String totalPage = request.getAttribute("numberOfPage").toString();
-                Integer numberOfPage = Integer.parseInt(totalPage);
-                Integer nextPage = Integer.parseInt(currentPage) + 1;
-                Integer previousPage = Integer.parseInt(currentPage) - 1;
-                if (previousPage < 1) previousPage = 1;
-                if (nextPage > numberOfPage) nextPage = numberOfPage;
-            %>
 
             <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12">
                 <a href="${pageContext.request.contextPath}/home?page=<%=previousPage%>"
