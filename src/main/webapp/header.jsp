@@ -1,4 +1,4 @@
-<div class="shadow bg-white fixed w-full top-0 z-10">
+<div class="shadow-sm bg-white fixed w-full top-0 z-10">
     <div class="py-2 px-5 lg:px-10">
         <div class="flex justify-between items-center space-x-6">
             <!-- left side -->

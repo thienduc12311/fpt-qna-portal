@@ -1,9 +1,9 @@
 package swp391.fptqna.controllers;
 
 import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dto.ExtendQuestionList;
-import swp391.fptqna.dto.ExtendedQuestionDTO;
-import swp391.fptqna.dto.QuestionDTO;
+import swp391.fptqna.dao.TagDAO;
+import swp391.fptqna.dao.UserDAO;
+import swp391.fptqna.dto.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,9 +61,20 @@ public class Home extends HttpServlet {
                 ExtendedQuestionDTO exQuestion = new ExtendedQuestionDTO(question);
                 extendedQuestion.add(exQuestion);
             }
+
+            //get top 10 tags
+            TagDAO tagDAO = new TagDAO();
+            ArrayList<TagDTO> topTenTag = tagDAO.getTopTenTag();
+
+            //get top 5 users
+            UserDAO userDAO = new UserDAO();
+            ArrayList<UserDTO> topFiveUser = userDAO.getTopFiveUser();
+
             questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("numberOfPage", numberOfPage);
+            request.setAttribute("topFiveUser", topFiveUser);
+            request.setAttribute("topTenTag", topTenTag);
             session.removeAttribute("questions");
             session.setAttribute("questions", extendedQuestion);
             request.getRequestDispatcher("home.jsp").forward(request, response);

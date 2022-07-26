@@ -13,10 +13,11 @@
   <title>Edit Profile</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full w-full flex justify-center bg-gray-50 text-gray-800 overflow-hidden">
+<body class="h-full w-full flex justify-center bg-[#F2F2F2] text-gray-800 overflow-hidden">
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<div class="flex flex-row justify-between h-full w-8/12 mt-20 relative">
+<jsp:include page="header.jsp"></jsp:include>
+<div class="flex flex-row justify-between h-full w-8/12 pt-32 relative">
 
   <!-- left side -->
   <!-- left side -->
@@ -33,11 +34,11 @@
           <div class="text-sm">Scores</div>
         </div>
         <div class="flex flex-col">
-          <div class="font-semibold">0</div>
-          <div class="text-sm">Posts</div>
+          <div class="font-semibold">${sessionScope.numberofQuestions}</div>
+          <div class="text-sm">Questions</div>
         </div>
         <div class="flex flex-col">
-          <div class="font-semibold">0</div>
+          <div class="font-semibold">${sessionScope.numberofAnswers}</div>
           <div class="text-sm">Answers</div>
         </div>
 
@@ -55,7 +56,7 @@
 
   <div class="basis-8/12 relative left-80">
 
-    <div class=" bg-white items-center rounded shadow ">
+    <div class=" bg-white items-center rounded shadow-md">
 
     <form action="/UpdateUser" method="POST">
       <div class="flex flex-col items-center p-20 space-y-6">
