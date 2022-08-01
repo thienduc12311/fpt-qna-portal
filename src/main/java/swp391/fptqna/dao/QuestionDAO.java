@@ -429,6 +429,19 @@ public class QuestionDAO {
         return false;
     }
 
+    public boolean undelete(int questionId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Questions SET DeletionDate = NULL WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public ArrayList<QuestionDTO> getQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Questions \n" + "ORDER BY Id ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";

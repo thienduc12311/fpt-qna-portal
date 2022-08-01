@@ -1,3 +1,4 @@
+<%@ page import="swp391.fptqna.dto.UserDTO" %>
 <div class="shadow bg-white fixed w-full top-0 z-10">
     <div class="py-2 px-5 lg:px-10">
         <div class="flex justify-between items-center space-x-6">
@@ -123,8 +124,13 @@
                                         </svg>
                                         Profile
                                     </a></div>
+                                <%
+                                    try {
+                                        UserDTO user = (UserDTO) session.getAttribute("USER");
+                                        if (user.getRole() != 0) {
+                                %>
                                 <div class="py-1 px-4 hover:bg-slate-100">
-                                    <a href="userManagement.jsp"
+                                    <a href="MainController?action=PendingQuestion&page=1"
                                        class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"
                                        role="menuitem">
                                         <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" id="Layer_1"
@@ -134,6 +140,12 @@
                                         </svg>
                                         Manage
                                     </a></div>
+                                <%
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                %>
                                 <div class="py-1 px-4 hover:bg-slate-100">
                                     <a href="/Logout"
                                        class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"

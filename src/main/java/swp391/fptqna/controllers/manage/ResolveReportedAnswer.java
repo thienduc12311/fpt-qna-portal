@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "ResolveReportedAnswer", value = "/manage/ResolveReportedAnswer")
 public class ResolveReportedAnswer extends HttpServlet {
 
-    private final String ACCEPTED_VIEW = "../accepted.jsp";
+    private final String ACCEPTED_VIEW = "../successPage.jsp";
     private final String ERROR_VIEW = "../errorResolve.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +62,7 @@ public class ResolveReportedAnswer extends HttpServlet {
                         reportedAnswerDAO.setState(reportedAnswerId, (byte) 0);
                         throw new Exception("Delete reported answer failed");
                     }
+
                     if (!notificationDAO.insert(4, answerId + "|" + questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     break;

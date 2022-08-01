@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebServlet(name = "ResolveReportedQuestion", value = "/manage/ResolveReportedQuestion")
 public class ResolveReportedQuestion extends HttpServlet {
-    private final String ACCEPTED_VIEW = "../accepted.jsp";
+    private final String ACCEPTED_VIEW = "../successPage.jsp";
     private final String ERROR_VIEW = "../errorResolve.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class ResolveReportedQuestion extends HttpServlet {
                     if (!reportedQuestionDAO.setState(reportedQuestionId, (byte) 2))
                         throw new Exception("Delete reported question failed");
                     String reason = request.getParameter("reasonText");
-                    reason = "|" + questionId + "|" + reason;
+                    reason = questionId + "|" + reason;
                     if (!notificationDAO.insert(7, reason, ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     if (!notificationDAO.insert(8, reason, ownerQuestionFlagUserId))

@@ -110,7 +110,7 @@
                         <span class="relative">Active</span>
                     <% } else {%>
                         <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-md"></span>
-                        <span class="relative">Passive</span>
+                        <span class="relative">Suspended</span>
                     <%}%>
                 </span>
                     </td>

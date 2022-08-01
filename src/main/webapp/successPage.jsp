@@ -49,10 +49,10 @@
         </div>
         <div class="mt-5 text-center mx-10">
             <h4 class="mb-2 lg:mb-5 text-4xl lg:text-[50px] font-bold">Successful!!!</h4>
-            <p class="text-lg font-medium">Your question is being received. You can see it on the feed as soon as it is
+            <p class="text-lg font-medium">Your action is being received. You can see it on the feed as soon as it is
                 approved.</p>
         </div>
-        <a href="#"
+        <a href="<%=request.getAttribute("back") != null ? request.getAttribute("back") : "#" %>"
            class="mt-5 px-6 py-3 text-sm lg:text-xl font-medium text-center text-white bg-[#7E3AF2] rounded-lg hover:bg-[#442083] focus:ring-4 focus:outline-none focus:ring-[#7E3AF220]"
            type="button">
             Back to previous page...

@@ -21,7 +21,10 @@ public class MainController extends HttpServlet {
     private final String RESOLVE_REPORTED_ANSWER_CONTROLLER = "/manage/ResolveReportedAnswer";
     private final String BAN_OR_UNBAN_USER = "/manage/BanUser";
     private final String MANAGE_QUESTION_CONTROLLER = "/manage/admin/ManageQuestions";
+    private final String UNDELETE_QUESTION_CONTROLLER = "/manage/admin/UnDeleteQuestion";
+
     private final String MANAGE_USER_CONTROLLER = "/manage/admin/ManageUsers";
+    private final String DELETE_QUESTION_CONTROLLER = "DeleteQuestion";
     private final String LOGIN_VIEW = "index.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,6 +77,12 @@ public class MainController extends HttpServlet {
                     break;
                 case "BanOrUnBanUser":
                     url = BAN_OR_UNBAN_USER;
+                    break;
+                case "DeleteQuestion":
+                    url = DELETE_QUESTION_CONTROLLER;
+                    break;
+                case "UnDeleteQuestion":
+                    url = UNDELETE_QUESTION_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);
