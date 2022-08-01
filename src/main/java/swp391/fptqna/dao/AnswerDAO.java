@@ -80,6 +80,7 @@ public class AnswerDAO {
         }
         return false;
     }
+
     public boolean delete(int answerId) {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "DELETE FROM Answers WHERE Id = ?";
@@ -108,6 +109,7 @@ public class AnswerDAO {
         }
         return false;
     }
+
     public boolean deleteWithoutDB(int answerId) {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "UPDATE Answers SET DeletionDate = ? WHERE Id = ?";
@@ -123,7 +125,7 @@ public class AnswerDAO {
     }
 
     public void getListAnswersOfQuestion(ExtendedQuestionDTO question) {
-        String query = "SELECT * FROM (SELECT * FROM Answers WHERE QuestionId = ?) a INNER JOIN Users u ON a.OwnerUserId = u.Id";
+        String query = "SELECT * FROM (SELECT * FROM Answers WHERE QuestionId = ? AND DeletionDate IS NULL) a INNER JOIN Users u ON a.OwnerUserId = u.Id";
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, question.getId());

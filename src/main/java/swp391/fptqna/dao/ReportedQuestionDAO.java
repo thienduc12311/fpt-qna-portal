@@ -1,7 +1,6 @@
 package swp391.fptqna.dao;
 
 import swp391.fptqna.dto.ReportedQuestionDTO;
-import swp391.fptqna.dto.ReportedQuestionDTO;
 import swp391.fptqna.utils.DButil;
 
 import java.sql.*;
@@ -37,6 +36,7 @@ public class ReportedQuestionDAO {
         }
         return null;
     }
+
     public ArrayList<ReportedQuestionDTO> getReportedQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM QuestionFlag \n" +
@@ -85,6 +85,40 @@ public class ReportedQuestionDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    public boolean isReported(int questionId, int userId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM QuestionFlag WHERE QuestionId = ? AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, questionId);
+            preparedStatement.setInt(2, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean createReport(int flagId, int answerId, int userId, String description) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "INSERT INTO QuestionFlag VALUES (?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, flagId);
+            preparedStatement.setInt(2, answerId);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.setTimestamp(4, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(5, 0);
+            preparedStatement.setString(6, description);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
