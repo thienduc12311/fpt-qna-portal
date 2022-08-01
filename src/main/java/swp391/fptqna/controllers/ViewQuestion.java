@@ -2,6 +2,7 @@ package swp391.fptqna.controllers;
 
 import swp391.fptqna.dao.AnswerDAO;
 import swp391.fptqna.dao.CommentDAO;
+import swp391.fptqna.dao.FlagTypeDAO;
 import swp391.fptqna.dao.QuestionDAO;
 import swp391.fptqna.dto.*;
 
@@ -102,7 +103,7 @@ public class ViewQuestion extends HttpServlet {
         }
     }
 
-    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
+    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws Exception {
         question.setAnswerList(new ExtendedAnswerList());
         question.setComments(new ArrayList<CommentDTO>());
         AnswerDAO answerDAO = new AnswerDAO();
@@ -110,7 +111,10 @@ public class ViewQuestion extends HttpServlet {
         CommentDAO commentDAO = new CommentDAO();
         commentDAO.getListCommentOfQuestion(question);
         commentDAO.getListCommentOfAnswer(question);
+        FlagTypeDAO flagTypeDAO = new FlagTypeDAO();
+        ArrayList<FlagTypeDTO> flags = flagTypeDAO.getAllFlag();
         request.setAttribute("question", question);
+        request.setAttribute("flags", flags);
         request.getRequestDispatcher(QUESTION_VIEW).forward(request, response);
     }
 

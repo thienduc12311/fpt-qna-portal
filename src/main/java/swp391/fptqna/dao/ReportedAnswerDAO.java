@@ -107,6 +107,21 @@ public class ReportedAnswerDAO {
         return false;
     }
 
+    public boolean isReported(int answerId, int userId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT * FROM AnswerFlag WHERE AnswerId = ? AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, answerId);
+            preparedStatement.setInt(2, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public int getNumberOfPage() throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {

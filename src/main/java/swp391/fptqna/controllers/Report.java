@@ -28,20 +28,29 @@ public class Report extends HttpServlet {
             ReportedQuestionDAO reportedQuestionDAO = new ReportedQuestionDAO();
             ReportedAnswerDAO reportedAnswerDAO = new ReportedAnswerDAO();
             boolean isSuccess = false;
+            boolean isReported = false;
             if (type.equals("answer")) {
-                isSuccess = reportedAnswerDAO.createReport(flagId, typeId, userDTO.getId(), description);
+                isReported = reportedAnswerDAO.isReported(typeId, userDTO.getId());
+                if (!isReported) {
+                    isSuccess = reportedAnswerDAO.createReport(flagId, typeId, userDTO.getId(), description);
+                }
             } else if (type.equals("question")) {
-                isSuccess = reportedQuestionDAO.createReport(flagId, typeId, userDTO.getId(), description);
+                isReported = reportedQuestionDAO.isReported(typeId, userDTO.getId());
+                if (!isReported) {
+                    isSuccess = reportedQuestionDAO.createReport(flagId, typeId, userDTO.getId(), description);
+                }
             }
             if (isSuccess) {
                 request.setAttribute("SUCCESS_MESSAGE", "Report success!");
+            } else if (isReported) {
+                request.setAttribute("ERROR_MESSAGE", "You already reported this " + type);
             } else {
                 request.setAttribute("ERROR_MESSAGE", "Something went wrong please try again later!");
             }
             request.getRequestDispatcher(view).forward(request, response);
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
-            System.out.println(ex);
+            ex.printStackTrace();
         }
 
     }

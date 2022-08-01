@@ -20,6 +20,19 @@ change this template use File | Settings | File Templates. --%>
     .ql-toolbar {
         border-radius: 10px !important;
     }
+
+    html * {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+    }
+
+    .drop ion-icon {
+        font-size: 20px;
+    }
+
+    .vote ion-icon {
+        font-size: 20px;
+    }
 </style>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -100,14 +113,15 @@ change this template use File | Settings | File Templates. --%>
                                 >
                                     <li>
                                         <a
-                                                href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                        >Report</a
-                                        >
+                                                class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                type="button"
+                                                onclick="openReportModal(`question`, ${requestScope.question.id})"
+                                        >Report</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+                        <%--                        report question modal--%>
 
                         <!-- this to show question detail -->
 
@@ -261,7 +275,124 @@ change this template use File | Settings | File Templates. --%>
                         </a>
                     </div>
                 </div>
+                <%--                report question modal--%>
+                <div
+                        id="reportModalQuestion"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+                >
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                    class="flex justify-between items-start p-4 rounded-t border-b"
+                            >
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Report Question
+                                </h3>
+                                <button
+                                        type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                        onclick="modal.hide()"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mx-8 pt-6">
+                                <form action="/Report" method="post">
+                                    <input hidden name="view"
+                                           value="ViewQuestion?questionId=${requestScope.question.id}">
+                                    <input hidden name="type" id="type">
+                                    <input hidden name="typeId" id="typeId">
+                                    <input hidden name="flagId" id="flagId">
+                                    <label
+                                            for="question-flag"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Select a flag</label>
+                                    <select
+                                            required
+                                            onchange="questionFlagSelect(this)"
+                                            id="question-flag"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    >
+                                        <option selected value="">Choose a flag</option>
+                                        <c:forEach items="${requestScope.flags}" var="flag">
+                                            <option value="${flag.id}">${flag.name}</option>
+                                        </c:forEach>
+                                        <%--                                        <option value="flag-1">Flag 1</option>--%>
+                                        <%--                                        <option value="flag-2">Flag 2</option>--%>
+                                        <%--                                        <option value="flag-3">Flag 3</option>--%>
+                                    </select>
 
+                                    <!-- description go here -->
+
+                                    <div class="my-6 bg-[#F3F4F6] rounded-md">
+                                        <p
+                                                class="p-6 text-sm font-semibold"
+                                                id="question-flag-0"
+                                        >
+                                            Please choose a flag
+                                        </p>
+                                        <c:forEach items="${requestScope.flags}" var="flag">
+                                            <p
+                                                    class="hidden p-6 text-sm font-semibold description-flag"
+                                                    id="question-flag-${flag.id}"
+                                            >
+                                                    ${flag.description}
+                                            </p>
+                                        </c:forEach>
+                                    </div>
+
+                                    <label
+                                            for="question-description"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Description</label
+                                    >
+                                    <div class="relative w-full">
+                                        <input
+                                                type="text"
+                                                name="description"
+                                                id="question-description"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                placeholder="More detail"
+                                                required
+                                        />
+                                    </div>
+                                    <div
+                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
+                                    >
+                                        <button
+                                                type="submit"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                        >
+                                            Report
+                                        </button>
+                                        <button
+                                                onclick="modal.hide()"
+                                                type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- number of answers here -->
 
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
@@ -304,7 +435,7 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- this button is for report this answer loop the ans1 ans2 ans3 here -->
 
                                 <button
-                                        data-dropdown-toggle="dropdownLeftStartAns1"
+                                        data-dropdown-toggle="dropdownLeftStartAns${answer.getId()}"
                                         data-dropdown-placement="left-start"
                                         class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
                                         type="button"
@@ -315,7 +446,7 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- ans1 ans2 ans3 here too -->
 
                                 <div
-                                        id="dropdownLeftStartAns1"
+                                        id="dropdownLeftStartAns${answer.getId()}"
                                         class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
                                 >
                                     <ul
@@ -323,15 +454,18 @@ change this template use File | Settings | File Templates. --%>
                                             aria-labelledby="dropdownLeftStartButton"
                                     >
                                         <li>
+                                            <!-- put loop index here -->
                                             <a
-                                                    href="#"
-                                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Report</a
-                                            >
+                                                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                    type="button"
+                                                    onclick="openReportModal(`answer`, ${answer.getId()})"
+                                            >Report</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
+                                <%--                            answer report modal--%>
+
 
                             <!-- this to show answer detail -->
 
@@ -728,6 +862,88 @@ change this template use File | Settings | File Templates. --%>
     quill.on('text-change', function (delta, oldDelta, source) {
         $('#answerContent').val(quill.container.firstChild.innerHTML);
     });
+    const questionFlagSelect = (props) => {
+        let value = props.value;
+        if (value === "") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-0").classList.remove("hidden");
+        } else {
+            hideQuestionFlagDescription();
+            document.getElementById(`question-flag-` + value).classList.remove("hidden");
+        }
+        document.getElementById("flagId").value = value;
+    };
+    const openReportModal = (type, typeId) => {
+        modal.show();
+        document.getElementById("type").value = type;
+        document.getElementById("typeId").value = typeId;
+    }
+
+    const reportModal = document.getElementById('reportModalQuestion');
+
+    // options with default values
+    const options = {
+        onHide: () => {
+            console.log('modal is hidden');
+        },
+        onShow: () => {
+            console.log('modal is shown');
+        },
+        onToggle: () => {
+            console.log('modal has been toggled');
+        }
+    };
+    const modal = new Modal(reportModal, options);
+
+    const hideQuestionFlagDescription = () => {
+        let flagDescriptionElement = document.getElementsByClassName("description-flag");
+        document.getElementById("question-flag-0").classList.add("hidden");
+        for (let i = 0; i < flagDescriptionElement.length; i++) {
+            let current = flagDescriptionElement[i];
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+
+        // for (let i = 0; i <= 3; i++) {
+        //     let current = document.getElementById("question-flag-" + i);
+        //     if (!current.classList.contains("hidden")) {
+        //         current.classList.add("hidden");
+        //     }
+        // }
+    };
+    const answerFlagSelect = (idx, props) => {
+        let value = props.value;
+        if (value === "") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-0")
+                .classList.remove("hidden");
+        } else if (value === "flag-1") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-1")
+                .classList.remove("hidden");
+        } else if (value === "flag-2") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-2")
+                .classList.remove("hidden");
+        } else if (value === "flag-3") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-3")
+                .classList.remove("hidden");
+        }
+    };
+    const hideAnswerFlagDescription = (idx) => {
+        for (let i = 0; i <= 3; i++) {
+            let current = document.getElementById("answer-" + idx + "-flag-" + i);
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+    };
 </script>
 </body>
 </html>
