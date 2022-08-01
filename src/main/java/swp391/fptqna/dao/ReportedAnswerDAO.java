@@ -1,6 +1,5 @@
 package swp391.fptqna.dao;
 
-import swp391.fptqna.dto.QuestionDTO;
 import swp391.fptqna.dto.ReportedAnswerDTO;
 import swp391.fptqna.utils.DButil;
 
@@ -66,7 +65,7 @@ public class ReportedAnswerDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "UPDATE AnswerFlag SET State = ? WHERE Id = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
-            preparedStatement.setByte(1,state);
+            preparedStatement.setByte(1, state);
             preparedStatement.setInt(2, reportedAnswerId);
             int rs = preparedStatement.executeUpdate();
             return rs > 0;
@@ -89,6 +88,24 @@ public class ReportedAnswerDAO {
         return false;
     }
 
+    public boolean createReport(int flagId, int answerId, int userId, String description) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "INSERT INTO AnswerFlag VALUES (?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, flagId);
+            preparedStatement.setInt(2, answerId);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.setTimestamp(4, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(5, 0);
+            preparedStatement.setString(6, description);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public int getNumberOfPage() throws Exception {
         int numberOfRecord = 0;
