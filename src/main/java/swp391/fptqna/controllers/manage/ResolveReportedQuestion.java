@@ -18,6 +18,7 @@ public class ResolveReportedQuestion extends HttpServlet {
 
         try {
             String state = request.getParameter("state");
+            String emailTo = request.getParameter("emailTo");
             int reportedQuestionId = Integer.parseInt(request.getParameter("reportedQuestionId"));
             int questionId = Integer.parseInt(request.getParameter("questionId"));
             int ownerFlagUserId = Integer.parseInt(request.getParameter("ownerUserId"));
@@ -59,6 +60,9 @@ public class ResolveReportedQuestion extends HttpServlet {
                         throw new Exception("Delete reported question failed");
                     }
 
+                    request.setAttribute("emailTo",emailTo);
+                    request.setAttribute("reason","Your account have been banned!!");
+                    request.getRequestDispatcher("/SendEmail").include(request,response);
                     if (!notificationDAO.insert(7, questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     break;

@@ -168,6 +168,8 @@
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
                     <input class="hidden" name="ownerUserId" value="<%=reportedQuestion.getOwnerUserId()%>"/>
                     <input class="hidden" name="ownerQuestionFlagUserId" value="<%=question.getOwnerUserId()%>"/>
+                    <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
+
                 <button data-modal-toggle="deleteModal" type="submit" name="state" value="DELETE"
                         class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Reject
