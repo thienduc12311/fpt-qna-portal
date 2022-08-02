@@ -833,7 +833,7 @@ change this template use File | Settings | File Templates. --%>
 <script src="./asset/js/flowbite.js"></script>
 <script
         type="module"
-        src="./asset/js/ionicons.esm.js"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
 ></script>
 <script
         nomodule

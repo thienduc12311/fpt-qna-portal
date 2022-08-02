@@ -251,7 +251,7 @@
         hljs.highlightBlock(block);
     })
 </script>
-<script type="module" src="./asset/js/ionicons.esm.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="./asset/js/ionicons.js"></script>
 </body>
 </html>
