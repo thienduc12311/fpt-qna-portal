@@ -1,4 +1,6 @@
 <%@ page import="swp391.fptqna.dto.UserDTO" %>
+<%@ page import="swp391.fptqna.dto.NotificationViewDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <div class="shadow bg-white fixed w-full top-0 z-10">
     <div class="py-2 px-5 lg:px-10">
         <div class="flex justify-between items-center space-x-6">
@@ -65,20 +67,24 @@
                                 <div class="px-6 pt-6 pb-2">
                                     <p class="text-lg leading-5 font-bold">Notifications</p>
                                 </div>
-                                <div class="py-1 px-6 hover:bg-slate-100">
-                                    <a href="/PersonalProfile?page=1"
+                                <%
+                                    ArrayList<NotificationViewDTO> listNoti =(ArrayList<NotificationViewDTO>) session.getAttribute("noti");
+                                    for (NotificationViewDTO noti: listNoti) {
+                                %>
+                                <div class="py-1 px-6 hover:bg-slate-100" >
+                                    <a href="<%=noti.getHref()%>"
                                        class="text-gray-700 flex w-full pt-4 py-2 text-xs leading-5 text-left space-x-2"
                                        role="menuitem">
-                                        <img class="rounded-full h-9 w-9"
-                                             src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/avatar-mac-dinh-nu-co-mau-30-10-31-43.jpg">
                                         <div>
-                                            <div class="text-xs">Jane Dove<span class="font-normal text-xs"> has recently answered your question </span>"Why
-                                                do birds fly, they want to look down on us or ..."
-                                            </div>
-                                            <div class="text-slate-300 font-normal text-xs mt-1">March 3, 2022</div>
+                                            <div class="text-xs"><%=noti.getContent()%></div>
+                                            <div class="text-slate-300 font-normal text-xs mt-1"><%=noti.getNoti().getCreationDate()%></div>
                                         </div>
                                     </a>
                                 </div>
+                                <%
+                                    }
+                                %>
+
                             </div>
                         </div>
                     </div>

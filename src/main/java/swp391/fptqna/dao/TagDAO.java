@@ -19,6 +19,37 @@ public class TagDAO {
         return new TagDTO(id, tagName, description, creationDate, ownerUserId, questionCount,state);
     }
 
+    public boolean insert(String tagName, String description, int owner){
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "INSERT INTO Tags VALUES (?,?,?,?,0,1)";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, tagName);
+            preparedStatement.setString(2, description);
+            preparedStatement.setTimestamp(3, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(4, owner);
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean update(int id, String tagName, String description){
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Tags SET TagName = ?, Discription = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, tagName);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, id);
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private TagDTO getTagById(int id) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "Select * from Tags Where Id = ?";
@@ -76,7 +107,7 @@ public class TagDAO {
     public ArrayList<TagDTO> getTagByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Tags \n" +
-                    "ORDER BY Id DESC \n" +
+                    "ORDER BY CreationDate DESC \n" +
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY;";
             PreparedStatement preparedStatement = cn.prepareStatement(query);

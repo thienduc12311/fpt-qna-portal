@@ -13,6 +13,8 @@ public class MainController extends HttpServlet {
     private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
     private final String TAG_CONTROLLER = "/manage/Tag";
+    private final String ADD_TAG_CONTROLLER = "/manage/AddTag";
+    private final String EDIT_TAG_CONTROLLER = "/manage/EditTag";
     private final String VIEW_PENDING_QUESTION_CONTROLLER = "/manage/ViewPendingQuestion";
     private final String VIEW_REPORTED_QUESTION_CONTROLLER = "/manage/ViewReportedQuestion";
     private final String VIEW_REPORTED_ANSWER_CONTROLLER = "/manage/ViewReportedAnswer";
@@ -83,6 +85,12 @@ public class MainController extends HttpServlet {
                     break;
                 case "UnDeleteQuestion":
                     url = UNDELETE_QUESTION_CONTROLLER;
+                    break;
+                case "AddTag":
+                    url = ADD_TAG_CONTROLLER;
+                    break;
+                case "EditTag":
+                    url = EDIT_TAG_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

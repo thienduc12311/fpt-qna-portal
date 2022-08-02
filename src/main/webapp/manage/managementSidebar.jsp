@@ -35,9 +35,6 @@
                 </svg>
                 <span>Pending Questions</span>
             </div>
-            <div class="flex items-center bg-gray-400 rounded-md text-xs text-white px-1 group-hover:bg-gray-900 transition duration-300 ease-in-out">
-                10
-            </div>
 
         </a>
     </div>

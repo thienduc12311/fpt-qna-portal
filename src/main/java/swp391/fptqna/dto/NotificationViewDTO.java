@@ -1,10 +1,11 @@
 package swp391.fptqna.dto;
 
 public class NotificationViewDTO {
-    private int noti;
+    private NotificationDTO noti;
     private String content;
+    private String href;
 
-    public NotificationViewDTO(int noti, String content) {
+    public NotificationViewDTO(NotificationDTO noti, String content) {
         this.noti = noti;
         this.content = content;
     }
@@ -13,11 +14,11 @@ public class NotificationViewDTO {
         this.content = content;
     }
 
-    public int getNoti() {
+    public NotificationDTO getNoti() {
         return noti;
     }
 
-    public void setNoti(int noti) {
+    public void setNoti(NotificationDTO noti) {
         this.noti = noti;
     }
 
@@ -27,5 +28,13 @@ public class NotificationViewDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 }
