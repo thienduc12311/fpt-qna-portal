@@ -115,6 +115,7 @@
                 <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
                 <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
                 <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+                <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
             <button type="submit" name="state" value="REJECT"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#0694A2] rounded-lg hover:bg-[#057c87] focus:ring-2 focus:outline-none focus:ring-[#0694A230] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
                 Resolve with no violation
@@ -186,6 +187,7 @@
                         <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
                         <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
                         <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+                        <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
                     <button data-modal-toggle="deleteModal" type="submit" name="state" value="DELETE"
                             class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Reject

@@ -92,9 +92,11 @@
                 <form action="MainController" method="post" class="m-0">
                     <input hidden name="action" value="ResolveReportedQuestion"/>
                     <input class="hidden" name="reportedQuestionId" value="<%=reportedQuestion.getId()%>"/>
+<                  <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
                     <input class="hidden" name="ownerUserId" value="<%=reportedQuestion.getOwnerUserId()%>"/>
                     <input class="hidden" name="ownerQuestionFlagUserId" value="<%=question.getOwnerUserId()%>"/>
+
                 <button type="submit" name="state" value="REJECT"
                         class="px-10 py-2 text-sm font-medium text-center text-white bg-[#0694A2] rounded-lg hover:bg-[#057c87] focus:ring-2 focus:outline-none focus:ring-[#0694A230] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
                     Resolve with no violation

@@ -62,7 +62,7 @@ public class ResolveReportedQuestion extends HttpServlet {
 
                     request.setAttribute("emailTo",emailTo);
                     request.setAttribute("reason","Your account have been banned!!");
-                    request.getRequestDispatcher("/SendEmail").include(request,response);
+                    request.getRequestDispatcher("/manage/SendEmail").include(request,response);
                     if (!notificationDAO.insert(7, questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     break;

@@ -1,22 +1,20 @@
-package swp391.fptqna.controllers;
+package swp391.fptqna.controllers.manage;
 
-import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dto.UserDTO;
-
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.*;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import java.io.PrintWriter;
+import java.util.Properties;
 
-@WebServlet(name = "SendMail", value = "/SendMail")
-public class SendMail extends HttpServlet {
+@WebServlet(name = "SendEmail", value = "/manage/SendEmail")
+public class SendEmail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Recipient's email ID needs to be mentioned.
@@ -75,18 +73,18 @@ public class SendMail extends HttpServlet {
                     "<h1 align = \"center\">" + title + "</h1>\n" +
                     "<p align = \"center\">" + res + "</p>\n" +
                     "</body></html>"
-         );
+            );
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
 }
