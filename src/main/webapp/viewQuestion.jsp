@@ -10,11 +10,11 @@ change this template use File | Settings | File Templates. --%>
     <link href="/asset/style/style.css" rel="stylesheet"/>
     <link
             rel="stylesheet"
-            href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
+            href="./asset/style/flowbite.min.css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./asset/js/cdn.tailwind.js"></script>
     <link href="./asset/style/dracula.css" rel="stylesheet">
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="./asset/style/quill.snow.css" rel="stylesheet">
 </head>
 <style>
     .ql-toolbar {
@@ -830,17 +830,17 @@ change this template use File | Settings | File Templates. --%>
         </div>
     </c:if>
 </div>
-<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+<script src="./asset/js/flowbite.js"></script>
 <script
         type="module"
-        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        src="./asset/js/ionicons.esm.js"
 ></script>
 <script
         nomodule
-        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        src="./asset/js/ionicons.js"
 ></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="./asset/js/highlight.min.js"></script>
+<script src="./asset/js/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
 <script>
     var toolbarOptions = [

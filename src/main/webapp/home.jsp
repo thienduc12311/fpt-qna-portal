@@ -10,10 +10,10 @@
 <html>
 <head>
     <title>Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./asset/js/cdn.tailwind.js"></script>
     <link
             rel="stylesheet"
-            href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
+            href="./asset/style/flowbite.min.css"
     />
     <link href="./asset/style/dracula.css" rel="stylesheet">
 </head>
@@ -242,7 +242,7 @@
         </button>
     </div>
 </c:if>
-<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<script src="./asset/js/highlight.min.js"></script>
 <script>
     hljs.configure({
         languages: ['javascript', 'java', 'python']
@@ -251,7 +251,7 @@
         hljs.highlightBlock(block);
     })
 </script>
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script type="module" src="./asset/js/ionicons.esm.js"></script>
+<script nomodule src="./asset/js/ionicons.js"></script>
 </body>
 </html>
