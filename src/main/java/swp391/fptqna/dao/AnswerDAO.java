@@ -154,4 +154,19 @@ public class AnswerDAO {
             e.printStackTrace();
         }
     }
+
+    public boolean updateAnswer(int userId, int answerId, String description) {
+        String query = "UPDATE Answers SET Body = ? WHERE OwnerUserId = ? AND Id = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, description);
+            preparedStatement.setInt(3, answerId);
+            preparedStatement.setInt(2, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

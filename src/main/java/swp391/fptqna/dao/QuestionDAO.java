@@ -564,4 +564,19 @@ public class QuestionDAO {
         }
         return numberOfRecord;
     }
+
+    public boolean updateQuestion(int userId, int questionId, String description) {
+        String query = "UPDATE Questions SET Body = ? WHERE OwnerUserId = ? AND Id = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, description);
+            preparedStatement.setInt(3, questionId);
+            preparedStatement.setInt(2, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

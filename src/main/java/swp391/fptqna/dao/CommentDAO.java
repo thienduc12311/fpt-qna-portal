@@ -60,6 +60,26 @@ public class CommentDAO {
         }
     }
 
+    public boolean deleteComment(String type, int typeId, int userId) {
+        String questionComment = "DELETE FROM QuestionComment WHERE QuestionId = ? OnwerUserId = ?";
+        String answerComment = "DELETE FROM AnswerComment WHERE AnswerId = ? OnwerUserId = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = null;
+            if (type.equals("question")) {
+                preparedStatement = cn.prepareStatement(questionComment);
+            } else if (type.equals("answer")) {
+                preparedStatement = cn.prepareStatement(answerComment);
+            }
+            preparedStatement.setInt(1, typeId);
+            preparedStatement.setInt(2, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public void getListCommentOfAnswer(ExtendedQuestionDTO question) {
         String query = "select * FROM (Select * FROM AnswerComment where AnswerId in (select Id from Answers where QuestionId = ?)) c LEFT JOIN dbo.Users u on c.OwnerUserId = u.Id\n";
         try (Connection cn = DButil.getMyConnection()) {
