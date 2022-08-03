@@ -55,10 +55,10 @@ change this template use File | Settings | File Templates. --%>
             <a
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150"
-            >Question</a
+            >${(requestScope.resource eq "resource") ? 'Resource' : 'Question'}</a
             >
-            <span> / </span>
-            <a
+            <span style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"> / </span>
+            <a style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150 text-[#252530]"
             >Q${requestScope.question.id}</a
@@ -69,9 +69,9 @@ change this template use File | Settings | File Templates. --%>
             <!-- this section is for question info -->
 
             <div class="content w-full lg:w-9/12">
-                <div class="question bg-white rounded-lg drop-shadow-md relative">
+                <div class="question bg-white ${(requestScope.resource eq "resource") ? 'bg-[#7E3AF2]' : ''} rounded-lg drop-shadow-md relative">
                     <div class="p-11">
-                        <div class="flex items-center mb-6 mx-3">
+                        <div style="${(requestScope.resource eq "resource") ? 'display:none' : ''}" class="flex items-center mb-6 mx-3">
                             <!-- put the link to profile here in href -->
 
                             <a href="" class="cursor-pointer">
@@ -85,10 +85,15 @@ change this template use File | Settings | File Templates. --%>
                             </a>
                             <!-- put the link to profile here in href-->
 
-                            <a href="" class="font-semibold ml-3 text-[#505059]"
+                            <a href="/PersonalProfile?page=1&userid=${requestScope.question.ownerUserId}" class="font-semibold ml-3 text-[#505059]"
                             >${requestScope.question.ownerName}
                                 <!-- put the author name here -->
                             </a>
+                            <c:if test="${requestScope.question.ownerRole == 1}">
+                                <div class="ml-2 text-xs inline-flex items-center font-medium leading-sm px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                                    Lecturer
+                                </div>
+                            </c:if>
 
                             <!-- put date here -->
                             <span class="ml-4 text-xs text-[#B9C1CC]">${requestScope.question.stringCreationDate}</span>
@@ -126,7 +131,7 @@ change this template use File | Settings | File Templates. --%>
                         <!-- this to show question detail -->
 
                         <div class="content mr-16">
-                            <h3 class="text-[#252530] font-semibold text-xl mb-3">
+                            <h3 class="${(requestScope.resource eq "resource") ? 'text-white text-2xl' : 'text-[#252530] text-xl mb-3'} font-semibold">
                                 ${requestScope.question.title}
                             </h3>
                             <p class="text-[#505059]">
@@ -136,7 +141,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- place a loop for tags here -->
 
-                        <div class="flex mt-6">
+                        <div class="flex mt-6" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
 
                             <c:forEach items="${requestScope.question.tags}" var="tag">
                                 <c:url var="tagUrl" value="/home">
@@ -150,11 +155,11 @@ change this template use File | Settings | File Templates. --%>
                                 >${tag.tagName}</a>
                             </c:forEach>
                         </div>
-                        <div class="border-b my-7"></div>
+                        <div class="border-b my-7" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"></div>
 
                         <!-- this is for number of answers and comments -->
 
-                        <div class="flex items-center flex-col md:flex-row gap-y-3">
+                        <div class="flex items-center flex-col md:flex-row gap-y-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div
                                     class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center md:mr-6"
                             >
@@ -178,7 +183,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- comment form -->
 
-                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8">
+                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div class="flex">
                                 <input name="action" value="comment" hidden/>
                                 <input name="parentId" value="${requestScope.question.id}" hidden>
@@ -187,7 +192,7 @@ change this template use File | Settings | File Templates. --%>
                                         type="text"
                                         name="commentContent"
                                         class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                        placeholder="Write a comment here..."
+                                        placeholder="${(requestScope.resource eq "resource") ? 'Share a resouce link here... ' : 'Write a comment here...'}"
                                 />
                                 <button
                                         class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -201,11 +206,11 @@ change this template use File | Settings | File Templates. --%>
                         <!-- put comment here -->
                         <!-- open loop -->
                         <c:forEach items="${requestScope.question.comments}" var="comment">
-                            <div class="comment my-8">
+                            <div class="comment my-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <div class="flex items-center mb-4 mx-3">
                                     <!-- put the link to profile here in href -->
 
-                                    <a href="" class="cursor-pointer">
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="cursor-pointer">
                                         <!-- put avatar link here -->
 
                                         <img
@@ -216,7 +221,7 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                     <!-- put the link to profile here in href-->
 
-                                    <a href="" class="font-semibold ml-3 text-[#505059]"
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="font-semibold ml-3 text-[#505059]"
                                     >${comment.userName}
                                         <!-- put the author name here -->
                                     </a>
@@ -252,7 +257,7 @@ change this template use File | Settings | File Templates. --%>
 
                     <!-- this is for vote -->
 
-                    <div class="vote absolute flex-col text-center top-32 -left-12">
+                    <div class="vote absolute flex-col text-center top-32 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                         <!-- upvote button -->
 
                         <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
@@ -277,6 +282,7 @@ change this template use File | Settings | File Templates. --%>
                 </div>
                 <%--                report question modal--%>
                 <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                         id="reportModalQuestion"
                         tabindex="-1"
                         aria-hidden="true"
@@ -398,7 +404,7 @@ change this template use File | Settings | File Templates. --%>
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
                     <div class="p-8">
                         <h1 class="font-semibold text-xl text-[#7E3AF2]">
-                            ANSWERS (${requestScope.question.answerCount})
+                            ${(requestScope.resource eq "resource") ? 'SUBJECTS' : 'ANSWERS'} (${requestScope.question.answerCount})
                         </h1>
                     </div>
                 </div>
@@ -410,7 +416,7 @@ change this template use File | Settings | File Templates. --%>
                             class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-6"
                     >
                         <div class="p-11">
-                            <div class="flex items-center mb-6 mx-3">
+                            <div class="flex items-center mb-6 mx-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <!-- put the link to profile here in href -->
 
                                 <a href="" class="cursor-pointer">
@@ -487,7 +493,7 @@ change this template use File | Settings | File Templates. --%>
                                             type="text"
                                             name="commentContent"
                                             class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                            placeholder="Write a comment here..."
+                                            placeholder="${(requestScope.resource eq "resource") ? 'Share a resource link here... ' : 'Write a comment here...'}"
                                     />
                                     <button
                                             class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -542,7 +548,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- this is for vote -->
 
-                        <div class="vote absolute flex-col text-center top-10 -left-12">
+                        <div class="vote absolute flex-col text-center top-10 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                             <!-- upvote button -->
 
                             <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
@@ -571,6 +577,7 @@ change this template use File | Settings | File Templates. --%>
                 <!-- answer form -->
 
                 <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                         class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-8"
                 >
                     <div class="p-11">

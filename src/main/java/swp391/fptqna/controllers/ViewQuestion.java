@@ -29,16 +29,19 @@ public class ViewQuestion extends HttpServlet {
             questionList.add(questionDAO.getExtendQuestionById(questionId));
             questionDAO.getAllTagsOfQuestion(questionList);
             ExtendedQuestionDTO question = questionList.getQuestionById(questionId);
+            String resource = "";
+            if (question.getTitle().contains("Semester "))
+                resource = "resource";
             if (action == null) action = "view";
             switch (action) {
                 case "view":
-                    viewQuestion(request, response, question);
+                    viewQuestion(request, response, question, resource);
                     break;
                 case "comment":
-                    addComment(request, response, question);
+                    addComment(request, response, question, resource);
                     break;
                 case "answer":
-                    addAnswer(request, response, question);
+                    addAnswer(request, response, question, resource);
                     break;
             }
         } catch (Exception ex) {
@@ -48,7 +51,7 @@ public class ViewQuestion extends HttpServlet {
 
     }
 
-    private void addAnswer(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
+    private void addAnswer(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
             int questionId = Integer.parseInt(request.getParameter("questionId"));
@@ -71,14 +74,14 @@ public class ViewQuestion extends HttpServlet {
                 }
 
             }
-            forwardRequest(request, response, question);
+            forwardRequest(request, response, question, resource);
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
             System.out.println(ex);
         }
     }
 
-    private void addComment(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
+    private void addComment(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
             int parentId = Integer.parseInt(request.getParameter("parentId"));
@@ -96,14 +99,14 @@ public class ViewQuestion extends HttpServlet {
                     request.setAttribute("ERROR_MESSAGE", "Something went wrong, please try again later!");
                 }
             }
-            forwardRequest(request, response, question);
+            forwardRequest(request, response, question, resource);
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
             System.out.println(ex);
         }
     }
 
-    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws Exception {
+    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws Exception {
         question.setAnswerList(new ExtendedAnswerList());
         question.setComments(new ArrayList<CommentDTO>());
         AnswerDAO answerDAO = new AnswerDAO();
@@ -113,14 +116,15 @@ public class ViewQuestion extends HttpServlet {
         commentDAO.getListCommentOfAnswer(question);
         FlagTypeDAO flagTypeDAO = new FlagTypeDAO();
         ArrayList<FlagTypeDTO> flags = flagTypeDAO.getAllFlag();
+        request.setAttribute("resource", resource);
         request.setAttribute("question", question);
         request.setAttribute("flags", flags);
         request.getRequestDispatcher(QUESTION_VIEW).forward(request, response);
     }
 
-    private void viewQuestion(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question) throws ServletException, IOException {
+    private void viewQuestion(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
         try {
-            forwardRequest(request, response, question);
+            forwardRequest(request, response, question, resource);
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
             System.out.println(ex);
