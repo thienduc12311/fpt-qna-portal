@@ -29,51 +29,61 @@
     if (nextPage > numberOfPage) nextPage = numberOfPage;
 %>
 <div class="pt-14">
-    <div class="pt-10 pb-3 px-10 xl:px-52 lg:48 md:px-32 sm:px-20 inline-flex space-x-8 ml-20 font-semibold">
+    <div class="${(requestScope.resource eq "resource") ? 'px-3 xl:px-32' : 'xl:px-52 lg:px-48 md:px-32 sm:px-20'} pt-10 pb-5 px-10 inline-flex space-x-4 md:space-x-8 ml-20 font-semibold">
 
         <a href="/home?action=latest&page=1" class="text-sm hover:opacity-60 duration-150">Newest</a>
 
         <a href="/home?action=mostLiked&page=1" class="text-sm hover:opacity-60 duration-150">Most liked</a>
         <a href="/home?action=mostAnswered&page=1" class="text-sm hover:opacity-60 duration-150">Most answered</a>
+        <a href="/home?action=discussion&page=1" class="text-sm hover:opacity-60 duration-150">Discussion</a>
+        <a href="/home?action=resource&page=1" class="text-sm hover:opacity-60 duration-150">Resource</a>
+
     </div>
     <div class="flex justify-center h-screen px-2 xl:px-40 lg:px-24 md:px-18 sm:px-8 h-full space-x-4">
 
         <!-- left column -->
-        <div class="w-10/12 sm:w-8/12">
+        <div class="w-10/12 sm:w-8/12 ${(requestScope.resource eq "resource") ? 'md:grid md:grid-cols-3 h-0' : ''}">
 
             <!-- a post -->
             <c:forEach items="${sessionScope.questions}" var="question">
-                <div class="flex gap-x-2 mb-4">
-                    <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold">
+                <div class=" gap-x-2 mb-4 ${(requestScope.resource eq "resource") ? 'text-center' : 'flex'}">
+                    <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                         <a href="/Vote?action=upVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
-                           class="hover:opacity-60 duration-150">
+                           class="hover:opacity-60 duration-150" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <ion-icon name="caret-up"></ion-icon>
                         </a>
 
-                        <p>${question.score}</p>
+                        <p style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">${question.score}</p>
                         <a href="/Vote?action=downVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
-                           class="hover:opacity-60 duration-150">
+                           class="hover:opacity-60 duration-150" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <ion-icon name="caret-down"></ion-icon>
                         </a>
                     </div>
 
-                    <div class="w-11/12 bg-white p-8 grid content-start gap-y-3 rounded shadow-md">
-                        <div class="flex gap-x-2 items-center">
+                    <div class="w-11/12 bg-white p-8 ${(requestScope.resource eq "resource") ? 'px-8 md:py-16 py-5 hover:bg-[#7E3AF2] hover:text-white duration-100' : ''} grid content-start gap-y-3 rounded shadow-md">
+                        <div class="flex gap-x-2 items-center" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <a href="/PersonalProfile?page=1&userid=${question.ownerUserId}">
                                 <img class="rounded-full h-8 w-8" src="${question.ownerAvt}">
                             </a>
                             <a href="/PersonalProfile?page=1&userid=${question.ownerUserId}">
-                                <p class="text-sm font-semibold pt-1">${question.ownerName}</p>
+                                <p class="text-sm font-semibold">${question.ownerName}</p>
                             </a>
+                            <c:if test="${question.ownerRole == 1}">
+                                <div class="text-xs inline-flex items-center font-medium leading-sm px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                                    Lecturer
+                                </div>
+                            </c:if>
+
+                            <span class="ml-4 text-xs text-[#B9C1CC]">${question.stringCreationDate}</span>
                         </div>
                         <div>
                             <a href="/ViewQuestion?questionId=${question.id}"
-                               class="font-semibold hover:opacity-60 duration-150">${question.title}</a>
+                               class="font-semibold ${(requestScope.resource eq "resource") ? '' : 'hover:opacity-60 duration-150'}">${question.title}</a>
                         </div>
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <p class="text-gray-500 text-sm">${question.body}</p>
                         </div>
-                        <div class="flex text-xs gap-x-1">
+                        <div class="flex text-xs gap-x-1" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <c:forEach items="${question.tags}" var="tag">
                                 <c:url var="tagUrl" value="/home">
                                     <c:param name="action" value="tag"></c:param>
@@ -85,7 +95,7 @@
                                 </a>
                             </c:forEach>
                         </div>
-                        <div class="border-t border-gray-300 pt-5 mt-2 flex items-center gap-x-3">
+                        <div class="border-t border-gray-300 pt-5 mt-2 flex items-center gap-x-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center">
                                 <ion-icon name="chatbox-ellipses"></ion-icon>
                                 <div class="ml-2 text-xs">${question.answerCount} answers</div>
@@ -103,7 +113,7 @@
             <!-- end -->
 
 
-            <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12">
+            <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                 <a href="${pageContext.request.contextPath}/home?page=<%=previousPage%>"
                    class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                     <span class="sr-only">Previous</span>

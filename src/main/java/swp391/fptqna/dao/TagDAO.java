@@ -39,7 +39,7 @@ public class TagDAO {
 
     public ArrayList<TagDTO> getAllAvailableTag() throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT * FROM Tags WHERE State = 1";
+            String query = "SELECT * FROM Tags WHERE State = 1 AND Id !=15";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 ArrayList<TagDTO> list = new ArrayList<>();
@@ -139,7 +139,7 @@ public class TagDAO {
 
     public ArrayList<TagDTO> getTopTenTag() throws  Exception{
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT TOP 10 * FROM Tags WHERE State = 1 ORDER BY QuestionCount DESC";
+            String query = "SELECT TOP 10 * FROM Tags WHERE State = 1 AND Id !=15 ORDER BY QuestionCount DESC";
             Statement stmt = cn.createStatement();
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 ArrayList<TagDTO> list = new ArrayList<>();

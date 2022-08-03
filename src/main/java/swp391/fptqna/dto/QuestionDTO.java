@@ -14,6 +14,9 @@ public class QuestionDTO {
     private String body;
     private int ownerUserId;
     private String ownerAvt;
+    private int ownerRole;
+    public int getOwnerRole() { return ownerRole; }
+    public void setOwnerRole(int ownerRole) { this.ownerRole = ownerRole; }
 
     public String getOwnerAvt() {
         return ownerAvt;

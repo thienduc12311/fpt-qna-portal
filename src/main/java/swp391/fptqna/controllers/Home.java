@@ -28,6 +28,7 @@ public class Home extends HttpServlet {
             String txtSearch = request.getParameter("txtSearch");
             if (action == null) action = "latest";
             int numberOfPage = 0;
+            String resource = "";
 
             //5 filter actions: latest, search, tag, most voted, most answered
             numberOfPage = questionDAO.getNumberOfAvailablePage();
@@ -55,6 +56,15 @@ public class Home extends HttpServlet {
                 case "mostAnswered":
                     questionList = questionDAO.getAvailableQuestionFilterMostAnsweredByPage(page);
                     break;
+                case "discussion":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterDiscussion();
+                    questionList = questionDAO.getAvailableQuestionFilterDiscussionByPage(page);
+                    break;
+                case "resource":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterTag("Resource");
+                    questionList = questionDAO.getAvailableQuestionFilterResourceByPage(page);
+                    resource = "resource";
+                    break;
                 default:
                     extendedQuestion = (ExtendQuestionList) session.getAttribute("questions");
                     break;
@@ -80,6 +90,7 @@ public class Home extends HttpServlet {
 
             questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("resource", resource);
             request.setAttribute("numberOfPage", numberOfPage);
             request.setAttribute("topFiveUser", topFiveUser);
             request.setAttribute("topTenTag", topTenTag);
