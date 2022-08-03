@@ -9,6 +9,8 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
     private final String REGISTER_CONTROLLER = "Register";
     private final String LOGIN_CONTROLLER = "Login";
+    private final String HANDLE_NOTIFICATION = "HandleNoti";
+
     private final String PENDING_QUESTION_CONTROLLER = "/manage/PendingQuestion";
     private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
@@ -91,6 +93,9 @@ public class MainController extends HttpServlet {
                     break;
                 case "EditTag":
                     url = EDIT_TAG_CONTROLLER;
+                    break;
+                case "HandleNoti":
+                    url = HANDLE_NOTIFICATION;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

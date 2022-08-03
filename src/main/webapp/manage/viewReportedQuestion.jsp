@@ -92,7 +92,7 @@
                 <form action="MainController" method="post" class="m-0">
                     <input hidden name="action" value="ResolveReportedQuestion"/>
                     <input class="hidden" name="reportedQuestionId" value="<%=reportedQuestion.getId()%>"/>
-<                  <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
+                    <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
                     <input class="hidden" name="ownerUserId" value="<%=reportedQuestion.getOwnerUserId()%>"/>
                     <input class="hidden" name="ownerQuestionFlagUserId" value="<%=question.getOwnerUserId()%>"/>

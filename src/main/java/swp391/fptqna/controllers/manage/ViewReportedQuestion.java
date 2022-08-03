@@ -21,7 +21,6 @@ public class ViewReportedQuestion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-
             int reportedQuestionId = Integer.parseInt(request.getParameter("reportedQuestionId"));
             ReportedQuestionDAO reportedQuestionDAO = new ReportedQuestionDAO();
             ReportedQuestionDTO reportedQuestion = reportedQuestionDAO.getReportedQuestionById(reportedQuestionId);

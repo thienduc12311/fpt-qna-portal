@@ -39,6 +39,7 @@ public class ResolveReportedQuestion extends HttpServlet {
                         throw new Exception("Delete reported question failed");
                     if (!reportedQuestionDAO.setState(reportedQuestionId, (byte) 2))
                         throw new Exception("Delete reported question failed");
+                    reportedQuestionDAO.disableAllRelated(questionId);
                     String reason = request.getParameter("reasonText");
                     reason = questionId + "|" + reason;
                     if (!notificationDAO.insert(7, reason, ownerFlagUserId))
@@ -54,6 +55,7 @@ public class ResolveReportedQuestion extends HttpServlet {
                         throw new Exception("Delete reported question failed");
                     if (!reportedQuestionDAO.setState(reportedQuestionId, (byte) 3))
                         throw new Exception("Delete reported question failed");
+                    reportedQuestionDAO.disableAllRelated(questionId);
                     UserDAO userDAO = new UserDAO();
                     if (!userDAO.setState(ownerQuestionFlagUserId, false)) {
                         reportedQuestionDAO.setState(reportedQuestionId, (byte) 0);
@@ -61,7 +63,7 @@ public class ResolveReportedQuestion extends HttpServlet {
                     }
 
                     request.setAttribute("emailTo",emailTo);
-                    request.setAttribute("reason","Your account have been banned!!");
+                    request.setAttribute("reason","Your account have been banned!! Please reply this mail if you thing so wrong");
                     request.getRequestDispatcher("/manage/SendEmail").include(request,response);
                     if (!notificationDAO.insert(7, questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");

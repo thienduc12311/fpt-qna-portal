@@ -22,6 +22,7 @@ public class ResolveReportedAnswer extends HttpServlet {
 
         try {
             String state = request.getParameter("state");
+            String emailTo = request.getParameter("emailTo");
             int reportedAnswerId = Integer.parseInt(request.getParameter("reportedAnswerId"));
             int questionId = Integer.parseInt(request.getParameter("questionId"));
             int answerId = Integer.parseInt(request.getParameter("answerId"));
@@ -43,6 +44,7 @@ public class ResolveReportedAnswer extends HttpServlet {
                     }
                     if (!reportedAnswerDAO.setState(reportedAnswerId, (byte) 2))
                         throw new Exception("Delete reported answer failed");
+                    reportedAnswerDAO.disableAllRelated(answerId);
                     String reason = request.getParameter("reasonText");
                     if (!notificationDAO.insert(4, answerId + "|" + questionId , ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
@@ -57,12 +59,15 @@ public class ResolveReportedAnswer extends HttpServlet {
                         throw new Exception("Delete reported answer failed");
                     if (!reportedAnswerDAO.setState(reportedAnswerId, (byte) 3))
                         throw new Exception("Delete reported answer failed");
+                    reportedAnswerDAO.disableAllRelated(answerId);
                     UserDAO userDAO = new UserDAO();
                     if (!userDAO.setState(ownerAnswerFlagUserId, false)) {
                         reportedAnswerDAO.setState(reportedAnswerId, (byte) 0);
                         throw new Exception("Delete reported answer failed");
                     }
-
+                    request.setAttribute("emailTo",emailTo);
+                    request.setAttribute("reason","Your account have been banned!! Please reply this mail if you thing so wrong");
+                    request.getRequestDispatcher("/manage/SendEmail").include(request,response);
                     if (!notificationDAO.insert(4, answerId + "|" + questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     break;

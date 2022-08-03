@@ -80,4 +80,18 @@ public class NotificationDAO {
         }
         return null;
     }
+
+    public boolean updateState(int id, boolean state){
+            try (Connection cn = DButil.getMyConnection()) {
+                String query = "UPDATE Notifications SET State = ? WHERE Id = ?";
+                PreparedStatement preparedStatement = cn.prepareStatement(query);
+                preparedStatement.setBoolean(1, state);
+                preparedStatement.setInt(2, id);
+                int rs = preparedStatement.executeUpdate();
+                return rs > 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+    }
 }

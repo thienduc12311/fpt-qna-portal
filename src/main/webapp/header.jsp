@@ -71,8 +71,8 @@
                                     ArrayList<NotificationViewDTO> listNoti =(ArrayList<NotificationViewDTO>) session.getAttribute("noti");
                                     for (NotificationViewDTO noti: listNoti) {
                                 %>
-                                <div class="py-1 px-6 hover:bg-slate-100" >
-                                    <a href="<%=noti.getHref()%>"
+                                <div class="py-1 px-6 hover:bg-slate-100 <%=noti.getNoti().isState() ? "" : "bg-slate-50"%>" >
+                                    <a href="<%="/MainController?action=HandleNoti&id=" + noti.getNoti().getId() + "&h=" + noti.getHref()%>"
                                        class="text-gray-700 flex w-full pt-4 py-2 text-xs leading-5 text-left space-x-2"
                                        role="menuitem">
                                         <div>
