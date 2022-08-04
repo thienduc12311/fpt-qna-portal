@@ -21,60 +21,24 @@
 <%@include file="header.jsp" %>
 <div class="container w-1/2 h-[100vh] mx-auto flex gap-y-6 flex-col justify-start mt-28">
     <h3 class="text-2xl font-bold mb-5">All notifications</h3>
-    <button type="button" data-modal-toggle="medium-modal">
+    <%
+        ArrayList<NotificationViewDTO> listAllNoti = (ArrayList<NotificationViewDTO>) request.getAttribute("listNoti");
+        for (NotificationViewDTO noti: listAllNoti) {
+            String url = "/MainController?action=HandleNoti&id=" + noti.getNoti().getId() + "&h=" + noti.getHref();
+    %>
+    <button type="button" onclick="window.location='<%=url%>';">
         <div
                 class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-6 flex items-center gap-x-8 hover:bg-purple-50 text-left">
-            <img src="https://avatar.tobi.sh/" alt="Avatar" class="rounded-full w-20 h-20 flex-shrink-0"/>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta vel, aut commodi maxime perspiciatis
-                tempora
-                deserunt veniam repudiandae molestias reprehenderit, sunt cupiditate debitis et suscipit nobis totam
-                odit
-                vitae quas!</p>
+            <p><%=noti.getContent()%>/p>
         </div>
     </button>
-    <button type="button" data-modal-toggle="medium-modal">
-        <div
-                class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-6 flex items-center gap-x-8 hover:bg-purple-50 text-left">
-            <img src="https://avatar.tobi.sh/" alt="Avatar" class="rounded-full w-20 h-20 flex-shrink-0"/>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-    </button>
-    <button type="button" data-modal-toggle="medium-modal">
-        <div
-                class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-6 flex items-center gap-x-8 hover:bg-purple-50 text-left">
-            <img src="https://avatar.tobi.sh/" alt="Avatar" class="rounded-full w-20 h-20 flex-shrink-0"/>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta vel, aut commodi maxime perspiciatis
-                tempora
-                deserunt veniam repudiandae molestias reprehenderit, sunt cupiditate debitis et suscipit nobis totam
-                odit
-                vitae quas!</p>
-        </div>
-    </button>
-    <button type="button" data-modal-toggle="medium-modal">
-        <div
-                class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-6 flex items-center gap-x-8 hover:bg-purple-50 text-left">
-            <img src="https://avatar.tobi.sh/" alt="Avatar" class="rounded-full w-20 h-20 flex-shrink-0"/>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta vel, aut commodi maxime perspiciatis
-                tempora
-                deserunt veniam repudiandae molestias reprehenderit, sunt cupiditate debitis et suscipit nobis totam
-                odit
-                vitae quas!</p>
-        </div>
-    </button>
-    <button type="button" data-modal-toggle="medium-modal">
-        <div
-                class="w-full bg-white rounded-lg border border-gray-200 shadow-md p-6 flex items-center gap-x-8 hover:bg-purple-50 text-left">
-            <img src="https://avatar.tobi.sh/" alt="Avatar" class="rounded-full w-20 h-20 flex-shrink-0"/>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta vel, aut commodi maxime perspiciatis
-                tempora
-                deserunt veniam repudiandae molestias reprehenderit, sunt cupiditate debitis et suscipit nobis totam
-                odit
-                vitae quas!</p>
-        </div>
-    </button>
+    <%
+        }
+    %>
+
 
     <div class="w-8/12 flex flex-col gap-4 justify-between sm:flex-row mt-5">
-        <a href="#" class="text-[#B9C1CC] hover:text-[#9aa0a8] font-semibold">Back to home page...</a>
+        <a href="/home?page=1" class="text-[#B9C1CC] hover:text-[#9aa0a8] font-semibold">Back to home page...</a>
     </div>
     <div id="medium-modal" tabindex="-1"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">

@@ -50,7 +50,7 @@ public class NotificationUpdate implements Filter {
                 noti.setContent(content);
                 noti.setHref(href);
             } else {
-                noti.setHref("#");
+                noti.setHref("");
                 QuestionDAO questionDAO = new QuestionDAO();
                 QuestionDTO question = questionDAO.getQuestionById(Integer.parseInt(body[0]));
                 String title = question.getTitle().length() > 40 ? question.getTitle().substring(0,40) : question.getTitle();
@@ -69,7 +69,7 @@ public class NotificationUpdate implements Filter {
         try{
             UserDTO user = (UserDTO) session.getAttribute("USER");
             NotificationDAO notiDAO = new NotificationDAO();
-            ArrayList<NotificationViewDTO> listNoti = notiDAO.getTop10(user.getId());
+            ArrayList<NotificationViewDTO> listNoti = notiDAO.getTop(user.getId(),5);
             buildHref(listNoti);
             session.setAttribute("noti",listNoti );
         } catch (Exception e) {

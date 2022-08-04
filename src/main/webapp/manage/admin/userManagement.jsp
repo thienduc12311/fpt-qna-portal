@@ -65,6 +65,9 @@
                         class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
                     Score
                 </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
+                    Role
+                </th>
                 <th
                         class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
                     State
@@ -81,6 +84,7 @@
                 try{
                     ArrayList<UserDTO> list = (ArrayList<UserDTO>) request.getAttribute("listUser");
                     for (UserDTO user : list) {
+                        String url = "/MainController?action=SetRole&id=" + user.getId() + "&role=";
             %>
             <tr>
                 <!-- form for ban button  -->
@@ -102,6 +106,13 @@
                         <p class="text-gray-900 whitespace-no-wrap">
                             <%=user.getScore()%>
                         </p>
+                    </td>
+                    <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
+                        <select id="selectBox" onchange="window.location='<%=url%>' + value;" class="text-gray-900 whitespace-no-wrap">
+                            <option value="0" <%= user.getRole() == 0 ? "selected" : "" %>>User</option>
+                            <option value="1" <%= user.getRole() == 1 ? "selected" : "" %>>Moderator</option>
+                            <option value="2" <%= user.getRole() == 2 ? "selected" : "" %>>Admin</option>
+                        </select>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                 <span class="relative inline-block w-full py-1 font-semibold text-green-900 leading-tight">

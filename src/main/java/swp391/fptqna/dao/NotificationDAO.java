@@ -57,13 +57,14 @@ public class NotificationDAO {
         return numberOfRecord;
     }
 
-    public ArrayList<NotificationViewDTO> getTop10(int id) throws Exception {
+    public ArrayList<NotificationViewDTO> getTop(int id, int value) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "select A.*,B.Body as Content\n" +
                     "from (select * from Notifications where OwnerUserId = ?) as A left join NotificationTypes as B on A.NotificationTypeId = B.Id\n" +
-                    "ORDER BY CreationDate DESC OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
+                    "ORDER BY CreationDate DESC OFFSET 0 ROWS FETCH NEXT ? ROWS ONLY";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1,id);
+            preparedStatement.setInt(2,value);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 ArrayList<NotificationViewDTO> list = new ArrayList<>();
                 while (resultSet.next()) {

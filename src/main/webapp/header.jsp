@@ -84,6 +84,15 @@
                                 <%
                                     }
                                 %>
+                                <div class="py-1 px-6 hover:bg-slate-100" >
+                                    <a href="/MainController?action=ViewAllNoti"
+                                       class="text-gray-700 flex w-full pt-4 py-2 text-xs leading-5 text-center space-x-2"
+                                       role="menuitem">
+                                        <div>
+                                            <div class="text-xs">View All Notifications</div>
+                                        </div>
+                                    </a>
+                                </div>
 
                             </div>
                         </div>

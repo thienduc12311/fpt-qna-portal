@@ -10,7 +10,7 @@ public class MainController extends HttpServlet {
     private final String REGISTER_CONTROLLER = "Register";
     private final String LOGIN_CONTROLLER = "Login";
     private final String HANDLE_NOTIFICATION = "HandleNoti";
-
+    private final String VIEW_ALL_NOTIFICATION_CONTROLLER = "ViewAllNoti";
     private final String PENDING_QUESTION_CONTROLLER = "/manage/PendingQuestion";
     private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
@@ -26,7 +26,7 @@ public class MainController extends HttpServlet {
     private final String BAN_OR_UNBAN_USER = "/manage/BanUser";
     private final String MANAGE_QUESTION_CONTROLLER = "/manage/admin/ManageQuestions";
     private final String UNDELETE_QUESTION_CONTROLLER = "/manage/admin/UnDeleteQuestion";
-
+    private final String SET_ROLE_CONTROLLER = "/manage/admin/SetRole";
     private final String MANAGE_USER_CONTROLLER = "/manage/admin/ManageUsers";
     private final String DELETE_QUESTION_CONTROLLER = "DeleteQuestion";
     private final String LOGIN_VIEW = "index.jsp";
@@ -96,6 +96,12 @@ public class MainController extends HttpServlet {
                     break;
                 case "HandleNoti":
                     url = HANDLE_NOTIFICATION;
+                    break;
+                case "SetRole":
+                    url = SET_ROLE_CONTROLLER;
+                    break;
+                case "ViewAllNoti":
+                    url = VIEW_ALL_NOTIFICATION_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

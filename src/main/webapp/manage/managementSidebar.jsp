@@ -1,4 +1,9 @@
+<%@ page import="swp391.fptqna.dto.UserDTO" %>
 <div class="w-64 h-full shadow-md bg-white px-1 font-semibold pt-8">
+    <%
+        UserDTO user = (UserDTO) session.getAttribute("USER");
+        if (user.getRole() == 2){
+    %>
     <div class="relative">
         <a class="flex items-center text-sm py-4 px-6 h-12 text-gray-400 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
            href="/MainController?action=ManageUser&page=1" data-mdb-ripple="true" data-mdb-ripple-color="dark">
@@ -24,6 +29,9 @@
             <span>Questions</span>
         </a>
     </div>
+    <%
+        }
+    %>
     <div class="relative">
         <a class="flex group justify-between text-sm py-4 px-6 h-12 text-gray-400 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
            href="/MainController?action=PendingQuestion&page=1" data-mdb-ripple="true" data-mdb-ripple-color="dark">

@@ -212,6 +212,26 @@ public class UserDAO {
         return false;
     }
 
+    public boolean setRole(int id, byte role) throws Exception {
+
+        cn= DButil.getMyConnection();
+        if (cn != null) {
+            try {
+                String query = "UPDATE Users SET Role = ? WHERE Id = ?";
+                PreparedStatement preparedStatement = cn.prepareStatement(query);
+                preparedStatement.setByte(1, role);
+                preparedStatement.setInt(2, id);
+                int rs = preparedStatement.executeUpdate();
+                return rs > 0;
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }
+        return false;
+    }
+
     public ArrayList<UserDTO> getUserByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Users \n" + "ORDER BY Id ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";

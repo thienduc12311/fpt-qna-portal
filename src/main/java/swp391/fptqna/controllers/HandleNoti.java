@@ -17,14 +17,14 @@ public class HandleNoti extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("back", "/home.jsp?page=1");
+        request.setAttribute("back", "/home?page=1");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             String href = request.getParameter("h");
             if (href==null || href.isEmpty()) href="/home?page=1";
             NotificationDAO notificationDAO = new NotificationDAO();
             if (!notificationDAO.updateState(id, false)) throw new Exception("Read noti fails");
-            request.getRequestDispatcher(href).forward(request,response);
+            response.sendRedirect(href);
         } catch (Exception e) {
             e.printStackTrace();
             request.getRequestDispatcher(ERROR_VIEW).forward(request,response);
