@@ -13,30 +13,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Posted by</th>
-            <th>Posted date</th>
-        </tr>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Posted by</th>
+        <th>Posted date</th>
+    </tr>
 
-        <%
-            ArrayList<QuestionDTO> list = (ArrayList<QuestionDTO>) request.getAttribute("listPendingQuestion");
-            for (QuestionDTO question : list) {
-        %>
-                <tr>
-                    <a href="#">
-                        <td><%=question.getId()%></td>
-                        <td><%=(100 > question.getTitle().length()) ? question.getTitle() : question.getTitle().substring(100) + "..."%></td>
-                    </a>
-                    <td><a href="#"><%=question.getOwnerUserId()%></a></td>
-                    <td><%=question.getCreationDate()%></td>
-                </tr>
-        <%
-            }
-        %>
+    <%
+        ArrayList<QuestionDTO> list = (ArrayList<QuestionDTO>) request.getAttribute("listPendingQuestion");
+        for (QuestionDTO question : list) {
+    %>
+    <tr>
+        <a href="#">
+            <td><%=question.getId()%>
+            </td>
+            <td><%=(100 > question.getTitle().length()) ? question.getTitle() : question.getTitle().substring(100) + "..."%>
+            </td>
+        </a>
+        <td><a href="#"><%=question.getOwnerUserId()%>
+        </a></td>
+        <td><%=question.getCreationDate()%>
+        </td>
+    </tr>
+    <%
+        }
+    %>
 
-    </table>
+</table>
 </body>
 </html>

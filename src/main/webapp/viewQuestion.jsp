@@ -10,14 +10,28 @@ change this template use File | Settings | File Templates. --%>
     <link href="/asset/style/style.css" rel="stylesheet"/>
     <link
             rel="stylesheet"
-            href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css"
+            href="./asset/style/flowbite.min.css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="./asset/js/cdn.tailwind.js"></script>
+    <link href="./asset/style/dracula.css" rel="stylesheet">
+    <link href="./asset/style/quill.snow.css" rel="stylesheet">
 </head>
 <style>
     .ql-toolbar {
         border-radius: 10px !important;
+    }
+
+    html * {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+    }
+
+    .drop ion-icon {
+        font-size: 20px;
+    }
+
+    .vote ion-icon {
+        font-size: 20px;
     }
 </style>
 <body>
@@ -41,10 +55,10 @@ change this template use File | Settings | File Templates. --%>
             <a
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150"
-            >Question</a
+            >${(requestScope.resource eq "resource") ? 'Resource' : 'Question'}</a
             >
-            <span> / </span>
-            <a
+            <span style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"> / </span>
+            <a style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150 text-[#252530]"
             >Q${requestScope.question.id}</a
@@ -55,9 +69,9 @@ change this template use File | Settings | File Templates. --%>
             <!-- this section is for question info -->
 
             <div class="content w-full lg:w-9/12">
-                <div class="question bg-white rounded-lg drop-shadow-md relative">
+                <div class="question bg-white ${(requestScope.resource eq "resource") ? 'bg-[#7E3AF2]' : ''} rounded-lg drop-shadow-md relative">
                     <div class="p-11">
-                        <div class="flex items-center mb-6 mx-3">
+                        <div style="${(requestScope.resource eq "resource") ? 'display:none' : ''}" class="flex items-center mb-6 mx-3">
                             <!-- put the link to profile here in href -->
 
                             <a href="" class="cursor-pointer">
@@ -71,10 +85,15 @@ change this template use File | Settings | File Templates. --%>
                             </a>
                             <!-- put the link to profile here in href-->
 
-                            <a href="" class="font-semibold ml-3 text-[#505059]"
+                            <a href="/PersonalProfile?page=1&userid=${requestScope.question.ownerUserId}" class="font-semibold ml-3 text-[#505059]"
                             >${requestScope.question.ownerName}
                                 <!-- put the author name here -->
                             </a>
+                            <c:if test="${requestScope.question.ownerRole == 1}">
+                                <div class="ml-2 text-xs inline-flex items-center font-medium leading-sm px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                                    Lecturer
+                                </div>
+                            </c:if>
 
                             <!-- put date here -->
                             <span class="ml-4 text-xs text-[#B9C1CC]">${requestScope.question.stringCreationDate}</span>
@@ -99,19 +118,20 @@ change this template use File | Settings | File Templates. --%>
                                 >
                                     <li>
                                         <a
-                                                href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                        >Report</a
-                                        >
+                                                class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                type="button"
+                                                onclick="openReportModal(`question`, ${requestScope.question.id})"
+                                        >Report</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+                        <%--                        report question modal--%>
 
                         <!-- this to show question detail -->
 
                         <div class="content mr-16">
-                            <h3 class="text-[#252530] font-semibold text-xl mb-3">
+                            <h3 class="${(requestScope.resource eq "resource") ? 'text-white text-2xl' : 'text-[#252530] text-xl mb-3'} font-semibold">
                                 ${requestScope.question.title}
                             </h3>
                             <p class="text-[#505059]">
@@ -121,19 +141,25 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- place a loop for tags here -->
 
-                        <div class="flex mt-6">
+                        <div class="flex mt-6" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+
                             <c:forEach items="${requestScope.question.tags}" var="tag">
+                                <c:url var="tagUrl" value="/home">
+                                    <c:param name="action" value="tag"></c:param>
+                                    <c:param name="tag" value="${tag.tagName}"></c:param>
+                                    <c:param name="page" value="${1}"></c:param>
+                                </c:url>
                                 <a
-                                        href=""
+                                        href="${tagUrl}"
                                         class="px-4 py-1 mr-4 border border-solid border-[#B9C1CC] text-[#B9C1CC] rounded text-xs text-justify hover:backdrop-brightness-95 duration-50"
                                 >${tag.tagName}</a>
                             </c:forEach>
                         </div>
-                        <div class="border-b my-7"></div>
+                        <div class="border-b my-7" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"></div>
 
                         <!-- this is for number of answers and comments -->
 
-                        <div class="flex items-center flex-col md:flex-row gap-y-3">
+                        <div class="flex items-center flex-col md:flex-row gap-y-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div
                                     class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center md:mr-6"
                             >
@@ -157,7 +183,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- comment form -->
 
-                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8">
+                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div class="flex">
                                 <input name="action" value="comment" hidden/>
                                 <input name="parentId" value="${requestScope.question.id}" hidden>
@@ -166,7 +192,7 @@ change this template use File | Settings | File Templates. --%>
                                         type="text"
                                         name="commentContent"
                                         class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                        placeholder="Write a comment here..."
+                                        placeholder="${(requestScope.resource eq "resource") ? 'Share a resouce link here... ' : 'Write a comment here...'}"
                                 />
                                 <button
                                         class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -180,11 +206,11 @@ change this template use File | Settings | File Templates. --%>
                         <!-- put comment here -->
                         <!-- open loop -->
                         <c:forEach items="${requestScope.question.comments}" var="comment">
-                            <div class="comment my-8">
+                            <div class="comment my-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <div class="flex items-center mb-4 mx-3">
                                     <!-- put the link to profile here in href -->
 
-                                    <a href="" class="cursor-pointer">
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="cursor-pointer">
                                         <!-- put avatar link here -->
 
                                         <img
@@ -195,7 +221,7 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                     <!-- put the link to profile here in href-->
 
-                                    <a href="" class="font-semibold ml-3 text-[#505059]"
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="font-semibold ml-3 text-[#505059]"
                                     >${comment.userName}
                                         <!-- put the author name here -->
                                     </a>
@@ -220,46 +246,165 @@ change this template use File | Settings | File Templates. --%>
                         <!--place a condition for show more comments -->
                         <!-- if there is no more comment, hide this button -->
                         <!-- best case is to show 2 comments -->
-                        <a
-                                href=""
-                                class="text-[#7E3AF2] font-semibold hover:opacity-70 duration-150"
-                        >See 22 more comments</a
-                        >
+                        <%--                        <a--%>
+                        <%--                                href=""--%>
+                        <%--                                class="text-[#7E3AF2] font-semibold hover:opacity-70 duration-150"--%>
+                        <%--                        >See 22 more comments</a--%>
+                        <%--                        >--%>
 
                         <!-- close loop  -->
                     </div>
 
                     <!-- this is for vote -->
 
-                    <div class="vote absolute flex-col text-center top-32 -left-12">
+                    <div class="vote absolute flex-col text-center top-32 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                         <!-- upvote button -->
 
-                        <a href="" class="hover:opacity-60 duration-150"
+                        <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
+                           class="hover:opacity-60 duration-150"
                         >
                             <ion-icon name="caret-up"></ion-icon
                             >
                         </a>
 
                         <!-- number of votes -->
-
                         <div class="font-bold">${requestScope.question.score}</div>
 
                         <!-- downvote button -->
 
-                        <a href="" class="hover:opacity-60 duration-150"
+                        <a href="/Vote?action=downVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
+                           class="hover:opacity-60 duration-150"
                         >
                             <ion-icon name="caret-down"></ion-icon
                             >
                         </a>
                     </div>
                 </div>
+                <%--                report question modal--%>
+                <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
+                        id="reportModalQuestion"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+                >
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                    class="flex justify-between items-start p-4 rounded-t border-b"
+                            >
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Report Question
+                                </h3>
+                                <button
+                                        type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                        onclick="modal.hide()"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mx-8 pt-6">
+                                <form action="/Report" method="post">
+                                    <input hidden name="view"
+                                           value="ViewQuestion?questionId=${requestScope.question.id}">
+                                    <input hidden name="type" id="type">
+                                    <input hidden name="typeId" id="typeId">
+                                    <input hidden name="flagId" id="flagId">
+                                    <label
+                                            for="question-flag"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Select a flag</label>
+                                    <select
+                                            required
+                                            onchange="questionFlagSelect(this)"
+                                            id="question-flag"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    >
+                                        <option selected value="">Choose a flag</option>
+                                        <c:forEach items="${requestScope.flags}" var="flag">
+                                            <option value="${flag.id}">${flag.name}</option>
+                                        </c:forEach>
+                                        <%--                                        <option value="flag-1">Flag 1</option>--%>
+                                        <%--                                        <option value="flag-2">Flag 2</option>--%>
+                                        <%--                                        <option value="flag-3">Flag 3</option>--%>
+                                    </select>
 
+                                    <!-- description go here -->
+
+                                    <div class="my-6 bg-[#F3F4F6] rounded-md">
+                                        <p
+                                                class="p-6 text-sm font-semibold"
+                                                id="question-flag-0"
+                                        >
+                                            Please choose a flag
+                                        </p>
+                                        <c:forEach items="${requestScope.flags}" var="flag">
+                                            <p
+                                                    class="hidden p-6 text-sm font-semibold description-flag"
+                                                    id="question-flag-${flag.id}"
+                                            >
+                                                    ${flag.description}
+                                            </p>
+                                        </c:forEach>
+                                    </div>
+
+                                    <label
+                                            for="question-description"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Description</label
+                                    >
+                                    <div class="relative w-full">
+                                        <input
+                                                type="text"
+                                                name="description"
+                                                id="question-description"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                placeholder="More detail"
+                                                required
+                                        />
+                                    </div>
+                                    <div
+                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
+                                    >
+                                        <button
+                                                type="submit"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                        >
+                                            Report
+                                        </button>
+                                        <button
+                                                onclick="modal.hide()"
+                                                type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- number of answers here -->
 
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
                     <div class="p-8">
                         <h1 class="font-semibold text-xl text-[#7E3AF2]">
-                            ANSWERS (${requestScope.question.answerCount})
+                            ${(requestScope.resource eq "resource") ? 'SUBJECTS' : 'ANSWERS'} (${requestScope.question.answerCount})
                         </h1>
                     </div>
                 </div>
@@ -271,7 +416,7 @@ change this template use File | Settings | File Templates. --%>
                             class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-6"
                     >
                         <div class="p-11">
-                            <div class="flex items-center mb-6 mx-3">
+                            <div class="flex items-center mb-6 mx-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <!-- put the link to profile here in href -->
 
                                 <a href="" class="cursor-pointer">
@@ -296,7 +441,7 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- this button is for report this answer loop the ans1 ans2 ans3 here -->
 
                                 <button
-                                        data-dropdown-toggle="dropdownLeftStartAns1"
+                                        data-dropdown-toggle="dropdownLeftStartAns${answer.getId()}"
                                         data-dropdown-placement="left-start"
                                         class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
                                         type="button"
@@ -307,7 +452,7 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- ans1 ans2 ans3 here too -->
 
                                 <div
-                                        id="dropdownLeftStartAns1"
+                                        id="dropdownLeftStartAns${answer.getId()}"
                                         class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
                                 >
                                     <ul
@@ -315,15 +460,18 @@ change this template use File | Settings | File Templates. --%>
                                             aria-labelledby="dropdownLeftStartButton"
                                     >
                                         <li>
+                                            <!-- put loop index here -->
                                             <a
-                                                    href="#"
-                                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Report</a
-                                            >
+                                                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                    type="button"
+                                                    onclick="openReportModal(`answer`, ${answer.getId()})"
+                                            >Report</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
+                                <%--                            answer report modal--%>
+
 
                             <!-- this to show answer detail -->
 
@@ -345,7 +493,7 @@ change this template use File | Settings | File Templates. --%>
                                             type="text"
                                             name="commentContent"
                                             class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                            placeholder="Write a comment here..."
+                                            placeholder="${(requestScope.resource eq "resource") ? 'Share a resource link here... ' : 'Write a comment here...'}"
                                     />
                                     <button
                                             class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -400,10 +548,11 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- this is for vote -->
 
-                        <div class="vote absolute flex-col text-center top-10 -left-12">
+                        <div class="vote absolute flex-col text-center top-10 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                             <!-- upvote button -->
 
-                            <a href="" class="hover:opacity-60 duration-150"
+                            <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
+                               class="hover:opacity-60 duration-150"
                             >
                                 <ion-icon name="caret-up"></ion-icon
                                 >
@@ -415,7 +564,8 @@ change this template use File | Settings | File Templates. --%>
 
                             <!-- downvote button -->
 
-                            <a href="" class="hover:opacity-60 duration-150"
+                            <a href="/Vote?action=downVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
+                               class="hover:opacity-60 duration-150"
                             >
                                 <ion-icon name="caret-down"></ion-icon
                                 >
@@ -427,6 +577,7 @@ change this template use File | Settings | File Templates. --%>
                 <!-- answer form -->
 
                 <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                         class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-8"
                 >
                     <div class="p-11">
@@ -686,27 +837,120 @@ change this template use File | Settings | File Templates. --%>
         </div>
     </c:if>
 </div>
-<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+<script src="./asset/js/flowbite.js"></script>
 <script
         type="module"
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
 ></script>
 <script
         nomodule
-        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        src="./asset/js/ionicons.js"
 ></script>
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="./asset/js/highlight.min.js"></script>
+<script src="./asset/js/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
 <script>
+    var toolbarOptions = [
+        ['bold', 'italic'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        ['link', 'underline', 'blockquote', 'code-block']
+    ];
+    document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+    })
     var quill = new Quill('#editor', {
         theme: 'snow',
+        placeholder: "Write your answer here...",
         modules: {
-            toolbar: true
+            syntax: true,
+            toolbar: toolbarOptions
         }
     });
     quill.on('text-change', function (delta, oldDelta, source) {
         $('#answerContent').val(quill.container.firstChild.innerHTML);
     });
+    const questionFlagSelect = (props) => {
+        let value = props.value;
+        if (value === "") {
+            hideQuestionFlagDescription();
+            document.getElementById("question-flag-0").classList.remove("hidden");
+        } else {
+            hideQuestionFlagDescription();
+            document.getElementById(`question-flag-` + value).classList.remove("hidden");
+        }
+        document.getElementById("flagId").value = value;
+    };
+    const openReportModal = (type, typeId) => {
+        modal.show();
+        document.getElementById("type").value = type;
+        document.getElementById("typeId").value = typeId;
+    }
+
+    const reportModal = document.getElementById('reportModalQuestion');
+
+    // options with default values
+    const options = {
+        onHide: () => {
+            console.log('modal is hidden');
+        },
+        onShow: () => {
+            console.log('modal is shown');
+        },
+        onToggle: () => {
+            console.log('modal has been toggled');
+        }
+    };
+    const modal = new Modal(reportModal, options);
+
+    const hideQuestionFlagDescription = () => {
+        let flagDescriptionElement = document.getElementsByClassName("description-flag");
+        document.getElementById("question-flag-0").classList.add("hidden");
+        for (let i = 0; i < flagDescriptionElement.length; i++) {
+            let current = flagDescriptionElement[i];
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+
+        // for (let i = 0; i <= 3; i++) {
+        //     let current = document.getElementById("question-flag-" + i);
+        //     if (!current.classList.contains("hidden")) {
+        //         current.classList.add("hidden");
+        //     }
+        // }
+    };
+    const answerFlagSelect = (idx, props) => {
+        let value = props.value;
+        if (value === "") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-0")
+                .classList.remove("hidden");
+        } else if (value === "flag-1") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-1")
+                .classList.remove("hidden");
+        } else if (value === "flag-2") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-2")
+                .classList.remove("hidden");
+        } else if (value === "flag-3") {
+            hideAnswerFlagDescription(idx);
+            document
+                .getElementById("answer-" + idx + "-flag-3")
+                .classList.remove("hidden");
+        }
+    };
+    const hideAnswerFlagDescription = (idx) => {
+        for (let i = 0; i <= 3; i++) {
+            let current = document.getElementById("answer-" + idx + "-flag-" + i);
+            if (!current.classList.contains("hidden")) {
+                current.classList.add("hidden");
+            }
+        }
+    };
 </script>
 </body>
 </html>

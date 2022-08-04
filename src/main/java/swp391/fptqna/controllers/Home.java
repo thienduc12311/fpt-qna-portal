@@ -1,9 +1,9 @@
 package swp391.fptqna.controllers;
 
 import swp391.fptqna.dao.QuestionDAO;
-import swp391.fptqna.dto.ExtendQuestionList;
-import swp391.fptqna.dto.ExtendedQuestionDTO;
-import swp391.fptqna.dto.QuestionDTO;
+import swp391.fptqna.dao.TagDAO;
+import swp391.fptqna.dao.UserDAO;
+import swp391.fptqna.dto.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,19 +24,21 @@ public class Home extends HttpServlet {
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             String action = request.getParameter("action");
-
             String tag = request.getParameter("tag");
             String txtSearch = request.getParameter("txtSearch");
-
-
-
             if (action == null) action = "latest";
             int numberOfPage = 0;
+            String resource = "";
 
             //5 filter actions: latest, search, tag, most voted, most answered
             numberOfPage = questionDAO.getNumberOfAvailablePage();
-            page = Integer.parseInt(request.getParameter("page"));
-            switch (action){
+            String currentPage = request.getParameter("page");
+            if (currentPage == null) {
+                currentPage = "1";
+            }
+            System.out.println(action + "action");
+            page = Integer.parseInt(currentPage);
+            switch (action) {
                 case "latest":
                     questionList = questionDAO.getAvailableQuestionByPage(page);
                     break;
@@ -54,27 +56,51 @@ public class Home extends HttpServlet {
                 case "mostAnswered":
                     questionList = questionDAO.getAvailableQuestionFilterMostAnsweredByPage(page);
                     break;
+                case "discussion":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterDiscussion();
+                    questionList = questionDAO.getAvailableQuestionFilterDiscussionByPage(page);
+                    break;
+                case "resource":
+                    numberOfPage = questionDAO.getNumberOfAvailablePageFilterTag("Resource");
+                    questionList = questionDAO.getAvailableQuestionFilterResourceByPage(page);
+                    resource = "resource";
+                    break;
+                default:
+                    extendedQuestion = (ExtendQuestionList) session.getAttribute("questions");
+                    break;
             }
 
-            if (questionList.isEmpty()) {
-                throw new Exception("List is empty");
+            if (extendedQuestion == null) {
+                System.out.println("extend null");
             }
-            for (QuestionDTO question : questionList) {
-                ExtendedQuestionDTO exQuestion = new ExtendedQuestionDTO(question);
-                extendedQuestion.add(exQuestion);
+            if (extendedQuestion.isEmpty()) {
+                for (QuestionDTO question : questionList) {
+                    ExtendedQuestionDTO exQuestion = new ExtendedQuestionDTO(question);
+                    extendedQuestion.add(exQuestion);
+                }
             }
+
+            //get top 10 tags
+            TagDAO tagDAO = new TagDAO();
+            ArrayList<TagDTO> topTenTag = tagDAO.getTopTenTag();
+
+            //get top 5 users
+            UserDAO userDAO = new UserDAO();
+            ArrayList<UserDTO> topFiveUser = userDAO.getTopFiveUser();
+
             questionDAO.getAllTagsOfQuestion(extendedQuestion);
             response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("resource", resource);
             request.setAttribute("numberOfPage", numberOfPage);
+            request.setAttribute("topFiveUser", topFiveUser);
+            request.setAttribute("topTenTag", topTenTag);
             session.removeAttribute("questions");
             session.setAttribute("questions", extendedQuestion);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } catch (Exception ex) {
             response.sendRedirect("error.jsp");
-            System.out.println(ex);
+            ex.printStackTrace();
         }
-
-
     }
 
     @Override
