@@ -409,6 +409,78 @@ change this template use File | Settings | File Templates. --%>
                     </div>
                 </div>
 
+<%--                test chart--%>
+
+                <div class="shadow-lg rounded-lg overflow-hidden py-1.5" style="${sessionScope.USER.role != 1 ? 'display:none' : ''}">
+                    <div class="py-3 px-5 bg-white">Discussion activeness from ${requestScope.question.stringCreationDate} until now</div>
+                    <canvas class="p-10" id="chartLine"></canvas>
+                </div>
+
+                <!-- Required chart.js -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <!-- Chart line -->
+                <script>
+                    const labels = [${requestScope.answerCountByDate1}];
+                    const data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: "Answer Counts",
+                                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                                borderColor: "hsl(252, 82.9%, 67.8%)",
+                                data: ${requestScope.answerCountByDate.values()},
+                            },
+                        ],
+                    };
+
+                    const configLineChart = {
+                        type: "line",
+                        data,
+                        options: {}
+                    };
+
+                    var chartLine = new Chart(
+                        document.getElementById("chartLine"),
+                        configLineChart
+                    );
+                </script>
+
+                <div class="shadow-lg rounded-lg overflow-hidden py-1.5" style="${sessionScope.USER.role != 1 ? 'display:none' : ''}">
+                    <div class="py-3 px-5 bg-gray-50">Top contributors</div>
+                    <canvas class="p-10" id="chartBar"></canvas>
+                </div>
+
+                <!-- Required chart.js -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <!-- Chart bar -->
+                <script>
+                    const labelsBarChart = [${requestScope.topAnswerScore1}];
+                    const dataBarChart = {
+                        labels: labelsBarChart,
+                        datasets: [
+                            {
+                                label: "User ID",
+                                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                                borderColor: "hsl(252, 82.9%, 67.8%)",
+                                data: ${requestScope.topAnswerScore.values()},
+                            },
+                        ],
+                    };
+
+                    const configBarChart = {
+                        type: "bar",
+                        data: dataBarChart,
+                        options: {},
+                    };
+
+                    var chartBar = new Chart(
+                        document.getElementById("chartBar"),
+                        configBarChart
+                    );
+                </script>
+
                 <!-- answers start her -->
 
                 <c:forEach items="${requestScope.question.answerList}" var="answer">

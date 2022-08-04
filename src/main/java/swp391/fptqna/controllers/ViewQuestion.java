@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "ViewQuestion", value = "/ViewQuestion")
 public class ViewQuestion extends HttpServlet {
@@ -106,6 +110,10 @@ public class ViewQuestion extends HttpServlet {
         }
     }
 
+    String wrapWithQuotesAndJoin(List<String> strings) {
+        return strings.stream()
+                .collect(Collectors.joining("\", \"", "\"", "\""));
+    }
     private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws Exception {
         question.setAnswerList(new ExtendedAnswerList());
         question.setComments(new ArrayList<CommentDTO>());
@@ -116,6 +124,15 @@ public class ViewQuestion extends HttpServlet {
         commentDAO.getListCommentOfAnswer(question);
         FlagTypeDAO flagTypeDAO = new FlagTypeDAO();
         ArrayList<FlagTypeDTO> flags = flagTypeDAO.getAllFlag();
+        String[] answerCountByDate1 = answerDAO.getAnswerCountByCalenderDate(question).keySet().toArray(new String[answerDAO.getAnswerCountByCalenderDate(question).keySet().size()]);
+        String[] topAnswerScore1 = answerDAO.getTopAnswerScoreFilterQuestionId(question).keySet().toArray(new String[answerDAO.getTopAnswerScoreFilterQuestionId(question).keySet().size()]);
+        request.setAttribute("answerCountByDate", answerDAO.getAnswerCountByCalenderDate(question));
+        request.setAttribute("topAnswerScore", answerDAO.getTopAnswerScoreFilterQuestionId(question));
+        request.setAttribute("answerCountByDate1", wrapWithQuotesAndJoin(Arrays.asList(answerCountByDate1)));
+        request.setAttribute("topAnswerScore1", wrapWithQuotesAndJoin(Arrays.asList(topAnswerScore1)));
+        //System.out.println(answerDAO.getTopAnswerScoreFilterQuestionId(question));
+        //System.out.println(wrapWithQuotesAndJoin(Arrays.asList(tmp)));
+
         request.setAttribute("resource", resource);
         request.setAttribute("question", question);
         request.setAttribute("flags", flags);
