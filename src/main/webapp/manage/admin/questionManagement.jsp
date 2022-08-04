@@ -79,7 +79,7 @@
             %>
             <tr>
                 <!-- form for delete button  -->
-                <form action="" method="post">
+                <form action="MainController" method="post">
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                         <p class="text-gray-900 whitespace-no-wrap">
                             <%=question.getId()%>
@@ -101,8 +101,15 @@
                         </p>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
-
-                        <input type="submit" name="action" value="Delete" class="bg-red-600 hover:bg-red-800 text-white rounded px-5 py-1 font-semibold transition duration-300 ease-in-out">
+                        <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
+                        <input class="hidden" name="ownerUserId" value="<%=question.getOwnerUserId()%>"/>
+                        <% if (question.getDeletionDate() == null) { %>
+                            <input class="hidden" name="action" value="DeleteQuestion"/>
+                            <input type="submit" name="submit" value="Delete" class="bg-red-600 hover:bg-red-800 w-full text-white rounded px-5 py-1 font-semibold transition duration-300 ease-in-out">
+                        <%} else { %>
+                            <input class="hidden" name="action" value="UnDeleteQuestion"/>
+                            <input type="submit" name="submit" value="Recovery" class="bg-green-600 hover:bg-green-800 w-full text-white rounded px-5 py-1 font-semibold transition duration-300 ease-in-out">
+                        <%}%>
                     </td>
                 </form>
             </tr>

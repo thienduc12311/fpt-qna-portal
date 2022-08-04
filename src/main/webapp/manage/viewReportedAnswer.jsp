@@ -57,7 +57,7 @@
             class="mb-5 w-8/12 bg-white p-11 grid content-start gap-y-4 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.06),0px_4px_6px_rgba(0,0,0,0.1)]">
         <!-- Info start -->
         <div class="flex justify-start items-center gap-x-3">
-            <a href="" class="cursor-pointer">
+            <a href='<%="/PersonalProfile?page=1&userid=" + ownerQuestionUser.getId()%>' class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
                      src="<%=ownerQuestionUser.getAvtUrl()%>">
             </a>
@@ -87,7 +87,7 @@
     <div class="answer w-8/12 bg-white rounded-lg drop-shadow-md border-l-4 border-[#7E3AF2] mb-6">
         <div class="p-11">
             <div class="flex items-center mb-6 gap-x-3">
-                <a href="" class="cursor-pointer">
+                <a href='<%="/PersonalProfile?page=1&userid=" + ownerAnswerUser.getId()%>' class="cursor-pointer">
                     <img class="w-9 rounded-full" src="<%=ownerAnswerUser.getAvtUrl()%>" alt="avatar"/>
                 </a>
                 <a href="" class="font-semibold text-[#505059]">
@@ -115,6 +115,7 @@
                 <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
                 <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
                 <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+                <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
             <button type="submit" name="state" value="REJECT"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#0694A2] rounded-lg hover:bg-[#057c87] focus:ring-2 focus:outline-none focus:ring-[#0694A230] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
                 Resolve with no violation
@@ -186,6 +187,7 @@
                         <input class="hidden" name="answerId" value="<%=answer.getId()%>"/>
                         <input class="hidden" name="ownerUserId" value="<%=reportedAnswer.getOwnerUserId()%>"/>
                         <input class="hidden" name="ownerAnswerFlagUserId" value="<%=answer.getOwnerUserId()%>"/>
+                        <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
                     <button data-modal-toggle="deleteModal" type="submit" name="state" value="DELETE"
                             class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Reject

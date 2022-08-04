@@ -23,7 +23,9 @@ public class Tag extends HttpServlet {
             int page = Integer.parseInt(request.getParameter("page"));
             TagDAO tagDAO = new TagDAO();
             ArrayList<TagDTO> list = tagDAO.getTagByPage(page);
+            int numberOfPage = tagDAO.getNumberOfPage();
             request.setAttribute("listTag", list);
+            request.setAttribute("numberOfPage", numberOfPage);
             request.getRequestDispatcher(TAG_VIEW).forward(request,response);
         } catch (Exception e){
             e.printStackTrace();

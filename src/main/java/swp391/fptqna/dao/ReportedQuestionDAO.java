@@ -140,4 +140,18 @@ public class ReportedQuestionDAO {
         }
         return numberOfRecord;
     }
+
+    public boolean disableAllRelated(int id) throws Exception {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE QuestionFlag SET State = 1 WHERE QuestionId = ? ";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+

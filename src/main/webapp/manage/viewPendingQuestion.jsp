@@ -56,7 +56,7 @@
             class="mb-5 w-8/12 bg-white p-11 grid content-start gap-y-4 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.06),0px_4px_6px_rgba(0,0,0,0.1)]">
         <!-- Info start -->
         <div class="flex justify-start items-center gap-x-3">
-            <a href="#" class="cursor-pointer">
+            <a href='<%="/PersonalProfile?page=1&userid=" + ownerUser.getId()%>' class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
                      src="<%=ownerUser.getAvtUrl()%>">
             </a>

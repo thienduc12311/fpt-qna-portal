@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebServlet(name = "ResolveReportedQuestion", value = "/manage/ResolveReportedQuestion")
 public class ResolveReportedQuestion extends HttpServlet {
-    private final String ACCEPTED_VIEW = "../accepted.jsp";
+    private final String ACCEPTED_VIEW = "../successPage.jsp";
     private final String ERROR_VIEW = "../errorResolve.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -18,6 +18,7 @@ public class ResolveReportedQuestion extends HttpServlet {
 
         try {
             String state = request.getParameter("state");
+            String emailTo = request.getParameter("emailTo");
             int reportedQuestionId = Integer.parseInt(request.getParameter("reportedQuestionId"));
             int questionId = Integer.parseInt(request.getParameter("questionId"));
             int ownerFlagUserId = Integer.parseInt(request.getParameter("ownerUserId"));
@@ -38,8 +39,9 @@ public class ResolveReportedQuestion extends HttpServlet {
                         throw new Exception("Delete reported question failed");
                     if (!reportedQuestionDAO.setState(reportedQuestionId, (byte) 2))
                         throw new Exception("Delete reported question failed");
+                    reportedQuestionDAO.disableAllRelated(questionId);
                     String reason = request.getParameter("reasonText");
-                    reason = "|" + questionId + "|" + reason;
+                    reason = questionId + "|" + reason;
                     if (!notificationDAO.insert(7, reason, ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     if (!notificationDAO.insert(8, reason, ownerQuestionFlagUserId))
@@ -53,12 +55,16 @@ public class ResolveReportedQuestion extends HttpServlet {
                         throw new Exception("Delete reported question failed");
                     if (!reportedQuestionDAO.setState(reportedQuestionId, (byte) 3))
                         throw new Exception("Delete reported question failed");
+                    reportedQuestionDAO.disableAllRelated(questionId);
                     UserDAO userDAO = new UserDAO();
                     if (!userDAO.setState(ownerQuestionFlagUserId, false)) {
                         reportedQuestionDAO.setState(reportedQuestionId, (byte) 0);
                         throw new Exception("Delete reported question failed");
                     }
 
+                    request.setAttribute("emailTo",emailTo);
+                    request.setAttribute("reason","Your account have been banned!! Please reply this mail if you thing so wrong");
+                    request.getRequestDispatcher("/manage/SendEmail").include(request,response);
                     if (!notificationDAO.insert(7, questionId + "|", ownerFlagUserId))
                         throw new Exception("Notification DELETE fail");
                     break;

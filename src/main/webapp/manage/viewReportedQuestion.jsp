@@ -60,7 +60,7 @@
                     <img class="rounded-full h-8 w-8"
                          src="<%=ownerQuestionUser.getAvtUrl()%>">
                 </a>
-                <a href="" class="font-semibold"><%=ownerQuestionUser.getName()%></a>
+                <a href='<%="/PersonalProfile?page=1&userid=" + ownerQuestionUser.getId()%>' class="font-semibold"><%=ownerQuestionUser.getName()%></a>
                 <span class="text-xs text-slate-400"><%=question.getCreationDate()%></span>
             </div>
             <!-- Info end -->
@@ -92,9 +92,11 @@
                 <form action="MainController" method="post" class="m-0">
                     <input hidden name="action" value="ResolveReportedQuestion"/>
                     <input class="hidden" name="reportedQuestionId" value="<%=reportedQuestion.getId()%>"/>
+                    <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
                     <input class="hidden" name="ownerUserId" value="<%=reportedQuestion.getOwnerUserId()%>"/>
                     <input class="hidden" name="ownerQuestionFlagUserId" value="<%=question.getOwnerUserId()%>"/>
+
                 <button type="submit" name="state" value="REJECT"
                         class="px-10 py-2 text-sm font-medium text-center text-white bg-[#0694A2] rounded-lg hover:bg-[#057c87] focus:ring-2 focus:outline-none focus:ring-[#0694A230] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
                     Resolve with no violation
@@ -168,6 +170,8 @@
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
                     <input class="hidden" name="ownerUserId" value="<%=reportedQuestion.getOwnerUserId()%>"/>
                     <input class="hidden" name="ownerQuestionFlagUserId" value="<%=question.getOwnerUserId()%>"/>
+                    <input class="hidden" name="emailTo" value="<%=ownerQuestionUser.getEmail()%>"/>
+
                 <button data-modal-toggle="deleteModal" type="submit" name="state" value="DELETE"
                         class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Reject

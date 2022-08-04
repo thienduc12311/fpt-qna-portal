@@ -17,20 +17,28 @@ public class UserAuthorization implements Filter {
     public void destroy() {
     }
 
+    private boolean check(String uri) {
+        String[] array = {"Home","ViewQuestion"};
+        for (String tmp : array) {
+            if (uri.contains(tmp)) return true;
+        }
+        return false;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
         try {
-            if (req.getRequestURI().contains("home")) {
+            if (check(req.getRequestURI())) {
                 UserDTO user = (UserDTO) session.getAttribute("USER");
                 if (user == null) throw new Exception("user not found");
                 chain.doFilter(request, response);
             } else {
                 chain.doFilter(request, response);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             res.sendRedirect("/index.jsp");
         }
