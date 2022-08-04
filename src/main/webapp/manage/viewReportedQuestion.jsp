@@ -60,7 +60,7 @@
                     <img class="rounded-full h-8 w-8"
                          src="<%=ownerQuestionUser.getAvtUrl()%>">
                 </a>
-                <a href="" class="font-semibold"><%=ownerQuestionUser.getName()%></a>
+                <a href='<%="/PersonalProfile?page=1&userid=" + ownerQuestionUser.getId()%>' class="font-semibold"><%=ownerQuestionUser.getName()%></a>
                 <span class="text-xs text-slate-400"><%=question.getCreationDate()%></span>
             </div>
             <!-- Info end -->

@@ -11,6 +11,7 @@ public class MainController extends HttpServlet {
     private final String LOGIN_CONTROLLER = "Login";
     private final String HANDLE_NOTIFICATION = "HandleNoti";
     private final String VIEW_ALL_NOTIFICATION_CONTROLLER = "ViewAllNoti";
+    private final String FOLLOW_CONTROLLER = "FollowQuestion";
     private final String PENDING_QUESTION_CONTROLLER = "/manage/PendingQuestion";
     private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
@@ -102,6 +103,9 @@ public class MainController extends HttpServlet {
                     break;
                 case "ViewAllNoti":
                     url = VIEW_ALL_NOTIFICATION_CONTROLLER;
+                    break;
+                case "FollowQuestion":
+                    url = FOLLOW_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

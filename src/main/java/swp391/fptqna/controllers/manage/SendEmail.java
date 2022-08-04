@@ -69,11 +69,27 @@ public class SendEmail extends HttpServlet {
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
+            message.setSubject("FPT Q&A Portal Notifications");
 
             // Send the actual HTML message, as big as you like
-            message.setContent("<h1>" + content + "</h1>", "text/html" );
-
+            String htmlContent = " <body style=\"font-family: Arial, Helvetica, sans-serif\">\n" +
+                    "    <h1 style=\"color: #7e3af2\">\n" +
+                    "      <span style=\"font-weight: bold\">FPT</span\n" +
+                    "      ><span style=\"font-weight: normal\">QnA</span>\n" +
+                    "    </h1>\n" +
+                    "    \n" +
+                    "    <!-- header for mail -->\n" +
+                    "    <h3>"+ content +"</h3>\n" +
+                    "\n" +
+                    "    <!-- mail description -->\n" +
+                    "    <p>If there was any mistake please reply this email</p>\n" +
+                    "\n" +
+                    "    <p style=\"font-size: 10px;\">Best regard,</p>\n" +
+                    "    <p style=\"font-size: 10px;\">FPTQnA Portal team</p>\n" +
+                    "  </body>\n" +
+                    "</html>";
+//            message.setContent("<h1>" + content + "</h1>", "text/html" );
+            message.setContent(htmlContent, "text/html" );
             // Send message
             Transport.send(message);
         } catch (MessagingException mex) {

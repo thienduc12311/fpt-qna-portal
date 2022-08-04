@@ -21,12 +21,21 @@ public class BanUser extends HttpServlet {
             String targetUrl = request.getParameter("url");
             int userId = Integer.parseInt(request.getParameter("userId"));
             String state = request.getParameter("state");
+            String emailTo = request.getParameter("emailTo");
             boolean stateChange = state.equals("Unban User");
             HttpSession session = request.getSession(false);
             UserDTO user = (UserDTO) session.getAttribute("USER");
             if (user.getRole() != 0) {
                 UserDAO userDAO = new UserDAO();
                 if (!userDAO.setState(userId, stateChange)) throw new Exception("Ban user fail");
+                request.setAttribute("emailTo",emailTo);
+                if (!stateChange) {
+                    request.setAttribute("reason","Your account have been banned!! Please reply this mail if you thing so wrong T.T .");
+                    request.getRequestDispatcher("/manage/SendEmail").include(request,response);
+                } else {
+                    request.setAttribute("reason","Your account have been un banned!! Thank you and best regards ^.^ .");
+                    request.getRequestDispatcher("/manage/SendEmail").include(request,response);
+                }
             }
             request.getRequestDispatcher("../"+targetUrl).forward(request,response);
         } catch (Exception e){

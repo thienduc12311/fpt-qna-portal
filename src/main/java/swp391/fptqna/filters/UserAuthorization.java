@@ -17,9 +17,9 @@ public class UserAuthorization implements Filter {
     public void destroy() {
     }
 
-    private boolean check(String uri){
-        String[] array = {"home","allNotifications","changepassword","createQuestion","editprofile"};
-        for (String tmp: array) {
+    private boolean check(String uri) {
+        String[] array = {"Home","ViewQuestion"};
+        for (String tmp : array) {
             if (uri.contains(tmp)) return true;
         }
         return false;
@@ -34,12 +34,11 @@ public class UserAuthorization implements Filter {
             if (check(req.getRequestURI())) {
                 UserDTO user = (UserDTO) session.getAttribute("USER");
                 if (user == null) throw new Exception("user not found");
-                if (!user.getState()) res.sendRedirect("/banError.jsp"); else
                 chain.doFilter(request, response);
             } else {
                 chain.doFilter(request, response);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             res.sendRedirect("/index.jsp");
         }

@@ -1,3 +1,5 @@
+<%@ page import="swp391.fptqna.dto.ExtendedQuestionDTO" %>
+<%@ page import="swp391.fptqna.dto.UserDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- Created by IntelliJ IDEA. User: markhipz Date: 6/2/2022 Time: 2:57 PM To
 change this template use File | Settings | File Templates. --%>
@@ -174,11 +176,17 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- number of answers here -->
                                 <div class="ml-2 text-xs">${requestScope.question.commentCount} comments</div>
                             </div>
+                            <%
+                                ExtendedQuestionDTO q = (ExtendedQuestionDTO) request.getAttribute("question");
+                                UserDTO user = (UserDTO) session.getAttribute("USER");
+                                if (q.getOwnerUserId() != user.getId()){
+                                String url = "/MainController?action=FollowQuestion&questionId=" + q.getId();
+                            %>
                             <a
-                                    href=""
+                                    href="<%=url%>"
                                     class="mx-auto md:ml-auto md:mr-0 text-[#B9C1CC] hover:opacity-60 duration-100"
-                            >Follow this thread</a
-                            >
+                            >Follow this thread</a>
+                            <% } %>
                         </div>
 
                         <!-- comment form -->

@@ -1,9 +1,6 @@
 package swp391.fptqna.controllers;
 
-import swp391.fptqna.dao.AnswerDAO;
-import swp391.fptqna.dao.CommentDAO;
-import swp391.fptqna.dao.FlagTypeDAO;
-import swp391.fptqna.dao.QuestionDAO;
+import swp391.fptqna.dao.*;
 import swp391.fptqna.dto.*;
 
 import javax.servlet.ServletException;
@@ -68,6 +65,21 @@ public class ViewQuestion extends HttpServlet {
                     boolean isSuccess = answerDAO.addNewAnswer(user.getId(), questionId, content);
                     if (isSuccess) {
                         request.setAttribute("SUCCESS_MESSAGE", "Successfully");
+                        QuestionDAO qDAO = new QuestionDAO();
+                        QuestionDTO q = qDAO.getQuestionById(questionId);
+                        NotificationDAO notificationDAO = new NotificationDAO();
+                        if (user.getId() != q.getOwnerUserId()) {
+                            if (!notificationDAO.insert(10, questionId + "|", q.getOwnerUserId()))
+                                throw new Exception("Notification fail");
+                        }
+                        QuestionFollowDAO followDAO = new QuestionFollowDAO();
+                        ArrayList<Integer> listFollwer = followDAO.getFollower(questionId);
+                        for (int tmp: listFollwer) {
+                            if (user.getId() != tmp) {
+                                if (!notificationDAO.insert(11, questionId + "|", tmp))
+                                    throw new Exception("Notification fail");
+                            }
+                        }
                     } else {
                         request.setAttribute("ERROR_MESSAGE", "Something went wrong, please try again later!");
                     }

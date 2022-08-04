@@ -129,6 +129,7 @@
                             <input hidden name="action" value="BanOrUnBanUser"/>
                             <input class="hidden" name="userId" value="<%=user.getId()%>"/>
                             <input class="hidden" name="url" value="<%="MainController?action=ManageUser&page=" + request.getParameter("page")%>"/>
+                            <input class="hidden" name="emailTo" value="<%=user.getEmail()%>"/>
                             <% if (user.getState()){%>
                             <input type="submit" name="state" value="Ban User" class="bg-purple-600 hover:bg-purple-800 text-white rounded w-full py-1 font-semibold  transition duration-300 ease-in-out">
                             <% } else { %>

@@ -18,8 +18,6 @@
     </style>
 </head>
 <body>
-
-<%@include file="header.jsp" %>
 <div class="container w-1/2 lg:w-1/3 h-[80vh] mx-auto flex gap-y-6 flex-col justify-center items-center mt-28">
     <!-- Card start -->
     <div
@@ -35,7 +33,7 @@
                 to
                 you. If there are any mistakes, please reply the email! Thank you.</p>
         </div>
-        <a href="#"
+        <a href="index.jsp"
            class="mt-5 px-6 py-3 text-sm lg:text-xl font-medium text-center text-white bg-[#7E3AF2] rounded-lg hover:bg-[#442083] focus:ring-4 focus:outline-none focus:ring-[#7E3AF220]"
            type="button">
             Back to login page

@@ -57,7 +57,7 @@
             class="mb-5 w-8/12 bg-white p-11 grid content-start gap-y-4 rounded-xl shadow-[0px_2px_4px_rgba(0,0,0,0.06),0px_4px_6px_rgba(0,0,0,0.1)]">
         <!-- Info start -->
         <div class="flex justify-start items-center gap-x-3">
-            <a href="" class="cursor-pointer">
+            <a href='<%="/PersonalProfile?page=1&userid=" + ownerQuestionUser.getId()%>' class="cursor-pointer">
                 <img class="rounded-full h-8 w-8"
                      src="<%=ownerQuestionUser.getAvtUrl()%>">
             </a>
@@ -87,7 +87,7 @@
     <div class="answer w-8/12 bg-white rounded-lg drop-shadow-md border-l-4 border-[#7E3AF2] mb-6">
         <div class="p-11">
             <div class="flex items-center mb-6 gap-x-3">
-                <a href="" class="cursor-pointer">
+                <a href='<%="/PersonalProfile?page=1&userid=" + ownerAnswerUser.getId()%>' class="cursor-pointer">
                     <img class="w-9 rounded-full" src="<%=ownerAnswerUser.getAvtUrl()%>" alt="avatar"/>
                 </a>
                 <a href="" class="font-semibold text-[#505059]">

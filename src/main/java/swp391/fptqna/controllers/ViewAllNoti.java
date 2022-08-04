@@ -36,7 +36,7 @@ public class ViewAllNoti extends HttpServlet {
                     content = content.replace(body[1], '"' +  title + "..." + '"');
                     noti.setContent(content);
                     noti.setHref(href);
-                } else if(type == 2 || type == 6 || type == 10 ) {
+                } else if(type == 2 || type == 6 || type == 10 || type == 11 ) {
                     String href = "/ViewQuestion?questionId=" + body[0];
                     QuestionDAO questionDAO = new QuestionDAO();
                     QuestionDTO question = questionDAO.getQuestionById(Integer.parseInt(body[0]));
