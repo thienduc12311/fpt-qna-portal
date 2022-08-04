@@ -230,6 +230,35 @@ change this template use File | Settings | File Templates. --%>
                                     <span class="ml-4 text-xs text-[#B9C1CC]"
                                     >${comment.stringCreationDate}</span
                                     >
+
+                                        <%-- Put Comment Unique ID in {data-dropdown-toggle} and the empty id below data-dropdown-toggle                              --%>
+                                    <button
+                                            data-dropdown-toggle=""
+                                            data-dropdown-placement="left-start"
+                                            class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
+                                            type="button"
+                                    >
+                                        <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
+                                    </button>
+
+                                    <div
+                                            id=""
+                                            class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                    >
+                                        <ul
+                                                class="py-1 text-sm text-gray-700"
+                                        >
+                                            <li>
+                                                <a
+                                                        class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                        type="button"
+                                                        href=""
+                                                >Delete</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
                                 <div class="content mr-16 ml-14">
                                     <p class="text-[#505059]">
@@ -602,6 +631,36 @@ change this template use File | Settings | File Templates. --%>
                                         <span class="ml-4 text-xs text-[#B9C1CC]"
                                         >${comment.getStringCreationDate()}</span
                                         >
+
+                                            <%-- Put Comment Unique ID in {data-dropdown-toggle} and the empty id below data-dropdown-toggle                              --%>
+                                        <button
+                                                data-dropdown-toggle=""
+                                                data-dropdown-placement="left-start"
+                                                class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
+                                                type="button"
+                                        >
+                                            <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
+                                        </button>
+
+                                        <div
+                                                id=""
+                                                class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                        >
+                                            <ul
+                                                    class="py-1 text-sm text-gray-700"
+                                            >
+                                                <li>
+                                                    <a
+                                                            class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                            type="button"
+                                                            href=""
+                                                    >Delete</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
                                     </div>
                                     <div class="content mr-16 ml-14">
                                         <p class="text-[#505059]">
