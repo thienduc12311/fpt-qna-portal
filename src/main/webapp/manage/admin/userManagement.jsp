@@ -94,7 +94,7 @@
                             <%=user.getId()%>
                         </p>
                     </td>
-                    <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
+                    <td  class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center cursor-pointer" onclick="window.location='<%="/PersonalProfile?page=1&userid=" + user.getId()%>';">
                         <p class="text-gray-900 whitespace-no-wrap"><%=user.getName()%></p>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
