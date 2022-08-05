@@ -6,6 +6,7 @@ public class ExtendedQuestionDTO extends QuestionDTO {
     private ArrayList<TagDTO> tags = new ArrayList<>();
     private ArrayList<CommentDTO> comments = new ArrayList<>();
     private ExtendedAnswerList answerList = new ExtendedAnswerList();
+    private ReasonRejectDTO reject = new ReasonRejectDTO();
 
     public ExtendedQuestionDTO(QuestionDTO question) {
         super();
@@ -26,6 +27,14 @@ public class ExtendedQuestionDTO extends QuestionDTO {
         this.setLastEditDate(question.getLastEditDate());
         this.setAnswerCount(question.getAnswerCount());
         this.setCommentCount(question.getCommentCount());
+    }
+
+    public ReasonRejectDTO getReject() {
+        return reject;
+    }
+
+    public void setReject(ReasonRejectDTO reject) {
+        this.reject = reject;
     }
 
     public ArrayList<TagDTO> getTags() {

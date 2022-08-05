@@ -61,8 +61,8 @@ public class CommentDAO {
     }
 
     public boolean deleteComment(String type, int typeId, int userId) {
-        String questionComment = "DELETE FROM QuestionComment WHERE QuestionId = ? OnwerUserId = ?";
-        String answerComment = "DELETE FROM AnswerComment WHERE AnswerId = ? OnwerUserId = ?";
+        String questionComment = "DELETE FROM QuestionComment WHERE QuestionId = ? AND OwnerUserId = ?";
+        String answerComment = "DELETE FROM AnswerComment WHERE AnswerId = ? AND OwnerUserId = ?";
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = null;
             if (type.equals("question")) {

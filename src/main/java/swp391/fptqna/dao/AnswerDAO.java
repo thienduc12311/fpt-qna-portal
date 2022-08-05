@@ -68,7 +68,7 @@ public class AnswerDAO {
     }
 
     public boolean isAnswered(int userId, int questionId) {
-        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ?";
+        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ? AND DeletionDate IS NULL";
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, questionId);

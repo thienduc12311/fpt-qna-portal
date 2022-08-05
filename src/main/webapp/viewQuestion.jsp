@@ -118,6 +118,22 @@ change this template use File | Settings | File Templates. --%>
                                                 onclick="openReportModal(`question`, ${requestScope.question.id})"
                                         >Report</a>
                                     </li>
+                                    <c:if test="${requestScope.question.ownerUserId == sessionScope.USER.id}">
+                                        <li>
+                                            <a
+                                                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                    type="button"
+                                                    data-modal-toggle="editQuestionModal"
+                                            >Edit</a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                    class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                    type="button"
+                                                    href="/ViewQuestion?action=deleteQuestion&questionId=${requestScope.question.id}"
+                                            >Delete</a>
+                                        </li>
+                                    </c:if>
                                 </ul>
                             </div>
                         </div>
@@ -225,7 +241,39 @@ change this template use File | Settings | File Templates. --%>
                                     <span class="ml-4 text-xs text-[#B9C1CC]"
                                     >${comment.stringCreationDate}</span
                                     >
+                                        <%-- Put Comment Unique ID in {data-dropdown-toggle} and the empty id below data-dropdown-toggle
+                                                            --%>
+                                    <c:if test="${comment.userId == sessionScope.USER.id}">
+                                        <button
+                                                data-dropdown-toggle="comment-${comment.id}"
+                                                data-dropdown-placement="left-start"
+                                                class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
+                                                type="button"
+                                        >
+                                            <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
+                                        </button>
+
+                                        <div
+                                                id="comment-${comment.id}"
+                                                class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                        >
+                                            <ul
+                                                    class="py-1 text-sm text-gray-700"
+                                            >
+                                                <li>
+                                                    <a
+                                                            class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                            type="button"
+                                                            href="/ViewQuestion?action=deleteComment&type=question&typeId=${requestScope.question.id}&questionId=${requestScope.question.id}"
+                                                    >Delete</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </c:if>
+
                                 </div>
+
                                 <div class="content mr-16 ml-14">
                                     <p class="text-[#505059]">
                                         <!-- comment content here -->
@@ -402,7 +450,79 @@ change this template use File | Settings | File Templates. --%>
                         </h1>
                     </div>
                 </div>
+                <%--                Edit question modal --%>
+                <div
+                        id="editQuestionModal"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+                >
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div
+                                    class="flex justify-between items-start p-4 rounded-t border-b"
+                            >
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Edit Question
+                                </h3>
+                                <button
+                                        type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                        data-modal-toggle="editQuestionModal"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mx-8 pt-6">
+                                <form action="ViewQuestion" id="edit-question">
+                                    <input name="action" value="editQuestion" hidden>
+                                    <input name="questionId" value="${requestScope.question.id}" hidden>
+                                    <label
+                                            for="editQuestionTitle"
+                                            class="block mb-2 text-lg font-medium text-gray-90"
+                                    >Title</label>
+                                    <input class="bg-gray-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                           id="editQuestionTitle" name="title"
+                                           value="${requestScope.question.title}">
+                                    <div id="editorQuestion"
+                                         class="block p-4 h-40 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></div>
 
+                                    <input id="editQuestionContent" name="body" style="display: none">
+                                    <div
+                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
+                                    >
+                                        <button
+                                                type="submit"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                                data-modal-toggle="editQuestionModal"
+                                                type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- answers start her -->
 
                 <c:forEach items="${requestScope.question.answerList}" var="answer">
@@ -461,6 +581,17 @@ change this template use File | Settings | File Templates. --%>
                                                     onclick="openReportModal(`answer`, ${answer.getId()})"
                                             >Report</a>
                                         </li>
+                                        <c:if test="${answer.ownerUserId == sessionScope.USER.id}">
+                                            <li>
+                                                <a
+                                                        class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                        type="button"
+                                                        href="/ViewQuestion?action=deleteAnswer&questionId=${requestScope.question.id}&answerId=${answer.id}"
+                                                >Delete</a
+                                                >
+                                            </li>
+                                        </c:if>
+
                                     </ul>
                                 </div>
                             </div>
@@ -524,6 +655,34 @@ change this template use File | Settings | File Templates. --%>
                                         <span class="ml-4 text-xs text-[#B9C1CC]"
                                         >${comment.getStringCreationDate()}</span
                                         >
+                                        <c:if test="${comment.userId == sessionScope.USER.id}">
+                                            <button
+                                                    data-dropdown-toggle="comment-${comment.id}"
+                                                    data-dropdown-placement="left-start"
+                                                    class="drop ml-auto p-2 rounded-[100%] hover:backdrop-contrast-75 duration-200 text-[#B9C1CC]"
+                                                    type="button"
+                                            >
+                                                <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
+                                            </button>
+
+                                            <div
+                                                    id="comment-${comment.id}"
+                                                    class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                            >
+                                                <ul
+                                                        class="py-1 text-sm text-gray-700"
+                                                >
+                                                    <li>
+                                                        <a
+                                                                class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                type="button"
+                                                                href="/ViewQuestion?action=deleteComment&type=answer&typeId=${answer.id}&questionId=${requestScope.question.id}"
+                                                        >Delete</a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </c:if>
                                     </div>
                                     <div class="content mr-16 ml-14">
                                         <p class="text-[#505059]">
@@ -532,7 +691,26 @@ change this template use File | Settings | File Templates. --%>
                                         </p>
                                     </div>
 
-                                    <div class="border-b mt-7"></div>
+                                    <div
+                                            id="dropdownLeftStartAns${answer.getId()}"
+                                            class="z-20 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"
+                                    >
+                                        <ul
+                                                class="py-1 text-sm text-gray-700"
+                                                aria-labelledby="dropdownLeftStartButton"
+                                        >
+                                            <li>
+                                                <!-- put loop index here -->
+                                                <a
+                                                        class="block px-4 py-2 hover:bg-gray-100 cursor-pointer text-rose-500"
+                                                        type="button"
+                                                        onclick="openReportModal(`answer`, ${answer.getId()})"
+                                                >Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="border-b mt-7">
+                                    </div>
                                 </div>
                             </c:forEach>
 
@@ -603,15 +781,8 @@ change this template use File | Settings | File Templates. --%>
                             <input name="action" value="answer" hidden>
                             <input name="questionId" value="${requestScope.question.id}" hidden>
                             <div id="editor"
-                                 class="block p-4 h-40 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                 placeholder="Your question here..."></div>
-                            <%--                            <textarea--%>
-                            <%--                                    rows="4"--%>
-                            <%--                                    name="answerContent"--%>
-                            <%--                                    class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"--%>
-                            <%--                                    placeholder="Start typing..."--%>
-                            <%--                                    required--%>
-                            <%--                            ></textarea>--%>
+                                 class="block p-4 h-40 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></div>
+
                             <input id="answerContent" name="answerContent" style="display: none">
                             <button
                                     class="text-[#fff] bg-[#7E3AF2] px-11 py-2 mt-6 hover:opacity-90 duration-150 rounded-md items-center justify-center flex"
@@ -862,7 +1033,19 @@ change this template use File | Settings | File Templates. --%>
     quill.on('text-change', function (delta, oldDelta, source) {
         $('#answerContent').val(quill.container.firstChild.innerHTML);
     });
-    const questionFlagSelect = (props) => {
+    var quillEdit = new Quill('#editorQuestion', {
+        theme: 'snow',
+        required: true,
+        placeholder: "Write your answer here...",
+        modules: {
+            syntax: true,
+            toolbar: toolbarOptions
+        }
+    });
+    quillEdit.on('text-change', function (delta, oldDelta, source) {
+        $('#editQuestionContent').val(quillEdit.container.firstChild.innerHTML);
+    })
+    questionFlagSelect = (props) => {
         let value = props.value;
         if (value === "") {
             hideQuestionFlagDescription();

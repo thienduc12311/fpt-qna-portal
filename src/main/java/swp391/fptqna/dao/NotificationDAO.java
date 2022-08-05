@@ -4,6 +4,7 @@ import swp391.fptqna.dto.NotificationDTO;
 import swp391.fptqna.utils.DButil;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class NotificationDAO {
@@ -32,5 +33,24 @@ public class NotificationDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public ArrayList<NotificationDTO> getNotiByUserAndType(int userId, int typeId) {
+        String query = "SELECT * FROM Notifications WHERE  OwnerUserId = ? And NotificationTypeId = ?";
+        ArrayList<NotificationDTO> notificationDTOS = new ArrayList<>();
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, typeId);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                NotificationDTO notificationDTO = parseFromDB(result);
+                notificationDTOS.add(notificationDTO);
+            }
+            return notificationDTOS;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
