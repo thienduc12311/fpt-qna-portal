@@ -53,7 +53,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM \n" +
                     "(SELECT * FROM Questions \n" +
-                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10) )   \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND ClosedDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10) )   \n" +
                     "    ORDER BY CreationDate DESC \n" +
                     "    OFFSET ? ROWS \n" +
                     "    FETCH NEXT 10 ROWS ONLY) q \n" +
@@ -85,7 +85,7 @@ public class QuestionDAO {
     public int getNumberOfAvailablePage() throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)";
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE DeletionDate IS NULL AND ClosedDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -103,7 +103,7 @@ public class QuestionDAO {
 
     public ExtendedQuestionDTO getExtendQuestionById(int questionId) {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "Select  * From (Select * From Questions WHERE ApproveUserId IS NOT NULL and DeletionDate IS NULL And Id = ?) q INNER JOIN Users u ON q.OwnerUserId = u.Id";
+            String query = "Select  * From (Select * From Questions WHERE ApproveUserId IS NOT NULL and DeletionDate IS NULL AND ClosedDate IS NULL And Id = ?) q INNER JOIN Users u ON q.OwnerUserId = u.Id";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, questionId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -130,7 +130,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT COUNT(q.Id) AS numOfQuestions\n" +
                     "FROM Questions q, [dbo].[QuestionTags] qt, [dbo].[Tags] t\n" +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND ClosedDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
                     "AND q.Id = qt.QuestionId AND qt.TagId = t.Id\n" +
                     "AND t.TagName = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
@@ -154,7 +154,7 @@ public class QuestionDAO {
             String query = "SELECT * FROM (\n" +
                     "SELECT q.*\n" +
                     "FROM Questions q, [dbo].[QuestionTags] qt, [dbo].[Tags] t\n" +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND ClosedDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
                     "AND q.Id = qt.QuestionId AND qt.TagId = t.Id\n" +
                     "AND t.TagName = ?\n" +
                     "ORDER BY q.CreationDate DESC \n" +
@@ -231,7 +231,7 @@ public class QuestionDAO {
             String query = "SELECT * FROM (\n" +
                     "SELECT q.*\n" +
                     "FROM Questions q, [dbo].[QuestionTags] qt, [dbo].[Tags] t\n" +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
+                    "WHERE DeletionDate IS NULL AND ClosedDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
                     "AND q.Id = qt.QuestionId AND qt.TagId = t.Id\n" +
                     "AND t.TagName = 'Discussion' \n" +
                     "ORDER BY q.CreationDate DESC \n" +
@@ -295,7 +295,7 @@ public class QuestionDAO {
             String query = "SELECT * FROM (\n" +
                     "SELECT *\n" +
                     "FROM Questions q\n" +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND ClosedDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
                     "ORDER BY Score DESC " +
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY\n" +
@@ -331,7 +331,7 @@ public class QuestionDAO {
             String query = "SELECT * FROM (\n" +
                     "SELECT *\n" +
                     "FROM Questions q\n" +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND ClosedDate IS NULL AND NOT(Title like '%Semester %' and LEN(Title) = 10)\n" +
                     "ORDER BY AnswerCount DESC " +
                     "OFFSET ? ROWS\n" +
                     "FETCH NEXT 10 ROWS ONLY\n" +
@@ -367,7 +367,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT COUNT(q.Id) AS numOfQuestions\n" +
                     "FROM Questions q " +
-                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL\n" +
+                    "WHERE DeletionDate IS NULL AND ApproveUserId IS NOT NULL AND ClosedDate IS NULL\n" +
                     "AND OwnerUserId = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, userId);
@@ -390,7 +390,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM \n" +
                     "(SELECT * FROM Questions \n" +
-                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND OwnerUserId = ?)   \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND OwnerUserId = ? AND ClosedDate IS NULL)   \n" +
                     "    ORDER BY CreationDate DESC \n" +
                     "    OFFSET ? ROWS \n" +
                     "    FETCH NEXT 10 ROWS ONLY) q \n" +
@@ -425,7 +425,7 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM \n" +
                     "(SELECT * FROM Questions \n" +
-                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND Title LIKE ? AND NOT(Title like '%Semester %' and LEN(Title) = 10))   \n" +
+                    "    WHERE (ApproveUserId IS NOT NULL AND DeletionDate IS NULL AND ClosedDate IS NULL AND Title LIKE ? AND NOT(Title like '%Semester %' and LEN(Title) = 10))   \n" +
                     "    ORDER BY CreationDate DESC \n" +
                     "    OFFSET ? ROWS \n" +
                     "    FETCH NEXT 10 ROWS ONLY) q \n" +
@@ -474,7 +474,6 @@ public class QuestionDAO {
         }
         return 0;
     }
-
 
 
     public ExtendQuestionList getAllTagsOfQuestion(ExtendQuestionList questions) {
@@ -584,6 +583,20 @@ public class QuestionDAO {
         return false;
     }
 
+    public boolean closeQuestion(int questionId) {
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "UPDATE Questions SET ClosedDate = ? WHERE Id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+            preparedStatement.setInt(2, questionId);
+            int rs = preparedStatement.executeUpdate();
+            return rs > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public ArrayList<QuestionDTO> getQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM Questions \n" + "ORDER BY Id ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
@@ -682,6 +695,61 @@ public class QuestionDAO {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    numberOfRecord = resultSet.getInt("numOfQuestions");
+                    return (int) ((numberOfRecord - 1) / 10 + 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecord;
+    }
+
+    public boolean updateQuestion(int userId, int questionId, String description, String title) {
+        String query = "UPDATE Questions SET Body = ?, Title = ? WHERE OwnerUserId = ? AND Id = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, description);
+            preparedStatement.setString(2, title);
+            preparedStatement.setInt(4, questionId);
+            preparedStatement.setInt(3, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<QuestionDTO> getAllQuestionOfUser(int userId, int page) {
+        String query = "SELECT * FROM Questions WHERE OwnerUserId = ? AND ClosedDate IS NULL " + "ORDER BY CreationDate DESC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
+        ArrayList<QuestionDTO> questionDTOS = new ArrayList<>();
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, 10 * (page - 1));
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                QuestionDTO questionDTO = parseFromDB(result);
+                questionDTOS.add(questionDTO);
+            }
+            return questionDTOS;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int numberOfQuestionByUser(int userId) {
+        int numberOfRecord = 0;
+        try (Connection cn = DButil.getMyConnection()) {
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE ClosedDate IS NULL AND OwnerUserId = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     numberOfRecord = resultSet.getInt("numOfQuestions");

@@ -163,6 +163,17 @@
                                     }
                                 %>
                                 <div class="py-1 px-4 hover:bg-slate-100">
+                                    <a href="/ManageMyQuestion?page=1"
+                                       class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"
+                                       role="menuitem">
+                                        <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" id="Layer_1"
+                                             data-name="Layer 1" viewBox="0 0 24 24">
+                                            <path fill="currentColor"
+                                                  d="M19,12h5v7c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5v-7H5v1c0,.552,.447,1,1,1s1-.448,1-1v-1h10v1c0,.552,.447,1,1,1s1-.448,1-1v-1Zm5-3v1h-5v-1c0-.552-.447-1-1-1s-1,.448-1,1v1H7v-1c0-.552-.447-1-1-1s-1,.448-1,1v1H0v-1c0-2.757,2.243-5,5-5h1.101C6.566,1.721,8.586,0,11,0h2c2.414,0,4.434,1.721,4.899,4h1.101c2.757,0,5,2.243,5,5ZM8.184,4h7.631c-.414-1.161-1.514-2-2.816-2h-2c-1.302,0-2.402,.839-2.816,2Z"/>
+                                        </svg>
+                                        My Question
+                                    </a></div>
+                                <div class="py-1 px-4 hover:bg-slate-100">
                                     <a href="/Logout"
                                        class="text-gray-700 flex items-center w-full px-4 py-2 text-sm leading-5 text-left"
                                        role="menuitem">
