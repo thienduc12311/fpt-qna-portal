@@ -4,9 +4,10 @@ import swp391.fptqna.dto.AnswerDTO;
 import swp391.fptqna.dto.ExtendedAnswerDTO;
 import swp391.fptqna.dto.ExtendedQuestionDTO;
 import swp391.fptqna.utils.DButil;
+import swp391.fptqna.utils.DateFormatter;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
 
 public class AnswerDAO {
@@ -68,7 +69,7 @@ public class AnswerDAO {
     }
 
     public boolean isAnswered(int userId, int questionId) {
-        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ?";
+        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ? AND DeletionDate IS NULL";
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, questionId);
@@ -153,5 +154,82 @@ public class AnswerDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean updateAnswer(int userId, int answerId, String description) {
+        String query = "UPDATE Answers SET Body = ? WHERE OwnerUserId = ? AND Id = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, description);
+            preparedStatement.setInt(3, answerId);
+            preparedStatement.setInt(2, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Map<String, Integer> getAnswerCountByCalenderDate (ExtendedQuestionDTO question){
+        Map<String, Integer> dateAnswerCountMap = new LinkedHashMap<>();
+        String query = ";with d(date) as (\n" +
+                "  select cast((convert(varchar, creationdate, 111)) as datetime) from questions where id = ?\n" +
+                "  union all\n" +
+                "  select date+1\n" +
+                "  from d\n" +
+                "  where date < getdate()\n" +
+                "  )\n" +
+                "select d.date CDate, t.count numofanswer\n" +
+                "from d\n" +
+                "left join (\n" +
+                "SELECT Count(*) as count, CONVERT(varchar(10), Answers.CreationDate, 120) as date\n" +
+                "FROM Questions, Answers\n" +
+                "WHERE Questions.Id = Answers.QuestionId\n" +
+                "AND Questions.Id = ?\n" +
+                "AND Answers.CreationDate >= Questions.CreationDate\n" +
+                "AND Answers.CreationDate <= GetDate()\n" +
+                "GROUP BY CONVERT(varchar(10), Answers.CreationDate, 120) --02/08\n" +
+                ") t\n" +
+                "on d.date = t.date\n" +
+                "order by d.date\n";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, question.getId());
+            preparedStatement.setInt(2, question.getId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    dateAnswerCountMap.put(DateFormatter.convertFromDateToString(resultSet.getDate("CDate")), resultSet.getInt("numofanswer"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateAnswerCountMap;
+    }
+
+    public Map<String, Integer> getTopAnswerScoreFilterQuestionId (ExtendedQuestionDTO question){
+        Map<String, Integer> dateAnswerCountMap = new LinkedHashMap<>();
+        String query = "SELECT TOP 5 Users.UserDisplayName as name, Answers.Score as score\n" +
+                "FROM Answers, Users\n" +
+                "WHERE Users.Id = Answers.OwnerUserId\n" +
+                "AND questionId = ?\n" +
+                "ORDER BY Score DESC";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, question.getId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    dateAnswerCountMap.put(resultSet.getString("name"), resultSet.getInt("score"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateAnswerCountMap;
     }
 }
