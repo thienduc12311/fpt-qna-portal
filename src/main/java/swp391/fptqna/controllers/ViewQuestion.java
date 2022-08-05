@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,13 +50,13 @@ public class ViewQuestion extends HttpServlet {
                     deleteQuestion(request, response, question, resource);
                     break;
                 case "deleteAnswer":
-                    deleteAnswer(request, response, question , resource);
+                    deleteAnswer(request, response, question, resource);
                     break;
                 case "editAnswer":
                     editAnswer(request, response, question, resource);
                     break;
                 case "editQuestion":
-                    editQuestion(request, response, question, resource  );
+                    editQuestion(request, response, question, resource);
                     break;
             }
         } catch (Exception ex) {
@@ -127,6 +126,7 @@ public class ViewQuestion extends HttpServlet {
             response.sendRedirect(ERROR_VIEW);
             ex.printStackTrace();
         }
+    }
 
     private void deleteQuestion(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
         try {
@@ -188,7 +188,7 @@ public class ViewQuestion extends HttpServlet {
                         }
                         QuestionFollowDAO followDAO = new QuestionFollowDAO();
                         ArrayList<Integer> listFollwer = followDAO.getFollower(questionId);
-                        for (int tmp: listFollwer) {
+                        for (int tmp : listFollwer) {
                             if (user.getId() != tmp) {
                                 if (!notificationDAO.insert(11, questionId + "|", tmp))
                                     throw new Exception("Notification fail");
@@ -232,10 +232,11 @@ public class ViewQuestion extends HttpServlet {
         }
     }
 
-    String wrapWithQuotesAndJoin(List<String> strings) {
+    private String wrapWithQuotesAndJoin(List<String> strings) {
         return strings.stream()
                 .collect(Collectors.joining("\", \"", "\"", "\""));
     }
+
     private void forwardRequest(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws Exception {
         question.setAnswerList(new ExtendedAnswerList());
         question.setComments(new ArrayList<CommentDTO>());
