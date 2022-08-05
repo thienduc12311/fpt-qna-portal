@@ -37,6 +37,25 @@ public class NotificationDAO {
         return false;
     }
 
+    public ArrayList<NotificationDTO> getNotiByUserAndType(int userId, int typeId) {
+        String query = "SELECT * FROM Notifications WHERE  OwnerUserId = ? And NotificationTypeId = ?";
+        ArrayList<NotificationDTO> notificationDTOS = new ArrayList<>();
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, typeId);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                NotificationDTO notificationDTO = parseFromDB(result);
+                notificationDTOS.add(notificationDTO);
+            }
+            return notificationDTOS;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public int getNumByUserId(int userId) throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {

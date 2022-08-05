@@ -69,7 +69,7 @@ public class AnswerDAO {
     }
 
     public boolean isAnswered(int userId, int questionId) {
-        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ?";
+        String query = "SELECT * FROM Answers WHERE QuestionId = ? AND OwnerUserId = ? AND DeletionDate IS NULL";
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, questionId);
@@ -154,6 +154,21 @@ public class AnswerDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean updateAnswer(int userId, int answerId, String description) {
+        String query = "UPDATE Answers SET Body = ? WHERE OwnerUserId = ? AND Id = ?";
+        try (Connection cn = DButil.getMyConnection()) {
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, description);
+            preparedStatement.setInt(3, answerId);
+            preparedStatement.setInt(2, userId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Map<String, Integer> getAnswerCountByCalenderDate (ExtendedQuestionDTO question){
