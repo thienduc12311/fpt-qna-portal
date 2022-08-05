@@ -476,7 +476,6 @@ public class QuestionDAO {
     }
 
 
-
     public ExtendQuestionList getAllTagsOfQuestion(ExtendQuestionList questions) {
         try (Connection cn = DButil.getMyConnection()) {
             String query = "SELECT * FROM (SELECT * FROM QuestionTags WHERE QuestionId IN (?,?,?,?,?,?,?,?,?,?)) q INNER JOIN Tags t ON q.TagId = t.Id";
@@ -728,7 +727,7 @@ public class QuestionDAO {
     }
 
     public ArrayList<QuestionDTO> getAllQuestionOfUser(int userId, int page) {
-        String query = "SELECT * FROM Questions WHERE OwnerUserId = ? AND ClosedDate IS NULL " + "ORDER BY CreationDate ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
+        String query = "SELECT * FROM Questions WHERE OwnerUserId = ? AND ClosedDate IS NULL " + "ORDER BY CreationDate DESC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
         ArrayList<QuestionDTO> questionDTOS = new ArrayList<>();
         try (Connection cn = DButil.getMyConnection()) {
             PreparedStatement preparedStatement = cn.prepareStatement(query);
