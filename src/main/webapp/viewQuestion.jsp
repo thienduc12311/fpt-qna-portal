@@ -703,7 +703,7 @@ change this template use File | Settings | File Templates. --%>
                     </div>
                 </div>
             </div>
-            <div class="trending w-3/12 ml-7 hidden lg:block">
+            <div class="trending w-3/12 ml-7 hidden lg:block" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                 <div class="bg-white rounded-lg drop-shadow-md mb-6">
                     <div class="p-9">
                         <div class="flex items-center text-[#505059]">
