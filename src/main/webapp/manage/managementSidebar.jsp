@@ -1,4 +1,9 @@
+<%@ page import="swp391.fptqna.dto.UserDTO" %>
 <div class="w-64 h-full shadow-md bg-white px-1 font-semibold pt-8">
+    <%
+        UserDTO user = (UserDTO) session.getAttribute("USER");
+        if (user.getRole() == 2){
+    %>
     <div class="relative">
         <a class="flex items-center text-sm py-4 px-6 h-12 text-gray-400 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
            href="/MainController?action=ManageUser&page=1" data-mdb-ripple="true" data-mdb-ripple-color="dark">
@@ -24,6 +29,9 @@
             <span>Questions</span>
         </a>
     </div>
+    <%
+        }
+    %>
     <div class="relative">
         <a class="flex group justify-between text-sm py-4 px-6 h-12 text-gray-400 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out"
            href="/MainController?action=PendingQuestion&page=1" data-mdb-ripple="true" data-mdb-ripple-color="dark">
@@ -34,9 +42,6 @@
                           d="M24,12A12,12,0,1,1,12,0,12.013,12.013,0,0,1,24,12ZM13,14.257a1.982,1.982,0,0,1,.93-1.752A4,4,0,1,0,8,9h2a2,2,0,0,1,2.371-1.967,2.024,2.024,0,0,1,1.6,1.595,2,2,0,0,1-1,2.125A3.954,3.954,0,0,0,11,14.257V15h2ZM13,17H11v2h2Z" />
                 </svg>
                 <span>Pending Questions</span>
-            </div>
-            <div class="flex items-center bg-gray-400 rounded-md text-xs text-white px-1 group-hover:bg-gray-900 transition duration-300 ease-in-out">
-                10
             </div>
 
         </a>

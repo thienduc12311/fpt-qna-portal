@@ -65,6 +65,9 @@
                         class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
                     Score
                 </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
+                    Role
+                </th>
                 <th
                         class="px-5 py-3 border-b-2 border-gray-200 text-center font-semibold">
                     State
@@ -81,6 +84,7 @@
                 try{
                     ArrayList<UserDTO> list = (ArrayList<UserDTO>) request.getAttribute("listUser");
                     for (UserDTO user : list) {
+                        String url = "/MainController?action=SetRole&id=" + user.getId() + "&role=";
             %>
             <tr>
                 <!-- form for ban button  -->
@@ -104,13 +108,20 @@
                         </p>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
+                        <select id="selectBox" onchange="window.location='<%=url%>' + value;" class="text-gray-900 whitespace-no-wrap">
+                            <option value="0" <%= user.getRole() == 0 ? "selected" : "" %>>User</option>
+                            <option value="1" <%= user.getRole() == 1 ? "selected" : "" %>>Moderator</option>
+                            <option value="2" <%= user.getRole() == 2 ? "selected" : "" %>>Admin</option>
+                        </select>
+                    </td>
+                    <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                 <span class="relative inline-block w-full py-1 font-semibold text-green-900 leading-tight">
                     <% if (user.getState()) { %>
                         <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-md"></span>
                         <span class="relative">Active</span>
                     <% } else {%>
                         <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-md"></span>
-                        <span class="relative">Passive</span>
+                        <span class="relative">Suspended</span>
                     <%}%>
                 </span>
                     </td>
@@ -118,6 +129,7 @@
                             <input hidden name="action" value="BanOrUnBanUser"/>
                             <input class="hidden" name="userId" value="<%=user.getId()%>"/>
                             <input class="hidden" name="url" value="<%="MainController?action=ManageUser&page=" + request.getParameter("page")%>"/>
+                            <input class="hidden" name="emailTo" value="<%=user.getEmail()%>"/>
                             <% if (user.getState()){%>
                             <input type="submit" name="state" value="Ban User" class="bg-purple-600 hover:bg-purple-800 text-white rounded w-full py-1 font-semibold  transition duration-300 ease-in-out">
                             <% } else { %>

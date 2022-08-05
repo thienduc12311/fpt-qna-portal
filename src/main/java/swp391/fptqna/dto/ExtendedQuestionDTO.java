@@ -18,6 +18,7 @@ public class ExtendedQuestionDTO extends QuestionDTO {
         this.setTitle(question.getTitle());
         this.setBody(question.getBody());
         this.setOwnerUserId(question.getOwnerUserId());
+        this.setOwnerRole(question.getOwnerRole());
         this.setOwnerAvt(question.getOwnerAvt());
         this.setOwnerName(question.getOwnerName());
         this.setApproveUserId(question.getApproveUserId());

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ResolvePendingQuestion", value = "/manage/ResolvePendingQuestion")
 public class ResolvePendingQuestion extends HttpServlet {
-    private final String ACCEPTED_VIEW = "../accepted.jsp";
+    private final String ACCEPTED_VIEW = "../successPage.jsp";
     private final String ERROR_VIEW = "../errorResolve.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

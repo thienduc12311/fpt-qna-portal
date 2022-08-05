@@ -33,7 +33,7 @@
                 <div class="text-2xl font-bold text-purple-600">Oops!!!</div>
                 <div class="px-2">Your account is not authorized to access this page.</div>
                 <button class="border rounded border-gray-300 w-full h-8 flex justify-center content-center pt-1 mt-3 font-semibold text-sm">
-                    <a href="index.jsp">Back to login page</a>
+                    <a href="home.jsp?page=1">Back to login page</a>
                 </button>
             </div>
         </div>

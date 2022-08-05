@@ -9,10 +9,15 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
     private final String REGISTER_CONTROLLER = "Register";
     private final String LOGIN_CONTROLLER = "Login";
+    private final String HANDLE_NOTIFICATION = "HandleNoti";
+    private final String VIEW_ALL_NOTIFICATION_CONTROLLER = "ViewAllNoti";
+    private final String FOLLOW_CONTROLLER = "FollowQuestion";
     private final String PENDING_QUESTION_CONTROLLER = "/manage/PendingQuestion";
     private final String REPORTED_ANSWER_CONTROLLER = "/manage/ReportedAnswer";
     private final String REPORTED_QUESTION_CONTROLLER = "/manage/ReportedQuestion";
     private final String TAG_CONTROLLER = "/manage/Tag";
+    private final String ADD_TAG_CONTROLLER = "/manage/AddTag";
+    private final String EDIT_TAG_CONTROLLER = "/manage/EditTag";
     private final String VIEW_PENDING_QUESTION_CONTROLLER = "/manage/ViewPendingQuestion";
     private final String VIEW_REPORTED_QUESTION_CONTROLLER = "/manage/ViewReportedQuestion";
     private final String VIEW_REPORTED_ANSWER_CONTROLLER = "/manage/ViewReportedAnswer";
@@ -21,7 +26,10 @@ public class MainController extends HttpServlet {
     private final String RESOLVE_REPORTED_ANSWER_CONTROLLER = "/manage/ResolveReportedAnswer";
     private final String BAN_OR_UNBAN_USER = "/manage/BanUser";
     private final String MANAGE_QUESTION_CONTROLLER = "/manage/admin/ManageQuestions";
+    private final String UNDELETE_QUESTION_CONTROLLER = "/manage/admin/UnDeleteQuestion";
+    private final String SET_ROLE_CONTROLLER = "/manage/admin/SetRole";
     private final String MANAGE_USER_CONTROLLER = "/manage/admin/ManageUsers";
+    private final String DELETE_QUESTION_CONTROLLER = "DeleteQuestion";
     private final String LOGIN_VIEW = "index.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,6 +82,30 @@ public class MainController extends HttpServlet {
                     break;
                 case "BanOrUnBanUser":
                     url = BAN_OR_UNBAN_USER;
+                    break;
+                case "DeleteQuestion":
+                    url = DELETE_QUESTION_CONTROLLER;
+                    break;
+                case "UnDeleteQuestion":
+                    url = UNDELETE_QUESTION_CONTROLLER;
+                    break;
+                case "AddTag":
+                    url = ADD_TAG_CONTROLLER;
+                    break;
+                case "EditTag":
+                    url = EDIT_TAG_CONTROLLER;
+                    break;
+                case "HandleNoti":
+                    url = HANDLE_NOTIFICATION;
+                    break;
+                case "SetRole":
+                    url = SET_ROLE_CONTROLLER;
+                    break;
+                case "ViewAllNoti":
+                    url = VIEW_ALL_NOTIFICATION_CONTROLLER;
+                    break;
+                case "FollowQuestion":
+                    url = FOLLOW_CONTROLLER;
                     break;
             }
             request.getRequestDispatcher(url).forward(request, response);

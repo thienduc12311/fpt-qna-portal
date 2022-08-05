@@ -1,3 +1,5 @@
+<%@ page import="swp391.fptqna.dto.ExtendedQuestionDTO" %>
+<%@ page import="swp391.fptqna.dto.UserDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- Created by IntelliJ IDEA. User: markhipz Date: 6/2/2022 Time: 2:57 PM To
 change this template use File | Settings | File Templates. --%>
@@ -55,10 +57,10 @@ change this template use File | Settings | File Templates. --%>
             <a
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150"
-            >Question</a
+            >${(requestScope.resource eq "resource") ? 'Resource' : 'Question'}</a
             >
-            <span> / </span>
-            <a
+            <span style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"> / </span>
+            <a style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                     href=""
                     class="font-bold cursor-pointer hover:opacity-75 duration-150 text-[#252530]"
             >Q${requestScope.question.id}</a
@@ -69,9 +71,9 @@ change this template use File | Settings | File Templates. --%>
             <!-- this section is for question info -->
 
             <div class="content w-full lg:w-9/12">
-                <div class="question bg-white rounded-lg drop-shadow-md relative">
+                <div class="question bg-white ${(requestScope.resource eq "resource") ? 'bg-[#7E3AF2]' : ''} rounded-lg drop-shadow-md relative">
                     <div class="p-11">
-                        <div class="flex items-center mb-6 mx-3">
+                        <div style="${(requestScope.resource eq "resource") ? 'display:none' : ''}" class="flex items-center mb-6 mx-3">
                             <!-- put the link to profile here in href -->
 
                             <a href="" class="cursor-pointer">
@@ -85,10 +87,15 @@ change this template use File | Settings | File Templates. --%>
                             </a>
                             <!-- put the link to profile here in href-->
 
-                            <a href="" class="font-semibold ml-3 text-[#505059]"
+                            <a href="/PersonalProfile?page=1&userid=${requestScope.question.ownerUserId}" class="font-semibold ml-3 text-[#505059]"
                             >${requestScope.question.ownerName}
                                 <!-- put the author name here -->
                             </a>
+                            <c:if test="${requestScope.question.ownerRole == 1}">
+                                <div class="ml-2 text-xs inline-flex items-center font-medium leading-sm px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                                    Lecturer
+                                </div>
+                            </c:if>
 
                             <!-- put date here -->
                             <span class="ml-4 text-xs text-[#B9C1CC]">${requestScope.question.stringCreationDate}</span>
@@ -142,7 +149,7 @@ change this template use File | Settings | File Templates. --%>
                         <!-- this to show question detail -->
 
                         <div class="content mr-16">
-                            <h3 class="text-[#252530] font-semibold text-xl mb-3">
+                            <h3 class="${(requestScope.resource eq "resource") ? 'text-white text-2xl' : 'text-[#252530] text-xl mb-3'} font-semibold">
                                 ${requestScope.question.title}
                             </h3>
                             <p class="text-[#505059]">
@@ -152,7 +159,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- place a loop for tags here -->
 
-                        <div class="flex mt-6">
+                        <div class="flex mt-6" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
 
                             <c:forEach items="${requestScope.question.tags}" var="tag">
                                 <c:url var="tagUrl" value="/home">
@@ -166,11 +173,11 @@ change this template use File | Settings | File Templates. --%>
                                 >${tag.tagName}</a>
                             </c:forEach>
                         </div>
-                        <div class="border-b my-7"></div>
+                        <div class="border-b my-7" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"></div>
 
                         <!-- this is for number of answers and comments -->
 
-                        <div class="flex items-center flex-col md:flex-row gap-y-3">
+                        <div class="flex items-center flex-col md:flex-row gap-y-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div
                                     class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center md:mr-6"
                             >
@@ -185,16 +192,22 @@ change this template use File | Settings | File Templates. --%>
                                 <!-- number of answers here -->
                                 <div class="ml-2 text-xs">${requestScope.question.commentCount} comments</div>
                             </div>
+                            <%
+                                ExtendedQuestionDTO q = (ExtendedQuestionDTO) request.getAttribute("question");
+                                UserDTO user = (UserDTO) session.getAttribute("USER");
+                                if (q.getOwnerUserId() != user.getId()){
+                                String url = "/MainController?action=FollowQuestion&questionId=" + q.getId();
+                            %>
                             <a
-                                    href=""
+                                    href="<%=url%>"
                                     class="mx-auto md:ml-auto md:mr-0 text-[#B9C1CC] hover:opacity-60 duration-100"
-                            >Follow this thread</a
-                            >
+                            >Follow this thread</a>
+                            <% } %>
                         </div>
 
                         <!-- comment form -->
 
-                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8">
+                        <form action="ViewQuestion?questionId=${requestScope.question.id}" method="post" class="mt-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div class="flex">
                                 <input name="action" value="comment" hidden/>
                                 <input name="parentId" value="${requestScope.question.id}" hidden>
@@ -203,7 +216,7 @@ change this template use File | Settings | File Templates. --%>
                                         type="text"
                                         name="commentContent"
                                         class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                        placeholder="Write a comment here..."
+                                        placeholder="${(requestScope.resource eq "resource") ? 'Share a resouce link here... ' : 'Write a comment here...'}"
                                 />
                                 <button
                                         class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -217,11 +230,11 @@ change this template use File | Settings | File Templates. --%>
                         <!-- put comment here -->
                         <!-- open loop -->
                         <c:forEach items="${requestScope.question.comments}" var="comment">
-                            <div class="comment my-8">
+                            <div class="comment my-8" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <div class="flex items-center mb-4 mx-3">
                                     <!-- put the link to profile here in href -->
 
-                                    <a href="" class="cursor-pointer">
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="cursor-pointer">
                                         <!-- put avatar link here -->
 
                                         <img
@@ -232,7 +245,7 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                     <!-- put the link to profile here in href-->
 
-                                    <a href="" class="font-semibold ml-3 text-[#505059]"
+                                    <a href="/PersonalProfile?page=1&userid=${comment.userId}" class="font-semibold ml-3 text-[#505059]"
                                     >${comment.userName}
                                         <!-- put the author name here -->
                                     </a>
@@ -273,7 +286,6 @@ change this template use File | Settings | File Templates. --%>
                                     </c:if>
 
                                 </div>
-
                                 <div class="content mr-16 ml-14">
                                     <p class="text-[#505059]">
                                         <!-- comment content here -->
@@ -300,7 +312,7 @@ change this template use File | Settings | File Templates. --%>
 
                     <!-- this is for vote -->
 
-                    <div class="vote absolute flex-col text-center top-32 -left-12">
+                    <div class="vote absolute flex-col text-center top-32 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                         <!-- upvote button -->
 
                         <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=question&typeId=${requestScope.question.id}"
@@ -325,6 +337,7 @@ change this template use File | Settings | File Templates. --%>
                 </div>
                 <%--                report question modal--%>
                 <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                         id="reportModalQuestion"
                         tabindex="-1"
                         aria-hidden="true"
@@ -446,83 +459,83 @@ change this template use File | Settings | File Templates. --%>
                 <div class="question bg-white rounded-lg drop-shadow-md my-6">
                     <div class="p-8">
                         <h1 class="font-semibold text-xl text-[#7E3AF2]">
-                            ANSWERS (${requestScope.question.answerCount})
+                            ${(requestScope.resource eq "resource") ? 'SUBJECTS' : 'ANSWERS'} (${requestScope.question.answerCount})
                         </h1>
                     </div>
                 </div>
-                <%--                Edit question modal --%>
-                <div
-                        id="editQuestionModal"
-                        tabindex="-1"
-                        aria-hidden="true"
-                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
-                >
-                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow">
-                            <!-- Modal header -->
-                            <div
-                                    class="flex justify-between items-start p-4 rounded-t border-b"
-                            >
-                                <h3 class="text-xl font-semibold text-gray-900">
-                                    Edit Question
-                                </h3>
-                                <button
-                                        type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                        data-modal-toggle="editQuestionModal"
-                                >
-                                    <svg
-                                            class="w-5 h-5"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                                fill-rule="evenodd"
-                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="mx-8 pt-6">
-                                <form action="ViewQuestion" id="edit-question">
-                                    <input name="action" value="editQuestion" hidden>
-                                    <input name="questionId" value="${requestScope.question.id}" hidden>
-                                    <label
-                                            for="editQuestionTitle"
-                                            class="block mb-2 text-lg font-medium text-gray-90"
-                                    >Title</label>
-                                    <input class="bg-gray-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                           id="editQuestionTitle" name="title"
-                                           value="${requestScope.question.title}">
-                                    <div id="editorQuestion"
-                                         class="block p-4 h-40 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></div>
 
-                                    <input id="editQuestionContent" name="body" style="display: none">
-                                    <div
-                                            class="flex items-center py-6 space-x-2 rounded-b border-gray-200"
-                                    >
-                                        <button
-                                                type="submit"
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                                data-modal-toggle="editQuestionModal"
-                                                type="button"
-                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+<%--                test chart--%>
+
+                <div class="shadow-lg rounded-lg overflow-hidden py-1.5" style="${sessionScope.USER.role != 1 ? 'display:none' : ''}">
+                    <div class="py-3 px-5 bg-white">Discussion activeness from ${requestScope.question.stringCreationDate} until now</div>
+                    <canvas class="p-10" id="chartLine"></canvas>
                 </div>
+
+                <!-- Required chart.js -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <!-- Chart line -->
+                <script>
+                    const labels = [${requestScope.answerCountByDate1}];
+                    const data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: "Answer Counts",
+                                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                                borderColor: "hsl(252, 82.9%, 67.8%)",
+                                data: ${requestScope.answerCountByDate.values()},
+                            },
+                        ],
+                    };
+
+                    const configLineChart = {
+                        type: "line",
+                        data,
+                        options: {}
+                    };
+
+                    var chartLine = new Chart(
+                        document.getElementById("chartLine"),
+                        configLineChart
+                    );
+                </script>
+
+                <div class="shadow-lg rounded-lg overflow-hidden py-1.5" style="${sessionScope.USER.role != 1 ? 'display:none' : ''}">
+                    <div class="py-3 px-5 bg-gray-50">Top contributors</div>
+                    <canvas class="p-10" id="chartBar"></canvas>
+                </div>
+
+                <!-- Required chart.js -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <!-- Chart bar -->
+                <script>
+                    const labelsBarChart = [${requestScope.topAnswerScore1}];
+                    const dataBarChart = {
+                        labels: labelsBarChart,
+                        datasets: [
+                            {
+                                label: "User ID",
+                                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                                borderColor: "hsl(252, 82.9%, 67.8%)",
+                                data: ${requestScope.topAnswerScore.values()},
+                            },
+                        ],
+                    };
+
+                    const configBarChart = {
+                        type: "bar",
+                        data: dataBarChart,
+                        options: {},
+                    };
+
+                    var chartBar = new Chart(
+                        document.getElementById("chartBar"),
+                        configBarChart
+                    );
+                </script>
+
                 <!-- answers start her -->
 
                 <c:forEach items="${requestScope.question.answerList}" var="answer">
@@ -530,7 +543,7 @@ change this template use File | Settings | File Templates. --%>
                             class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-6"
                     >
                         <div class="p-11">
-                            <div class="flex items-center mb-6 mx-3">
+                            <div class="flex items-center mb-6 mx-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                                 <!-- put the link to profile here in href -->
 
                                 <a href="" class="cursor-pointer">
@@ -618,7 +631,7 @@ change this template use File | Settings | File Templates. --%>
                                             type="text"
                                             name="commentContent"
                                             class="border-2 border-solid border-[#E2E8F0] bg-[#F9FAFB] w-8/12 rounded-md focus:ring-0 focus:outline-none placeholder:text-[#B9C1CC]"
-                                            placeholder="Write a comment here..."
+                                            placeholder="${(requestScope.resource eq "resource") ? 'Share a resource link here... ' : 'Write a comment here...'}"
                                     />
                                     <button
                                             class="text-[#fff] bg-[#7E3AF2] p-3 rounded-[100%] ml-8 w-11 h-11 hover:opacity-90 duration-150"
@@ -720,7 +733,7 @@ change this template use File | Settings | File Templates. --%>
 
                         <!-- this is for vote -->
 
-                        <div class="vote absolute flex-col text-center top-10 -left-12">
+                        <div class="vote absolute flex-col text-center top-10 -left-12" style="${(requestScope.resource eq "resource") ? 'visibility:hidden' : ''}">
                             <!-- upvote button -->
 
                             <a href="/Vote?action=upVote&currentView=/ViewQuestion?questionId=${requestScope.question.id}&type=answer&typeId=${answer.id}"
@@ -749,6 +762,7 @@ change this template use File | Settings | File Templates. --%>
                 <!-- answer form -->
 
                 <div
+                        style="${(requestScope.resource eq "resource") ? 'display:none' : ''}"
                         class="answer bg-white rounded-lg drop-shadow-md relative border-l-4 border-[#7E3AF2] mb-8"
                 >
                     <div class="p-11">

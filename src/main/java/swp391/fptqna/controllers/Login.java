@@ -11,6 +11,7 @@ import java.io.IOException;
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
     private final String LOGIN_VIEW = "index.jsp";
+    private final String BAN_VIEW = "banError.jsp";
     private final String ERROR_VIEW = "error.jsp";
     private final String HOME_VIEW = "/home?page=1";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,9 +33,12 @@ public class Login extends HttpServlet {
                     request.setAttribute("ERROR", "Invalid email or password.");
                     request.getRequestDispatcher(LOGIN_VIEW).forward(request, response);
                 } else{
-                    HttpSession session = request.getSession();
-                    session.setAttribute("USER", user);
-                    response.sendRedirect(HOME_VIEW);
+                    if (user.getState()) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("USER", user);
+                        response.sendRedirect(HOME_VIEW);
+                    } else response.sendRedirect(BAN_VIEW);
+
                 }
             }
         } catch (Exception e){
