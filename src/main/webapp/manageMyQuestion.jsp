@@ -99,11 +99,22 @@
                             </p>
                         </td>
                         <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
-                            <a href="/MainController?action=ViewPendingQuestion&questionId=${question.id}">
-                                <p class="text-gray-900 whitespace-no-wrap font-bold">
-                                        ${question.title}
-                                </p>
-                            </a>
+                            <c:choose>
+                                <c:when test="${question.deletionDate == null && question.approveUserId != 0}">
+                                    <a href="/ViewQuestion?questionId=${question.id}">
+                                        <p class="text-gray-900 whitespace-no-wrap font-bold">
+                                                ${question.title}
+                                        </p>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/MainController?action=ViewPendingQuestion&questionId=${question.id}">
+                                        <p class="text-gray-900 whitespace-no-wrap font-bold">
+                                                ${question.title}
+                                        </p>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
 
                         </td>
                         <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
