@@ -911,7 +911,7 @@ change this template use File | Settings | File Templates. --%>
                         <!-- put a loop for popular questions here -->
 
                         <div class="border-b my-4"></div>
-                        <a href="" class="">
+                        <a href="/ViewQuestion?questionId=18" class="">
                             <div class="flex items-center mb-4">
                                 <img
                                         class="w-9 rounded-full"
