@@ -21,6 +21,7 @@ public class LoginWithGoogle extends HttpServlet {
     private final String HOME_VIEW = "/home?page=1";
     private final String ERROR_VIEW = "error.jsp";
     private final String LOGIN_VIEW = "index.jsp";
+    private final String BAN_VIEW = "banError.jsp";
     private final String REGISTER_VIEW = "register.jsp";
 
     @Override
@@ -65,9 +66,10 @@ public class LoginWithGoogle extends HttpServlet {
                         session.setAttribute("USER", newUser);
                         response.sendRedirect(HOME_VIEW);
                     } else {
-                        log("login success");
-                        session.setAttribute("USER", user);
-                        response.sendRedirect(HOME_VIEW);
+                        if (user.getState()) {
+                            session.setAttribute("USER", user);
+                            response.sendRedirect(HOME_VIEW);
+                        } else response.sendRedirect(BAN_VIEW);
                     }
                 } else {
                     if (user == null) {

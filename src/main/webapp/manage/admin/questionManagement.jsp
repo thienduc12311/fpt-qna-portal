@@ -85,7 +85,7 @@
                             <%=question.getId()%>
                         </p>
                     </td>
-                    <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-left">
+                    <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-left cursor-pointer" onclick="window.location='<%="/ViewQuestion?questionId=" + question.getId()%>';">
                         <p class="text-gray-900 whitespace-no-wrap font-semibold">
                             <%=(70 > question.getTitle().length()) ? question.getTitle() : question.getTitle().substring(0,70) + "..."%>
                         </p>

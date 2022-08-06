@@ -21,7 +21,7 @@ public class HandleNoti extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             String href = request.getParameter("h");
-            if (href==null || href.isEmpty()) href="/home?page=1";
+            if (href==null || href.isEmpty()) href="/ManageMyQuestion?page=1";
             NotificationDAO notificationDAO = new NotificationDAO();
             if (!notificationDAO.updateState(id, false)) throw new Exception("Read noti fails");
             response.sendRedirect(href);
