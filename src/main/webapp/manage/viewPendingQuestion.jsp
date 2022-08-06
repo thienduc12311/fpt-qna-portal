@@ -10,6 +10,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <%-- We can put question's title in the title --%>
@@ -95,6 +97,10 @@
             page...</a>
 
         <div class="w-[100%] sm:w-auto flex gap-2">
+            <%
+                UserDTO user = (UserDTO) session.getAttribute("USER");
+                if (user.getRole() != 0) {
+            %>
             <button type="button" data-modal-toggle="rejectModal"
                     class="px-10 py-2 text-sm font-medium text-center text-white bg-[#C81E1E] rounded-lg hover:bg-[#911717] focus:ring-2 focus:ring-[#C81E1E30] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
                 Reject
@@ -108,7 +114,15 @@
                     Approve
                 </button>
             </form>
-
+            <% }%>
+            <%
+                if (user.getRole() == 0) {
+            %>
+            <a type="button" href="/DeleteWithCloseDate?questionId=<%=question.getId()%>"
+               class="px-10 py-2 text-sm font-medium text-center text-white bg-[#C81E1E] rounded-lg hover:bg-[#911717] focus:ring-2 focus:ring-[#C81E1E30] hover:-translate-y-1 hover:shadow-md duration-200 ease-in-out">
+                Delete
+            </a>
+            <% }%>
         </div>
 
     </div>
@@ -151,17 +165,17 @@
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
                     <input class="hidden" name="action" value="ResolvePendingQuestion"/>
                     <input class="hidden" name="questionId" value="<%=question.getId()%>"/>
+                    <input class="hidden" name="backUrl" value="/ManageMyQuestion?page=1"/>
                     <input class="hidden" name="ownerUserId" value="<%=question.getOwnerUserId()%>"/>
+
                     <button data-modal-toggle="rejectModal" type="submit" name="state" value="REJECT"
                             class="text-white bg-[#C81E1E] hover:bg-[#911717] focus:ring-4 focus:outline-none focus:ring-[#C81E1E30] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Reject
                     </button>
-
                     <button data-modal-toggle="rejectModal" type="button"
                             class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                         Cancel
                     </button>
-
                 </div>
             </form>
         </div>

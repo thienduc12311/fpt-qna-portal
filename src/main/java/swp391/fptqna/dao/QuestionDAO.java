@@ -511,7 +511,7 @@ public class QuestionDAO {
 
     public ArrayList<QuestionDTO> getPendingQuestionByPage(int page) throws Exception {
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT * FROM Questions \n" + "WHERE ApproveUserId IS NULL AND DeletionDate IS NULL \n" + "ORDER BY CreationDate ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
+            String query = "SELECT * FROM Questions \n" + "WHERE ApproveUserId IS NULL AND ClosedDate IS NULL AND DeletionDate IS NULL \n" + "ORDER BY CreationDate ASC \n" + "OFFSET ? ROWS\n" + "FETCH NEXT 10 ROWS ONLY;";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setInt(1, 10 * (page - 1));
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

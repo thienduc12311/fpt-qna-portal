@@ -58,6 +58,9 @@ public class ViewQuestion extends HttpServlet {
                 case "editQuestion":
                     editQuestion(request, response, question, resource);
                     break;
+                case "deleteQuestion1":
+                    deleteQuestion1(request, response, question, resource);
+                    break;
             }
         } catch (Exception ex) {
             response.sendRedirect(ERROR_VIEW);
@@ -144,6 +147,24 @@ public class ViewQuestion extends HttpServlet {
             ex.printStackTrace();
         }
     }
+
+    private void deleteQuestion1(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
+        try {
+            int questionId = Integer.parseInt(request.getParameter("questionId"));
+            QuestionDAO questionDAO = new QuestionDAO();
+            boolean isDeleted = questionDAO.closeQuestion(questionId);
+            if (isDeleted) {
+                request.setAttribute("SUCCESS_MESSAGE", "Successfully");
+            } else {
+                request.setAttribute("ERROR_MESSAGE", "Something went wrong, please try again later!");
+            }
+            response.sendRedirect("/ManageMyQuestion?page=1");
+        } catch (Exception ex) {
+            response.sendRedirect(ERROR_VIEW);
+            ex.printStackTrace();
+        }
+    }
+
 
     private void deleteAnswer(HttpServletRequest request, HttpServletResponse response, ExtendedQuestionDTO question, String resource) throws ServletException, IOException {
         try {

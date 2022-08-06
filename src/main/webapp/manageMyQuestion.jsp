@@ -99,9 +99,12 @@
                             </p>
                         </td>
                         <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                                    ${question.title}
-                            </p>
+                            <a href="/MainController?action=ViewPendingQuestion&questionId=${question.id}">
+                                <p class="text-gray-900 whitespace-no-wrap font-bold">
+                                        ${question.title}
+                                </p>
+                            </a>
+
                         </td>
                         <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                             <p class="text-gray-900 whitespace-no-wrap">
