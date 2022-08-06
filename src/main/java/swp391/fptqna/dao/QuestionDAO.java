@@ -674,7 +674,7 @@ public class QuestionDAO {
     public int getNumberOfPagePendingQuestion() throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {
-            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE ApproveUserId IS NULL AND DeletionDate IS NULL  ";
+            String query = "SELECT COUNT(Id) AS numOfQuestions FROM Questions WHERE ApproveUserId IS NULL AND ClosedDate IS NULL AND DeletionDate IS NULL  ";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
