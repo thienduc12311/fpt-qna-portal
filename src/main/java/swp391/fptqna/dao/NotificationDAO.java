@@ -55,7 +55,7 @@ public class NotificationDAO {
         }
         return null;
     }
-
+  
     public int getNumByUserId(int userId) throws Exception {
         int numberOfRecord = 0;
         try (Connection cn = DButil.getMyConnection()) {
