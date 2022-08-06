@@ -915,35 +915,34 @@ change this template use File | Settings | File Templates. --%>
                             <div class="flex items-center mb-4">
                                 <img
                                         class="w-9 rounded-full"
-                                        src="https://www.w3schools.com/howto/img_avatar.png"
+                                        src="https://lh3.googleusercontent.com/a-/AOh14Gjv6NaRb6EQ3-_39-F1YDDw4aOwPBcB_Ap0VeBuaw=s96-c"
                                         alt="avatar"
                                 />
 
                                 <!-- put author name here -->
 
-                                <span class="ml-3">Author</span>
+                                <span class="ml-3">Huynh Hoang Huy</span>
                             </div>
 
                             <!-- put question here -->
 
                             <h4 class="font-semibold text-lg text-[#252530]">
-                                Lorem ipsum dolor sit amet, consectetur adincid elit, sed do
-                                eiusmod tempor
+                                What is the difference between String and string in C#?
                             </h4>
                             <div class="flex items-center my-2">
                                 <!-- put date here -->
 
                                 <span class="mr-6 text-xs text-[#B9C1CC]"
-                                >March 3, 2022</span
+                                >Jun 30, 2022</span
                                 >
 
                                 <!-- put number of answers and comments here -->
 
                                 <div class="flex items-center text-[#7E3AF2]">
                                     <ion-icon name="chatbox-ellipses"></ion-icon>
-                                    <span class="ml-1 mr-6">12</span>
+                                    <span class="ml-1 mr-6">2</span>
                                     <ion-icon name="chatbubbles"></ion-icon>
-                                    <span class="ml-1">12</span>
+                                    <span class="ml-1">0</span>
                                 </div>
                             </div>
                         </a>
@@ -952,58 +951,58 @@ change this template use File | Settings | File Templates. --%>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg drop-shadow-md mb-6">
-                    <div class="p-9">
-                        <div class="flex items-center text-[#505059]">
-                            <ion-icon name="share-social-outline"></ion-icon>
-                            <span class="ml-2 text-md font-semibold"
-                            >Related questions</span
-                            >
-                        </div>
+                <%--                <div class="bg-white rounded-lg drop-shadow-md mb-6">--%>
+                <%--                    <div class="p-9">--%>
+                <%--                        <div class="flex items-center text-[#505059]">--%>
+                <%--                            <ion-icon name="share-social-outline"></ion-icon>--%>
+                <%--                            <span class="ml-2 text-md font-semibold"--%>
+                <%--                            >Related questions</span--%>
+                <%--                            >--%>
+                <%--                        </div>--%>
 
-                        <!-- put a loop for related questions here -->
+                <%--                        <!-- put a loop for related questions here -->--%>
 
-                        <div class="border-b my-4"></div>
-                        <a href="" class="">
-                            <div class="flex items-center mb-4">
-                                <img
-                                        class="w-9 rounded-full"
-                                        src="https://www.w3schools.com/howto/img_avatar.png"
-                                        alt="avatar"
-                                />
+                <%--                        <div class="border-b my-4"></div>--%>
+                <%--                        <a href="" class="">--%>
+                <%--                            <div class="flex items-center mb-4">--%>
+                <%--                                <img--%>
+                <%--                                        class="w-9 rounded-full"--%>
+                <%--                                        src="https://www.w3schools.com/howto/img_avatar.png"--%>
+                <%--                                        alt="avatar"--%>
+                <%--                                />--%>
 
-                                <!-- put author name here -->
+                <%--                                <!-- put author name here -->--%>
 
-                                <span class="ml-3">Author</span>
-                            </div>
+                <%--                                <span class="ml-3">Author</span>--%>
+                <%--                            </div>--%>
 
-                            <!-- put question here -->
+                <%--                            <!-- put question here -->--%>
 
-                            <h4 class="font-semibold text-lg text-[#252530]">
-                                Lorem ipsum dolor sit amet, consectetur adincid elit, sed do
-                                eiusmod tempor
-                            </h4>
-                            <div class="flex items-center my-2">
-                                <!-- put date here -->
+                <%--                            <h4 class="font-semibold text-lg text-[#252530]">--%>
+                <%--                                Lorem ipsum dolor sit amet, consectetur adincid elit, sed do--%>
+                <%--                                eiusmod tempor--%>
+                <%--                            </h4>--%>
+                <%--                            <div class="flex items-center my-2">--%>
+                <%--                                <!-- put date here -->--%>
 
-                                <span class="mr-6 text-xs text-[#B9C1CC]"
-                                >March 3, 2022</span
-                                >
+                <%--                                <span class="mr-6 text-xs text-[#B9C1CC]"--%>
+                <%--                                >March 3, 2022</span--%>
+                <%--                                >--%>
 
-                                <!-- put number of answers and comments here -->
+                <%--                                <!-- put number of answers and comments here -->--%>
 
-                                <div class="flex items-center text-[#7E3AF2]">
-                                    <ion-icon name="chatbox-ellipses"></ion-icon>
-                                    <span class="ml-1 mr-6">12</span>
-                                    <ion-icon name="chatbubbles"></ion-icon>
-                                    <span class="ml-1">12</span>
-                                </div>
-                            </div>
-                        </a>
+                <%--                                <div class="flex items-center text-[#7E3AF2]">--%>
+                <%--                                    <ion-icon name="chatbox-ellipses"></ion-icon>--%>
+                <%--                                    <span class="ml-1 mr-6">12</span>--%>
+                <%--                                    <ion-icon name="chatbubbles"></ion-icon>--%>
+                <%--                                    <span class="ml-1">12</span>--%>
+                <%--                                </div>--%>
+                <%--                            </div>--%>
+                <%--                        </a>--%>
 
-                        <!-- end loop here -->
-                    </div>
-                </div>
+                <%--                        <!-- end loop here -->--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
                 <div class="bg-white rounded-lg drop-shadow-md mb-6">
                     <div class="p-9">

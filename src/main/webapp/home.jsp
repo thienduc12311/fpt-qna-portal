@@ -15,6 +15,7 @@
             rel="stylesheet"
             href="./asset/style/flowbite.min.css"
     />
+    <link href="./asset/style/style.css" rel="stylesheet">
     <link href="./asset/style/dracula.css" rel="stylesheet">
 </head>
 <body class="text-gray-800 h-full w-full bg-[#F2F2F2]">
@@ -47,21 +48,25 @@
             <!-- a post -->
             <c:forEach items="${sessionScope.questions}" var="question">
                 <div class=" gap-x-2 mb-4 ${(requestScope.resource eq "resource") ? 'text-center' : 'flex'}">
-                    <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                    <div class="w-1/12 grid content-start pt-6 place-items-center font-semibold"
+                         style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                         <a href="/Vote?action=upVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
-                           class="hover:opacity-60 duration-150" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                           class="hover:opacity-60 duration-150"
+                           style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <ion-icon name="caret-up"></ion-icon>
                         </a>
 
                         <p style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">${question.score}</p>
                         <a href="/Vote?action=downVote&currentView=home?page=<%=currentPage%>&type=question&typeId=${question.id}"
-                           class="hover:opacity-60 duration-150" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                           class="hover:opacity-60 duration-150"
+                           style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <ion-icon name="caret-down"></ion-icon>
                         </a>
                     </div>
 
                     <div class="w-11/12 bg-white p-8 ${(requestScope.resource eq "resource") ? 'px-8 md:py-16 py-5 hover:bg-[#7E3AF2] hover:text-white duration-100' : ''} grid content-start gap-y-3 rounded shadow-md">
-                        <div class="flex gap-x-2 items-center" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                        <div class="flex gap-x-2 items-center"
+                             style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <a href="/PersonalProfile?page=1&userid=${question.ownerUserId}">
                                 <img class="rounded-full h-8 w-8" src="${question.ownerAvt}">
                             </a>
@@ -80,10 +85,12 @@
                             <a href="/ViewQuestion?questionId=${question.id}"
                                class="font-semibold ${(requestScope.resource eq "resource") ? '' : 'hover:opacity-60 duration-150'}">${question.title}</a>
                         </div>
-                        <div class="overflow-x-auto" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                        <div class="overflow-x-auto"
+                             style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <p class="text-gray-500 text-sm">${question.body}</p>
                         </div>
-                        <div class="flex text-xs gap-x-1" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                        <div class="flex text-xs gap-x-1"
+                             style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <c:forEach items="${question.tags}" var="tag">
                                 <c:url var="tagUrl" value="/home">
                                     <c:param name="action" value="tag"></c:param>
@@ -95,7 +102,8 @@
                                 </a>
                             </c:forEach>
                         </div>
-                        <div class="border-t border-gray-300 pt-5 mt-2 flex items-center gap-x-3" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+                        <div class="border-t border-gray-300 pt-5 mt-2 flex items-center gap-x-3"
+                             style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                             <div class="bg-[#7E3AF2] text-[#fff] items-center flex px-5 py-2 rounded-md w-full md:w-36 justify-center">
                                 <ion-icon name="chatbox-ellipses"></ion-icon>
                                 <div class="ml-2 text-xs">${question.answerCount} answers</div>
@@ -113,7 +121,8 @@
             <!-- end -->
 
 
-            <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12" style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
+            <div class="pagination p-3 inline-flex space-x-3 sm:ml-20 ml-12"
+                 style="${(requestScope.resource eq "resource") ? 'display:none' : ''}">
                 <a href="${pageContext.request.contextPath}/home?page=<%=previousPage%>"
                    class="relative px-2 py-2 rounded-md border border-purple-600 text-sm font-medium text-gray-500 hover:bg-gray-50">
                     <span class="sr-only">Previous</span>
