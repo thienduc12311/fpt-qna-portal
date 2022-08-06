@@ -82,6 +82,7 @@
 
             <%
                 try{
+                    UserDTO userR = (UserDTO) session.getAttribute("USER");
                     ArrayList<UserDTO> list = (ArrayList<UserDTO>) request.getAttribute("listUser");
                     for (UserDTO user : list) {
                         String url = "/MainController?action=SetRole&id=" + user.getId() + "&role=";
@@ -108,11 +109,15 @@
                         </p>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
+                        <% if (user.getId() == userR.getId()) {%>
+                            <span>Admin</span>
+                        <%} else {%>
                         <select id="selectBox" onchange="window.location='<%=url%>' + value;" class="text-gray-900 whitespace-no-wrap">
                             <option value="0" <%= user.getRole() == 0 ? "selected" : "" %>>User</option>
                             <option value="1" <%= user.getRole() == 1 ? "selected" : "" %>>Moderator</option>
                             <option value="2" <%= user.getRole() == 2 ? "selected" : "" %>>Admin</option>
                         </select>
+                        <%}%>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
                 <span class="relative inline-block w-full py-1 font-semibold text-green-900 leading-tight">
@@ -126,6 +131,7 @@
                 </span>
                     </td>
                     <td class="px-5 py-2.5 border-b border-gray-200 bg-white text-sm text-center">
+                        <% if (user.getId() != userR.getId()) {%>
                             <input hidden name="action" value="BanOrUnBanUser"/>
                             <input class="hidden" name="userId" value="<%=user.getId()%>"/>
                             <input class="hidden" name="url" value="<%="MainController?action=ManageUser&page=" + request.getParameter("page")%>"/>
@@ -135,6 +141,7 @@
                             <% } else { %>
                             <input type="submit" name="state" value="Unban User" class="bg-purple-600 hover:bg-purple-800 text-white rounded w-full py-1 font-semibold  transition duration-300 ease-in-out">
                             <% } %>
+                        <%}%>
                     </td>
                 </form>
             </tr>
